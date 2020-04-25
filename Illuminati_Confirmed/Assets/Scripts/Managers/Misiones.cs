@@ -14,6 +14,7 @@ public class Misiones
     {
         resultado = 0;
         titulo = _titulo;
+        misionJugada = false;
         for (int i = 0; i < _posiciones.Length; i++)
         {
             //Asignamos los illuminati a la misión
@@ -32,5 +33,6 @@ public class Misiones
     string titulo;
     Image[] posiciones;
     int resultado;
+    bool misionJugada;
 
 }

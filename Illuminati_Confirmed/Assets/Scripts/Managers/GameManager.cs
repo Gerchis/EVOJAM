@@ -11,8 +11,31 @@ public enum Estadisticas
     TOTAL_ESTADISTICAS
 }
 
+public enum RolSecreto
+{
+    COMUNISTA,
+    LIBERAL,
+    CIENTIFICO,
+    EMPRENDEDOR,
+    SOCIALISTA,
+    CAPITALISTA,
+    FILANTROPO,
+    CAOTICO,
+    TOTAL_ROLES
+}
+
 public class GameManager : MonoBehaviour
 {
+
+    /*index
+     * VARIABLES DE JUEGO
+     */
+
+    int[] rand; //Tamaño 3, las 3 misiones que pueden salir.
+
+    int[][] misionesPosiciones;
+
+    misionesPosiciones[0][0] = 2; //Mision 1, posicion 1 = jugador 2
     /*index
      * ESTADISTICAS DE JUEGO
      */
@@ -44,7 +67,8 @@ public class GameManager : MonoBehaviour
      * CANVAS: MISIONES
      */
 
-    Misiones[] misionesIngame;
+    public Misiones[] misionesIngame;
+    Personajes personajesIngame;
 
     
 
@@ -52,9 +76,9 @@ public class GameManager : MonoBehaviour
      * CANVAS: PRENSA
      */
 
-    Noticias[] noticiasIngame;
+    public Noticias[] noticiasIngame;
 
-    Dictionary<Misiones, Noticias> mapaMisionesNoticias = new Dictionary<Misiones, Noticias>();
+    public Dictionary<Misiones, Noticias> mapaMisionesNoticias = new Dictionary<Misiones, Noticias>();
 
     public void initMapa()
     {
@@ -62,7 +86,6 @@ public class GameManager : MonoBehaviour
         {
             mapaMisionesNoticias.Add(misionesIngame[i], noticiasIngame[i]);
         }
-        
     }
     
 
@@ -71,8 +94,8 @@ public class GameManager : MonoBehaviour
     {
         noticiasIngame = new Noticias[7];
 
+        //El personaje ya está en una misión 
         
-
         //TODO
     }
 
