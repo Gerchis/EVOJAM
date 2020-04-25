@@ -17,14 +17,14 @@ public class Personajes
         apoyos = _apoyos;
         seguidores = _seguidores;
         ia = _ia;
-
+        
         switch (_rol)
         {
             case RolSecreto.COMUNISTA:
                 afinidadesEstadisticas[0] = true;
                 afinidadesEstadisticas[1] = false;
                 afinidadesEstadisticas[2] = false;
-                break;
+            break;
             case RolSecreto.LIBERAL:
                 afinidadesEstadisticas[0] = false;
                 afinidadesEstadisticas[1] = true;
@@ -61,6 +61,14 @@ public class Personajes
                 afinidadesEstadisticas[2] = false;
                 break;
         }
+
+        if(!ia)
+        {
+            if (afinidadesEstadisticas[0]) { GameManager.Instance.sociedadActual = 33; } else { GameManager.Instance.sociedadActual = -1; }
+            if (afinidadesEstadisticas[1]) { GameManager.Instance.economiaActual = 33; } else { GameManager.Instance.economiaActual = -1; }
+            if (afinidadesEstadisticas[2]) { GameManager.Instance.desarrolloActual = 33; } else { GameManager.Instance.desarrolloActual = -1; }
+        }
+
     }
 
     ~Personajes()
@@ -81,7 +89,7 @@ public class Personajes
     int influencia;
 
     //POWERUPS
-    Powerups inventario;
+    public Powerups inventario;
 
     //IA
     int misionActual;

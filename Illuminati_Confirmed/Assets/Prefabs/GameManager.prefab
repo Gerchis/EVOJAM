@@ -49,73 +49,141 @@ MonoBehaviour:
   sociedadObjetivo: 0
   economiaObjetivo: 0
   desarrolloObjetivo: 0
-  turnActual: 0
-  turnMax: 0
   involucionActual: 0
   involucionObjectivo: 0
   misionesIngame:
   - titulo: 
+    misionJugada: 0
+    jugadorEnMision: 0
   - titulo: 
+    misionJugada: 0
+    jugadorEnMision: 0
   - titulo: 
+    misionJugada: 0
+    jugadorEnMision: 0
   - titulo: 
+    misionJugada: 0
+    jugadorEnMision: 0
   - titulo: 
+    misionJugada: 0
+    jugadorEnMision: 0
   - titulo: 
+    misionJugada: 0
+    jugadorEnMision: 0
   - titulo: 
+    misionJugada: 0
+    jugadorEnMision: 0
   - titulo: 
+    misionJugada: 0
+    jugadorEnMision: 0
   - titulo: 
+    misionJugada: 0
+    jugadorEnMision: 0
   - titulo: 
+    misionJugada: 0
+    jugadorEnMision: 0
   - titulo: 
+    misionJugada: 0
+    jugadorEnMision: 0
   - titulo: 
+    misionJugada: 0
+    jugadorEnMision: 0
   - titulo: 
+    misionJugada: 0
+    jugadorEnMision: 0
   - titulo: 
+    misionJugada: 0
+    jugadorEnMision: 0
   - titulo: 
+    misionJugada: 0
+    jugadorEnMision: 0
   - titulo: 
+    misionJugada: 0
+    jugadorEnMision: 0
   noticiasIngame:
   - titulo: 
     texto: 
     imagen: {fileID: 0}
+    estadistica: 0
+    efectosNoticia:
+    - estadistica: 0
+      valor: 5
+    - estadistica: 1
+      valor: 3
+    - estadistica: 2
+      valor: 2
   - titulo: 
     texto: 
     imagen: {fileID: 0}
+    estadistica: 0
+    efectosNoticia: []
   - titulo: 
     texto: 
     imagen: {fileID: 0}
+    estadistica: 0
+    efectosNoticia: []
   - titulo: 
     texto: 
     imagen: {fileID: 0}
+    estadistica: 0
+    efectosNoticia: []
   - titulo: 
     texto: 
     imagen: {fileID: 0}
+    estadistica: 0
+    efectosNoticia: []
   - titulo: 
     texto: 
     imagen: {fileID: 0}
+    estadistica: 0
+    efectosNoticia: []
   - titulo: 
     texto: 
     imagen: {fileID: 0}
+    estadistica: 0
+    efectosNoticia: []
   - titulo: 
     texto: 
     imagen: {fileID: 0}
+    estadistica: 0
+    efectosNoticia: []
   - titulo: 
     texto: 
     imagen: {fileID: 0}
+    estadistica: 0
+    efectosNoticia: []
   - titulo: 
     texto: 
     imagen: {fileID: 0}
+    estadistica: 0
+    efectosNoticia: []
   - titulo: 
     texto: 
     imagen: {fileID: 0}
+    estadistica: 0
+    efectosNoticia: []
   - titulo: 
     texto: 
     imagen: {fileID: 0}
+    estadistica: 0
+    efectosNoticia: []
   - titulo: 
     texto: 
     imagen: {fileID: 0}
+    estadistica: 0
+    efectosNoticia: []
   - titulo: 
     texto: 
     imagen: {fileID: 0}
+    estadistica: 0
+    efectosNoticia: []
   - titulo: 
     texto: 
     imagen: {fileID: 0}
+    estadistica: 0
+    efectosNoticia: []
   - titulo: 
     texto: 
     imagen: {fileID: 0}
+    estadistica: 0
+    efectosNoticia: []

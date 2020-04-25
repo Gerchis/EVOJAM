@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -27,10 +28,10 @@ public enum RolSecreto
 
 public struct Powerups
 {
-    int pwrCensura;
-    int pwrPublicidad;
-    int pwrRevelar;
-    int pwrEspia;
+    public bool pwrCensura;
+    public bool pwrPublicidad;
+    public bool pwrRevelar;
+    public bool pwrEspia;
 }
 
 
@@ -40,7 +41,7 @@ public class GameManager : MonoBehaviour
     /*index
      * VARIABLES DE JUEGO
      */  
-    int maxMisionesJugables = 3;
+    public int maxMisionesJugables = 3;
     public Personajes jugador;
     Personajes[] pnjs;
     Image[] avatares;
@@ -59,6 +60,7 @@ public class GameManager : MonoBehaviour
         sociedadActual = Random.Range(80, 101);
         economiaActual = Random.Range(80, 101);
         desarrolloActual = Random.Range(80, 101);
+
         involucionActual = sociedadActual + economiaActual + desarrolloActual;
         involucionObjectivo = 100;
 
@@ -66,33 +68,25 @@ public class GameManager : MonoBehaviour
         turnMax = 12;
 
         SetValuesPjs();
-
         jugador = new Personajes((RolSecreto)randRol, avatares[randAvatar], influencia, apoyos, seguidores, false);
-        avataresControl[randAvatar] = true;
-        rolControl[randRol] = true;
 
         for (int i = 0; i < pnjs.Length; i++)
         {
             SetValuesPjs();
-
             pnjs[i] = new Personajes((RolSecreto)randRol, avatares[randAvatar], influencia, apoyos, seguidores, true);
-            avataresControl[randAvatar] = true;
-            rolControl[randRol] = true;
         }
-
-        //TODO: valores de juego objetivo
-
 
     }
 
     void SetValuesPjs()
     {
-        randRol = Random.Range(0, (int)RolSecreto.TOTAL_ROLES);
         do
         {
+            randRol = Random.Range(0, (int)RolSecreto.TOTAL_ROLES);
             randAvatar = Random.Range(0, avatares.Length);
-        } while (avataresControl[randAvatar]);
+        } while (avataresControl[randAvatar] && rolControl[randRol]);
         avataresControl[randAvatar] = true;
+        rolControl[randRol] = true;
 
         influencia = Random.Range(100, 300);
         apoyos = Random.Range(1, 3);
@@ -137,14 +131,14 @@ public class GameManager : MonoBehaviour
 
 
     /*index
-     * CANVAS: MISIONES
+     * LOGICA: MISIONES
      */
 
     [Header("Misiones")]
     [SerializeField]
     public Misiones[] misionesIngame;
 
-    int[] idMisionesSeleccionadas; //Tamaño 3, las 3 misiones que pueden salir. Guardamos el ID de la mision.
+    public int[] idMisionesSeleccionadas; //Tamaño 3, las 3 misiones que pueden salir. Guardamos el ID de la mision.
 
     void seleccionarMisiones()
     {
@@ -195,22 +189,32 @@ public class GameManager : MonoBehaviour
 
 
     /*index
-     * CANVAS: PRENSA
+     * LOGICA: PRENSA
      */
     [Header("Noticias")]
     [SerializeField]
     public Noticias[] noticiasIngame;
 
-    public Dictionary<Misiones, Noticias> mapaMisionesNoticias = new Dictionary<Misiones, Noticias>();
+     
 
-    public void initMapa()
-    {
-        for (int i = 0; i < misionesIngame.Length; i++)
-        {
-            //mapaMisionesNoticias.Add(misionesIngame[i], noticiasIngame[i]);
-        }
-    }
-    
+
+    //maxMisionesJugables
+    //idMisionesSeleccionadas[i]
+
+
+
+
+    //AL FINAL NO LO NECESITAMOS
+    //public Dictionary<Misiones, Noticias> mapaMisionesNoticias = new Dictionary<Misiones, Noticias>();
+
+    //public void initMapa()
+    //{
+    //    for (int i = 0; i < misionesIngame.Length; i++)
+    //    {
+    //        mapaMisionesNoticias.Add(misionesIngame[i], noticiasIngame[i]);
+    //    }
+    //}
+
 
 
     public void initNoticias()
