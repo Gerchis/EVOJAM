@@ -8,21 +8,30 @@ public class Misiones
     
     Misiones()
     {
-        
+        listaPersonajes = new List<Personajes>();
+        resultado = 0;
+        misionJugada = false;
     }
 
-    public Misiones(string _titulo, Image[] _posiciones, int[] _apoyos)
+    public void resultadoFinal()
     {
-        resultado = 0;
-        titulo = _titulo;
-        misionJugada = false;
-        for (int i = 0; i < _posiciones.Length; i++)
+        if (!jugadorEnMision)
         {
-            //Asignamos los illuminati a la misión
-            posiciones[i].sprite = _posiciones[i].sprite;
-            
+            return;
+        }
+        resultado += GameManager.Instance.jugador.getApoyos();
+    }
+    
+    public void InitMisiones()
+    {    
+        
+        for (int i = 0; i < listaPersonajes.Count; i++)
+        {
+            //TODO: Generar el canvas de la ficha(afinidades, cantidad de apoyos y voto)
+
             //Precalculamos el resultado antes de que vote el jugador
-            resultado += _apoyos[i];
+
+            resultado += listaPersonajes[i].getApoyos();         
         }
     }
 
@@ -32,7 +41,9 @@ public class Misiones
     }
 
     public string titulo;
-    Image[] posiciones;
+    Image[] avatarPosiciones;
+    public List<Personajes> listaPersonajes;
     int resultado;
-    bool misionJugada;
+    public bool misionJugada;
+    public bool jugadorEnMision;
 }
