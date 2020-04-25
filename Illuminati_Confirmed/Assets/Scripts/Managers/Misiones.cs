@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine.UI;
 
+[System.Serializable]
 public class Misiones
 {
     
@@ -10,7 +11,7 @@ public class Misiones
         
     }
 
-    public Misiones(string _titulo, Image[] _posiciones, int[] _illuminati)
+    public Misiones(string _titulo, Image[] _posiciones, int[] _apoyos)
     {
         resultado = 0;
         titulo = _titulo;
@@ -21,7 +22,7 @@ public class Misiones
             posiciones[i].sprite = _posiciones[i].sprite;
             
             //Precalculamos el resultado antes de que vote el jugador
-            resultado += _illuminati[i];
+            resultado += _apoyos[i];
         }
     }
 
@@ -30,9 +31,8 @@ public class Misiones
 
     }
 
-    string titulo;
+    public string titulo;
     Image[] posiciones;
     int resultado;
     bool misionJugada;
-
 }

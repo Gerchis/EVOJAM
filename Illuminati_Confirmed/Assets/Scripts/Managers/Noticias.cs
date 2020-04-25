@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine.UI;
 
-
+[System.Serializable]
 public class Noticias
 {
     Noticias() {
