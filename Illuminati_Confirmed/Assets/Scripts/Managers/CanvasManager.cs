@@ -22,7 +22,9 @@ public class CanvasManager : MonoBehaviour
     public Sprite[] spritesEconomia;
     public Sprite[] spritesDesarrollo;
 
-        
+    public Sprite[] votaciones;
+
+
     /*index
      * ###################
      * CANVAS ESTATICO: INVENTARIO
@@ -214,7 +216,7 @@ public class CanvasManager : MonoBehaviour
     Image[] iconosM1 = new Image[3];
     Image[] iconosM0 = new Image[3];
 
-    public GameObject[] informacionesConocidas;
+    //public GameObject[] informacionesConocidas;
 
     //INTEGRACIÓN: Continue de la tienda.
     public void setCanvasMisiones()
@@ -370,6 +372,15 @@ public class CanvasManager : MonoBehaviour
         id = "M" + i + "-S" + j + "-Voto";
         GameObject.Find(id).SetActive(true);
 
+        id = "M" + i + "-S" + j + "-VotoIcono";
+        if(gm.misionesIngame[gm.idMisionesSeleccionadas[i]].listaPersonajes[j].GetVotacion())
+        {
+            GameObject.Find(id).GetComponent<Image>().sprite = votaciones[1];
+        } else
+        {
+            GameObject.Find(id).GetComponent<Image>().sprite = votaciones[0];
+        }
+
         id = "M" + i + "-S" + j + "-pwrVoto";
         GameObject.Find(id).SetActive(false);
 
@@ -489,6 +500,17 @@ public class CanvasManager : MonoBehaviour
 
     /*index
      * ###################
+     * CANVAS DINAMICO: MISIONES
+     * ###################
+     */
+
+    public void ComprarPowerup(int pwrName)
+    {
+        gm.BuyPowerUp((PowerupsName)pwrName);
+    }
+
+    /*index
+     * ###################
      * CANVAS DINAMICO: PRENSA
      * ###################
      */
@@ -542,6 +564,8 @@ public class CanvasManager : MonoBehaviour
         efectoSociedad[idNoticia] = "0";
         efectoEconomia[idNoticia] = "0";
         efectoDesarrollo[idNoticia] = "0";
+        setNoticiaAfectada(PowerupsName.CENSURA, idNoticia);
+        verificarPowerUp(PowerupsName.CENSURA);
     }
 
     public void aplicarPublicidad(int idNoticia)
@@ -558,15 +582,31 @@ public class CanvasManager : MonoBehaviour
 
         aux = gm.noticiasIngame[gm.idMisionesSeleccionadas[idNoticia]].efectosNoticia[2].valor * 2;
         efectoDesarrollo[idNoticia] = aux.ToString();
+
+        setNoticiaAfectada(PowerupsName.PUBLICIDAD, idNoticia);
+        verificarPowerUp(PowerupsName.PUBLICIDAD);
     }
 
-    /*index
-    * ###################
-    * FUNCIONES UNITY
-    * ###################
-    */
 
-    void Start()
+    void setNoticiaAfectada(PowerupsName pwrName, int idNoticia)
+    {
+        for (int i = 0; i < gm.jugador.inventario.Count; i++)
+        {
+            if (gm.jugador.inventario[i].pwrNombreEnum == pwrName)
+            {
+                gm.jugador.inventario[i].noticiaAfectada = idNoticia;
+            }
+        }
+    }
+   
+
+/*index
+* ###################
+* FUNCIONES UNITY
+* ###################
+*/
+
+void Start()
     {
         // -----------------
         // |    GENERAL    |

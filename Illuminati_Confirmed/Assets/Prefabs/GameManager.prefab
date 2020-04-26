@@ -43,6 +43,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c007aae76fc4f448966fe098ec2d3ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxMisionesJugables: 3
   sociedadActual: 0
   economiaActual: 0
   desarrolloActual: 0
@@ -52,59 +53,47 @@ MonoBehaviour:
   involucionActual: 0
   involucionObjectivo: 0
   misionesIngame:
+  - titulo: Reinstaurar ley de esclavitud
+    misionJugada: 0
+  - titulo: Derogar ley de sufragio femenino
+    misionJugada: 0
+  - titulo: Reinstaurar el feudalismo
+    misionJugada: 0
+  - titulo: Prohibir las energias renovables
+    misionJugada: 0
+  - titulo: "Eliminaci\xF3n de octogenarios"
+    misionJugada: 0
+  - titulo: "Instaurar el d\xEDa de LA PURGA"
+    misionJugada: 0
+  - titulo: Prohibir ser educado
+    misionJugada: 0
+  - titulo: "Prohibir la pornograf\xEDa"
+    misionJugada: 0
+  - titulo: Legalizar lo ilegal
+    misionJugada: 0
+  - titulo: Otorgar poderes del estado a la Iglesia
+    misionJugada: 0
+  - titulo: Desmantelar la ONU
+    misionJugada: 0
+  - titulo: Criminalizar
+    misionJugada: 0
   - titulo: 
     misionJugada: 0
-    jugadorEnMision: 0
   - titulo: 
     misionJugada: 0
-    jugadorEnMision: 0
   - titulo: 
     misionJugada: 0
-    jugadorEnMision: 0
   - titulo: 
     misionJugada: 0
-    jugadorEnMision: 0
   - titulo: 
     misionJugada: 0
-    jugadorEnMision: 0
   - titulo: 
     misionJugada: 0
-    jugadorEnMision: 0
-  - titulo: 
-    misionJugada: 0
-    jugadorEnMision: 0
-  - titulo: 
-    misionJugada: 0
-    jugadorEnMision: 0
-  - titulo: 
-    misionJugada: 0
-    jugadorEnMision: 0
-  - titulo: 
-    misionJugada: 0
-    jugadorEnMision: 0
-  - titulo: 
-    misionJugada: 0
-    jugadorEnMision: 0
-  - titulo: 
-    misionJugada: 0
-    jugadorEnMision: 0
-  - titulo: 
-    misionJugada: 0
-    jugadorEnMision: 0
-  - titulo: 
-    misionJugada: 0
-    jugadorEnMision: 0
-  - titulo: 
-    misionJugada: 0
-    jugadorEnMision: 0
-  - titulo: 
-    misionJugada: 0
-    jugadorEnMision: 0
+  idMisionesSeleccionadas: 
   noticiasIngame:
   - titulo: 
     texto: 
     imagen: {fileID: 0}
-    estadistica: 0
     efectosNoticia:
     - estadistica: 0
       valor: 5
@@ -115,75 +104,61 @@ MonoBehaviour:
   - titulo: 
     texto: 
     imagen: {fileID: 0}
-    estadistica: 0
     efectosNoticia: []
   - titulo: 
     texto: 
     imagen: {fileID: 0}
-    estadistica: 0
     efectosNoticia: []
   - titulo: 
     texto: 
     imagen: {fileID: 0}
-    estadistica: 0
     efectosNoticia: []
   - titulo: 
     texto: 
     imagen: {fileID: 0}
-    estadistica: 0
     efectosNoticia: []
   - titulo: 
     texto: 
     imagen: {fileID: 0}
-    estadistica: 0
     efectosNoticia: []
   - titulo: 
     texto: 
     imagen: {fileID: 0}
-    estadistica: 0
     efectosNoticia: []
   - titulo: 
     texto: 
     imagen: {fileID: 0}
-    estadistica: 0
     efectosNoticia: []
   - titulo: 
     texto: 
     imagen: {fileID: 0}
-    estadistica: 0
     efectosNoticia: []
   - titulo: 
     texto: 
     imagen: {fileID: 0}
-    estadistica: 0
     efectosNoticia: []
   - titulo: 
     texto: 
     imagen: {fileID: 0}
-    estadistica: 0
     efectosNoticia: []
   - titulo: 
     texto: 
     imagen: {fileID: 0}
-    estadistica: 0
     efectosNoticia: []
   - titulo: 
     texto: 
     imagen: {fileID: 0}
-    estadistica: 0
     efectosNoticia: []
   - titulo: 
     texto: 
     imagen: {fileID: 0}
-    estadistica: 0
     efectosNoticia: []
   - titulo: 
     texto: 
     imagen: {fileID: 0}
-    estadistica: 0
     efectosNoticia: []
   - titulo: 
     texto: 
     imagen: {fileID: 0}
-    estadistica: 0
     efectosNoticia: []
+  modificadorSeguidores: 0
