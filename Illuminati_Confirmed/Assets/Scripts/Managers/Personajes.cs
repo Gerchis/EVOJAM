@@ -131,18 +131,30 @@ public class Personajes
 
     public bool VerificarDisponibilidad(PowerupsName pwrNombre)
     {
-        //TODO
-
-        return true;
+        for (int i = 0; i < inventario.Count; i++)
+        {
+            if (pwrNombre == inventario[i].pwrNombreEnum)
+            {
+                return true;
+            }
+        }
         return false;
     }
 
     public void ConsumirPowerup(PowerupsName pwrNombre)
     {
-        //TODO cantidad--
-        //quitar lista....
+        for (int i = 0; i < inventario.Count; i++)
+        {
+            if (pwrNombre == inventario[i].pwrNombreEnum)
+            {
+                inventario[i].cantidad--;
 
-        
+                if (inventario[i].cantidad <= 0)
+                {
+                    inventario.RemoveAt(i);
+                }
+            }
+        }
     }
 
 
