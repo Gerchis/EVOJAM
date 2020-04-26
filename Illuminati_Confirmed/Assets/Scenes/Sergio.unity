@@ -6486,7 +6486,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0.000061035156, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: -768, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1113417700
@@ -12083,6 +12083,72 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1943399984}
   m_CullTransparentMesh: 0
+--- !u!1 &1967644883
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1967644885}
+  - component: {fileID: 1967644884}
+  m_Layer: 0
+  m_Name: CanvasManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1967644884
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1967644883}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b055dfe01dccb7546899b5b4f233f3d1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  iconosEfectos:
+  - {fileID: 21300000, guid: bf09d6ceb2d8bb3478e832e404e22dd6, type: 3}
+  - {fileID: 21300000, guid: e9e6e0fc46d8a204da52bca6fec8a14f, type: 3}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  titulosMisionesSeleccionadas: []
+  IconosMision2:
+  - {fileID: 1296199871}
+  - {fileID: 499048479}
+  - {fileID: 1463217829}
+  IconosMision1:
+  - {fileID: 1623431820}
+  - {fileID: 1349024475}
+  - {fileID: 297754502}
+  IconosMision0:
+  - {fileID: 78619476}
+  - {fileID: 677093009}
+  - {fileID: 1547450027}
+--- !u!4 &1967644885
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1967644883}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 2.4516206, y: 0.83942664, z: 986.14453}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1982077649
 GameObject:
   m_ObjectHideFlags: 0
