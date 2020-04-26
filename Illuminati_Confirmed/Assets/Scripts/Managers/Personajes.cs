@@ -17,6 +17,7 @@ public class Personajes
         apoyos = _apoyos;
         seguidores = _seguidores;
         ia = _ia;
+        personajeInvestigado = false;
 
         switch (_rol)
         {
@@ -99,12 +100,24 @@ public class Personajes
 
     }
 
-    //ATRIBUTOS
+    //ATRIBUTOS GENERALES
     public Image avatar;
     RolSecreto rol;
     //Revisar orden de afinidades en GameManager > public enum Estadisticas;
     bool[] afinidadesEstadisticas;
+
+    public bool[] getAfinidadesEstadisticas()
+    {
+        return afinidadesEstadisticas;
+    }
+
+
+    //ATRIBUTOS GENERALES IA
     bool ia;
+    bool personajeInvestigado;
+
+    public bool getPersonajeInvestigado() { return personajeInvestigado; }
+    public void setPersonajeInvestigado(bool _b) { personajeInvestigado = _b; }
 
     //RECURSOS
     int seguidores;
@@ -115,6 +128,22 @@ public class Personajes
 
     GameManager gm = GameObject.Find("GameManager").GetComponent<GameManager>();
     public Powerups[] inventario;
+
+    public bool VerificarDisponibilidad(PowerupsName pwrNombre)
+    {
+        //TODO
+
+        return true;
+        return false;
+    }
+
+    public void ConsumirPowerup(PowerupsName pwrNombre)
+    {
+        //TODO cantidad--
+        //quitar lista....
+
+        
+    }
 
 
     public bool powerupActivo(PowerupsName pwrNombre, int _value)
@@ -177,6 +206,11 @@ public class Personajes
         {
             return (Random.Range(0, 2) == 1);
         }
+    }
+
+    public int getApoyosRAW()
+    {
+        return apoyos;
     }
 
     public int getApoyos()

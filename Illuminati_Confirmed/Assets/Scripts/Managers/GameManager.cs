@@ -30,8 +30,8 @@ public enum PowerupsName
 {
     CENSURA,
     PUBLICIDAD,
-    REVELAR,
-    ESPIA,
+    INVESTIGADO,
+    AVERIGUAR_VOTO,
     TOTAL_POWERUPSNAME
 }
 
@@ -129,6 +129,21 @@ public class GameManager : MonoBehaviour
     public Misiones[] misionesIngame;
 
     public int[] idMisionesSeleccionadas; //Tamaño 3, las 3 misiones que pueden salir. Guardamos el ID de la mision.
+
+    public void initMisiones()
+    {
+        //Seleccionamos Misiones que se jugarán
+        seleccionarMisiones();
+        
+        //Asignamos IA a las Misiones
+        asignarPosiciones();
+
+        //Precalculamos el resultado de las Misiones.
+        for (int i = 0; i < maxMisionesJugables; i++)
+        {
+            misionesIngame[idMisionesSeleccionadas[i]].precalcularResultadoFinal();
+        }
+    }
 
     void seleccionarMisiones()
     {

@@ -24,15 +24,10 @@ public class Misiones
         return resultado;
     }
     
-    public void InitMisiones()
+    public void precalcularResultadoFinal()
     {    
-        
         for (int i = 0; i < listaPersonajes.Count; i++)
         {
-            //TODO: Generar el canvas de la ficha(afinidades, cantidad de apoyos y voto)
-
-            //Precalculamos el resultado antes de que vote el jugador
-
             resultado += listaPersonajes[i].getApoyos();         
         }
     }
@@ -47,5 +42,7 @@ public class Misiones
     public List<Personajes> listaPersonajes;
     int resultado;
     public bool misionJugada;
-    public bool jugadorEnMision;
+    bool jugadorEnMision;
+
+    public void setJugadorEnMision(bool _b) { jugadorEnMision = _b; }
 }
