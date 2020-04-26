@@ -131,29 +131,41 @@ public class Personajes
 
     public bool VerificarDisponibilidad(PowerupsName pwrNombre)
     {
-        //TODO
-
-        return true;
+        for (int i = 0; i < inventario.Count; i++)
+        {
+            if (pwrNombre == inventario[i].pwrNombreEnum)
+            {
+                return true;
+            }
+        }
         return false;
     }
 
     public void ConsumirPowerup(PowerupsName pwrNombre)
     {
-        //TODO cantidad--
-        //quitar lista....
+        for (int i = 0; i < inventario.Count; i++)
+        {
+            if (pwrNombre == inventario[i].pwrNombreEnum)
+            {
+                inventario[i].cantidad--;
 
-        
+                if (inventario[i].cantidad <= 0)
+                {
+                    inventario.RemoveAt(i);
+                }
+            }
+        }
     }
 
 
-    public bool powerupActivo(PowerupsName pwrNombre, int _value)
+    public bool powerupActivo(PowerupsName pwrNombre, int _noticiaAfectada)
     {
         for (int k = 0; k<gm.jugador.inventario.Count; k++)
         {
-            if (gm.jugador.inventario[k].pwrNombreEnum == pwrNombre && gm.jugador.inventario[k].value == _value)
+            if (gm.jugador.inventario[k].pwrNombreEnum == pwrNombre && gm.jugador.inventario[k].noticiaAfectada == _noticiaAfectada)
             {
                 //Desactivamos powerup
-                gm.jugador.inventario[k].value = -1;
+                gm.jugador.inventario[k].noticiaAfectada = -1;
       
                 return true;
             }
