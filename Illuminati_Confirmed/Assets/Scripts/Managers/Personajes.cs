@@ -120,14 +120,14 @@ public class Personajes
     public void setPersonajeInvestigado(bool _b) { personajeInvestigado = _b; }
 
     //RECURSOS
-    int seguidores;
-    int apoyos;
-    int influencia;
+    public int seguidores;
+    public int apoyos;
+    public int influencia;
 
     //POWERUPS
 
     GameManager gm = GameObject.Find("GameManager").GetComponent<GameManager>();
-    public Powerups[] inventario;
+    public List<Powerups> inventario;
 
     public bool VerificarDisponibilidad(PowerupsName pwrNombre)
     {

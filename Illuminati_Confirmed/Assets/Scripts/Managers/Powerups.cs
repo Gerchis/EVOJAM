@@ -17,4 +17,5 @@ public class Powerups : InterfaceEffector
     public string nombre;
     public string descripcion;
     public int value;
+    public int cantidad;
 }
