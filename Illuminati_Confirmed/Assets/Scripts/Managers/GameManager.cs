@@ -220,8 +220,10 @@ public class GameManager : MonoBehaviour
         //Si el resultado de la votacion es favorable a los intereses gana seguidores
     }
 
-    public void BuyPowerUp(Powerups _pw)
+    public void BuyPowerUp(PowerupsName _pw)
     {
+
+
         if (_pw.precio <= jugador.influencia)
         {
             for (int i = 0; i < jugador.inventario.Count; i++)
