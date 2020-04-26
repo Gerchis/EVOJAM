@@ -8,7 +8,9 @@ public class CanvasManager : MonoBehaviour
 {
 
     /*index
+     * ###################
      * VARIABLES GENERALES
+     * ###################
      */
 
     GameManager gm = GameObject.Find("GameManager").GetComponent<GameManager>();
@@ -22,7 +24,9 @@ public class CanvasManager : MonoBehaviour
 
 
     /*index
+     * ###################
      * CANVAS ESTATICO: INVENTARIO
+     * ###################
      */
 
     Button pwrCensura;
@@ -34,14 +38,16 @@ public class CanvasManager : MonoBehaviour
 
 
     /*index
+     * ###################
      * CANVAS ESTATICO: INVOLUCION
+     * ###################
      */
     //Slider principal.
     Slider sliderSociedad;
     Slider sliderEconomia;
     Slider sliderDesarrollo;
     Slider sliderInvolucion;
-    
+
     //Sliders complementarios para displayar progreso jugador en un efecto.
     Slider sliderSociedadPositivo;
     Slider sliderSociedadNegativo;
@@ -106,13 +112,11 @@ public class CanvasManager : MonoBehaviour
         setSlidersComplementario(previoDesarrollo, gm.desarrolloActual, Estadisticas.TOTAL_ESTADISTICAS);
     }
 
-    void setSlidersComplementario (int previo, int actual, Estadisticas efecto)
+    void setSlidersComplementario(int previo, int actual, Estadisticas efecto)
     {
-        int valorSliderPositivo=0;
-        int valorSliderNegativo=0;
-        int valorSlider=0;
-
-        //PREVIO 45 actual 50
+        int valorSliderPositivo = 0;
+        int valorSliderNegativo = 0;
+        int valorSlider = 0;
 
         if (previo < actual) // Efecto aumenta
         {
@@ -170,7 +174,7 @@ public class CanvasManager : MonoBehaviour
         //i = noticia
         for (int i = 0; i < gm.maxMisionesJugables; i++)
         {
-            
+
             //j = efecto
             for (int j = 0; j < gm.maxMisionesJugables; j++)
             {
@@ -182,9 +186,9 @@ public class CanvasManager : MonoBehaviour
                 }
 
                 modificacionValores[i][j] = gm.noticiasIngame[gm.idMisionesSeleccionadas[i]].efectosNoticia[j].valor;
-                
+
                 //Si es última iteración del for(j) AKA ya se ha calculado todos los modificacionValores[i][k] & pwrPublicidad == mision.
-                if (j == gm.maxMisionesJugables-1 && gm.jugador.powerupActivo(PowerupsName.PUBLICIDAD, i))
+                if (j == gm.maxMisionesJugables - 1 && gm.jugador.powerupActivo(PowerupsName.PUBLICIDAD, i))
                 {
                     //Aplicamos efecto del powerup
                     for (int k = 0; k < gm.maxMisionesJugables; k++)
@@ -193,16 +197,16 @@ public class CanvasManager : MonoBehaviour
                     }
                 }
             }
-        }       
+        }
 
     }
 
     /*index
+     * ###################
      * CANVAS DINAMICO: MISIONES
+     * ###################
      */
     public TextMeshProUGUI[] titulosMisionesSeleccionadas = new TextMeshProUGUI[3];
-
-    
 
     void setCanvasMisiones()
     {
@@ -213,7 +217,9 @@ public class CanvasManager : MonoBehaviour
     }
 
     /*index
+     * ###################
      * CANVAS DINAMICO: PRENSA
+     * ###################
      */
     TextMeshProUGUI[] titulosNoticias = new TextMeshProUGUI[3];
     TextMeshProUGUI[] textosNoticias = new TextMeshProUGUI[3];
@@ -229,7 +235,20 @@ public class CanvasManager : MonoBehaviour
             titulosNoticias[i].text = gm.noticiasIngame[gm.idMisionesSeleccionadas[i]].titulo;
         }
     }
-    // Start is called before the first frame update
+
+    void AsignarValoresPrensa()
+    {
+
+    }
+
+
+
+    /*index
+    * ###################
+    * FUNCIONES UNITY
+    * ###################
+    */
+
     void Start()
     {
         //Obtenemos referencias de los apartados...
@@ -283,13 +302,4 @@ public class CanvasManager : MonoBehaviour
         parentMisiones.SetActive(false);
     }
 
-    /*
-     ------------------
-     |     PRENSA     |
-     ------------------
-     */
-     void AsignarValoresPrensa()
-    {
-
-    }
 }
