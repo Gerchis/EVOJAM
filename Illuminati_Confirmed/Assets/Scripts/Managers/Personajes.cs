@@ -248,6 +248,11 @@ public class Personajes
         votacion = decidirVoto();
     }
 
+    public bool GetVotacion()
+    {
+        return votacion;
+    }
+
     public void SetVotacion(bool _voto)
     {
         votacion = _voto;

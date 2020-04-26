@@ -22,7 +22,9 @@ public class CanvasManager : MonoBehaviour
     public Sprite[] spritesEconomia;
     public Sprite[] spritesDesarrollo;
 
-        
+    public Sprite[] votaciones;
+
+
     /*index
      * ###################
      * CANVAS ESTATICO: INVENTARIO
@@ -369,6 +371,15 @@ public class CanvasManager : MonoBehaviour
         string id;
         id = "M" + i + "-S" + j + "-Voto";
         GameObject.Find(id).SetActive(true);
+
+        id = "M" + i + "-S" + j + "-VotoIcono";
+        if(gm.misionesIngame[gm.idMisionesSeleccionadas[i]].listaPersonajes[j].GetVotacion())
+        {
+            GameObject.Find(id).GetComponent<Image>().sprite = votaciones[1];
+        } else
+        {
+            GameObject.Find(id).GetComponent<Image>().sprite = votaciones[0];
+        }
 
         id = "M" + i + "-S" + j + "-pwrVoto";
         GameObject.Find(id).SetActive(false);
