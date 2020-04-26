@@ -18,11 +18,8 @@ public class CanvasManager : MonoBehaviour
     GameObject parentTienda;
     GameObject parentMisiones;
 
-    Image IconoSociedad;
-    Image IconoEconomia;
-    Image IconoDesarrollo;
 
-
+        
     /*index
      * ###################
      * CANVAS ESTATICO: INVENTARIO
@@ -42,6 +39,8 @@ public class CanvasManager : MonoBehaviour
      * CANVAS ESTATICO: INVOLUCION
      * ###################
      */
+
+    #region INVOLUCION
     //Slider principal.
     Slider sliderSociedad;
     Slider sliderEconomia;
@@ -201,20 +200,89 @@ public class CanvasManager : MonoBehaviour
 
     }
 
+    #endregion
     /*index
      * ###################
      * CANVAS DINAMICO: MISIONES
      * ###################
      */
-    public TextMeshProUGUI[] titulosMisionesSeleccionadas = new TextMeshProUGUI[3];
+    TextMeshProUGUI[] titulosMisionesSeleccionadas = new TextMeshProUGUI[3];    
+    Image[] iconosM2 = new Image[3];
+    Image[] iconosM1 = new Image[3];
+    Image[] iconosM0 = new Image[3];
 
-    void setCanvasMisiones()
-    {
+    
+    public void setCanvasMisiones()
+    {      
+        //Para cada mision en pantalla
         for (int i = 0; i < gm.maxMisionesJugables; i++)
         {
+            //Variables locales
+            
+
+            //Mostramos/ocultamos los iconos relevantes de la misión
+            switch (i)
+            {
+                case 0:
+                setActiveIconosMision(iconosM0, getEfectoPrincipal(i));
+                break;
+                case 1:
+                setActiveIconosMision(iconosM1, getEfectoPrincipal(i));
+                break;
+                case 2:
+                setActiveIconosMision(iconosM2, getEfectoPrincipal(i));
+                break;
+            }
+                  
+            //Seteamos los titulos
             titulosMisionesSeleccionadas[i].text = gm.misionesIngame[gm.idMisionesSeleccionadas[i]].titulo;
         }
     }
+
+    void setActiveIconosMision(Image[] iconos, Estadisticas efectoPrincipal)
+    {
+        switch (efectoPrincipal)
+        {
+            case Estadisticas.SOCIEDAD:
+                iconos[0].enabled = true;
+                iconos[1].enabled = false;
+                iconos[2].enabled = false;
+            break;
+
+            case Estadisticas.ECONOMIA:
+                iconos[0].enabled = false;
+                iconos[1].enabled = true;
+                iconos[2].enabled = false;
+            break;
+
+            case Estadisticas.DESARROLLO:
+                iconos[0].enabled = false;
+                iconos[1].enabled = false;
+                iconos[2].enabled = true;
+            break;
+        }   
+    }
+
+    Estadisticas getEfectoPrincipal(int i)
+    {
+        int valorMin = 0;
+        Estadisticas topEfecto = Estadisticas.TOTAL_ESTADISTICAS;
+
+        for (int j = 0; j < gm.maxMisionesJugables; j++)
+        {
+            int num = gm.noticiasIngame[gm.idMisionesSeleccionadas[i]].efectosNoticia[j].valor;
+
+            if ( num < valorMin)
+            {
+                valorMin = num;
+                topEfecto = gm.noticiasIngame[gm.idMisionesSeleccionadas[i]].efectosNoticia[j].estadistica;
+            }
+        }
+        
+        return topEfecto;
+    }
+
+    
 
     /*index
      * ###################
@@ -251,12 +319,17 @@ public class CanvasManager : MonoBehaviour
 
     void Start()
     {
-        //Obtenemos referencias de los apartados...
+        // -----------------
+        // |    GENERAL    |
+        // -----------------
         parentPrensa = GameObject.Find("parentPrensa");
         parentTienda = GameObject.Find("parentTienda");
         parentMisiones = GameObject.Find("parentMisiones");
 
-        //Obtenemos referencias del Canvas Prensa...
+        // ----------------
+        // |    PRENSA    |
+        // ----------------
+        //Referencas del Canvas Prensa...
         titulosNoticias[0] = GameObject.Find("N1-Titular").GetComponent<TextMeshProUGUI>();
         titulosNoticias[1] = GameObject.Find("N2-Titular").GetComponent<TextMeshProUGUI>();
         titulosNoticias[2] = GameObject.Find("N3-Titular").GetComponent<TextMeshProUGUI>();
@@ -296,10 +369,39 @@ public class CanvasManager : MonoBehaviour
         pwrEspia = GameObject.Find("pwrEspia").GetComponent<Button>();
 
 
+        // ------------------
+        // |    MISIONES    |
+        // ------------------
+
+        titulosMisionesSeleccionadas[0] = GameObject.Find("M0-Titulo").GetComponent<TextMeshProUGUI>();
+        titulosMisionesSeleccionadas[1] = GameObject.Find("M1-Titulo").GetComponent<TextMeshProUGUI>();
+        titulosMisionesSeleccionadas[2] = GameObject.Find("M2-Titulo").GetComponent<TextMeshProUGUI>();
+
+        iconosM0[0] = GameObject.Find("M0-SociedadIcono").GetComponent<Image>();
+        iconosM0[1] = GameObject.Find("M0-EconomiaIcono").GetComponent<Image>();
+        iconosM0[2] = GameObject.Find("M0-DesarrolloIcono").GetComponent<Image>();
+
+        iconosM1[0] = GameObject.Find("M0-SociedadIcono").GetComponent<Image>();
+        iconosM1[1] = GameObject.Find("M0-EconomiaIcono").GetComponent<Image>();
+        iconosM1[2] = GameObject.Find("M0-DesarrolloIcono").GetComponent<Image>();
+
+        iconosM2[0] = GameObject.Find("M0-SociedadIcono").GetComponent<Image>();
+        iconosM2[1] = GameObject.Find("M0-EconomiaIcono").GetComponent<Image>();
+        iconosM2[2] = GameObject.Find("M0-DesarrolloIcono").GetComponent<Image>();
+
+        // -----------------
+        // |    GENERAL    |
+        // -----------------
+
         //Desactivamos parents...
         parentPrensa.SetActive(false);
         parentTienda.SetActive(false);
         parentMisiones.SetActive(false);
+
+
+
+
+
     }
 
 }
