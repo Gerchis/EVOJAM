@@ -146,14 +146,14 @@ public class Personajes
     }
 
 
-    public bool powerupActivo(PowerupsName pwrNombre, int _value)
+    public bool powerupActivo(PowerupsName pwrNombre, int _noticiaAfectada)
     {
         for (int k = 0; k<gm.jugador.inventario.Count; k++)
         {
-            if (gm.jugador.inventario[k].pwrNombreEnum == pwrNombre && gm.jugador.inventario[k].value == _value)
+            if (gm.jugador.inventario[k].pwrNombreEnum == pwrNombre && gm.jugador.inventario[k].noticiaAfectada == _noticiaAfectada)
             {
                 //Desactivamos powerup
-                gm.jugador.inventario[k].value = -1;
+                gm.jugador.inventario[k].noticiaAfectada = -1;
       
                 return true;
             }
