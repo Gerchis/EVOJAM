@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-
 [System.Serializable]
 public class Powerups : InterfaceEffector
 {
@@ -12,5 +11,10 @@ public class Powerups : InterfaceEffector
     {
 
     }
-    
+
+    public int precio;
+    public PowerupsName pwrNombreEnum;
+    public string nombre;
+    public string descripcion;
+    public int value;
 }

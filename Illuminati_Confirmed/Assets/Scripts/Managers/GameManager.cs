@@ -26,12 +26,13 @@ public enum RolSecreto
     TOTAL_ROLES
 }
 
-public struct Powerups
+public enum PowerupsName
 {
-    public bool pwrCensura;
-    public bool pwrPublicidad;
-    public bool pwrRevelar;
-    public bool pwrEspia;
+    CENSURA,
+    PUBLICIDAD,
+    REVELAR,
+    ESPIA,
+    TOTAL_POWERUPSNAME
 }
 
 
@@ -98,25 +99,18 @@ public class GameManager : MonoBehaviour
      */
 
     [Header("EstadisticasDeJuego")]
-    [Range(0, 100)]
+    
     public int sociedadActual;
-    [Range(0, 100)]
     public int economiaActual;
-    [Range(0, 100)]
     public int desarrolloActual;
     [Space(10)]
-    [Range(0, 100)]
     public int sociedadObjetivo;
-    [Range(0, 100)]
     public int economiaObjetivo;
-    [Range(0, 100)]
     public int desarrolloObjetivo;  
     [Space(10)]
-    [Range(0, 100)]
     public int involucionActual;
-    [Range(0, 100)]
     public int involucionObjectivo;
-
+    
     int turnActual;
     int turnMax;
 

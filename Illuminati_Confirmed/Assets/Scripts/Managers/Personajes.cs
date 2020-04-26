@@ -17,56 +17,79 @@ public class Personajes
         apoyos = _apoyos;
         seguidores = _seguidores;
         ia = _ia;
-        
+
         switch (_rol)
         {
             case RolSecreto.COMUNISTA:
-                afinidadesEstadisticas[0] = true;
-                afinidadesEstadisticas[1] = false;
-                afinidadesEstadisticas[2] = false;
+            afinidadesEstadisticas[0] = true;
+            afinidadesEstadisticas[1] = false;
+            afinidadesEstadisticas[2] = false;
             break;
             case RolSecreto.LIBERAL:
-                afinidadesEstadisticas[0] = false;
-                afinidadesEstadisticas[1] = true;
-                afinidadesEstadisticas[2] = false;
-                break;
+            afinidadesEstadisticas[0] = false;
+            afinidadesEstadisticas[1] = true;
+            afinidadesEstadisticas[2] = false;
+            break;
             case RolSecreto.CIENTIFICO:
-                afinidadesEstadisticas[0] = false;
-                afinidadesEstadisticas[1] = false;
-                afinidadesEstadisticas[2] = true;
-                break;
+            afinidadesEstadisticas[0] = false;
+            afinidadesEstadisticas[1] = false;
+            afinidadesEstadisticas[2] = true;
+            break;
             case RolSecreto.EMPRENDEDOR:
-                afinidadesEstadisticas[0] = true;
-                afinidadesEstadisticas[1] = true;
-                afinidadesEstadisticas[2] = false;
-                break;
+            afinidadesEstadisticas[0] = true;
+            afinidadesEstadisticas[1] = true;
+            afinidadesEstadisticas[2] = false;
+            break;
             case RolSecreto.SOCIALISTA:
-                afinidadesEstadisticas[0] = true;
-                afinidadesEstadisticas[1] = false;
-                afinidadesEstadisticas[2] = true;
-                break;
+            afinidadesEstadisticas[0] = true;
+            afinidadesEstadisticas[1] = false;
+            afinidadesEstadisticas[2] = true;
+            break;
             case RolSecreto.CAPITALISTA:
-                afinidadesEstadisticas[0] = false;
-                afinidadesEstadisticas[1] = true;
-                afinidadesEstadisticas[2] = true;
-                break;
+            afinidadesEstadisticas[0] = false;
+            afinidadesEstadisticas[1] = true;
+            afinidadesEstadisticas[2] = true;
+            break;
             case RolSecreto.FILANTROPO:
-                afinidadesEstadisticas[0] = true;
-                afinidadesEstadisticas[1] = true;
-                afinidadesEstadisticas[2] = true;
-                break;
+            afinidadesEstadisticas[0] = true;
+            afinidadesEstadisticas[1] = true;
+            afinidadesEstadisticas[2] = true;
+            break;
             case RolSecreto.CAOTICO:
-                afinidadesEstadisticas[0] = false;
-                afinidadesEstadisticas[1] = false;
-                afinidadesEstadisticas[2] = false;
-                break;
+            afinidadesEstadisticas[0] = false;
+            afinidadesEstadisticas[1] = false;
+            afinidadesEstadisticas[2] = false;
+            break;
         }
 
-        if(!ia)
+        if (!ia)
         {
-            if (afinidadesEstadisticas[0]) { GameManager.Instance.sociedadObjetivo = 33; } else { GameManager.Instance.sociedadObjetivo = -1; }
-            if (afinidadesEstadisticas[1]) { GameManager.Instance.economiaObjetivo = 33; } else { GameManager.Instance.economiaObjetivo = -1; }
-            if (afinidadesEstadisticas[2]) { GameManager.Instance.desarrolloObjetivo = 33; } else { GameManager.Instance.desarrolloObjetivo = -1; }
+            if (afinidadesEstadisticas[0])
+            {
+                GameManager.Instance.sociedadObjetivo = 33;
+                //COLORES slider positivo/negativo
+            }
+            else
+            {
+                GameManager.Instance.sociedadObjetivo = -1;
+            }
+
+            if (afinidadesEstadisticas[1])
+            {
+                GameManager.Instance.economiaObjetivo = 33;
+            }
+            else
+            {
+                GameManager.Instance.economiaObjetivo = -1;
+            }
+
+            if (afinidadesEstadisticas[2])
+            {
+                GameManager.Instance.desarrolloObjetivo = 33;
+            } else
+            {
+                GameManager.Instance.desarrolloObjetivo = -1;
+            }
         }
 
     }
@@ -89,7 +112,27 @@ public class Personajes
     int influencia;
 
     //POWERUPS
-    public Powerups inventario;
+
+    GameManager gm = GameObject.Find("GameManager").GetComponent<GameManager>();
+    public Powerups[] inventario;
+
+
+    public bool powerupActivo(PowerupsName pwrNombre, int _value)
+    {
+        for (int k = 0; k<gm.jugador.inventario.Length; k++)
+        {
+            if (gm.jugador.inventario[k].pwrNombreEnum == pwrNombre && gm.jugador.inventario[k].value == _value)
+            {
+                //Desactivamos powerup
+                gm.jugador.inventario[k].value = -1;
+      
+                return true;
+            }
+        }
+        return false;
+    }
+
+        
 
     //IA
     int misionActual;

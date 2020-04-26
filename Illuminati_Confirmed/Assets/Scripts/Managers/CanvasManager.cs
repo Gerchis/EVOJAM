@@ -62,6 +62,9 @@ public class CanvasManager : MonoBehaviour
         int modificacionEconomia = 0;
         int modificacionDesarrollo = 0;
 
+        //Obtenemos la modificacion de cada mision
+        getModificacionValores();
+
         //Obtenemos la modificación final de los sliders
         for (int i = 0; i < gm.maxMisionesJugables; i++)
         {
@@ -96,7 +99,7 @@ public class CanvasManager : MonoBehaviour
         setSlidersComplementario(previoSociedad, gm.sociedadActual, Estadisticas.SOCIEDAD);
         setSlidersComplementario(previoEconomia, gm.economiaActual, Estadisticas.ECONOMIA);
         setSlidersComplementario(previoDesarrollo, gm.desarrolloActual, Estadisticas.DESARROLLO);
-        setSlidersComplementario(previoDesarrollo, gm.desarrolloActual, Estadisticas.DESARROLLO);
+        setSlidersComplementario(previoDesarrollo, gm.desarrolloActual, Estadisticas.TOTAL_ESTADISTICAS);
     }
 
     void setSlidersComplementario (int previo, int actual, Estadisticas efecto)
@@ -105,12 +108,14 @@ public class CanvasManager : MonoBehaviour
         int valorSliderNegativo=0;
         int valorSlider=0;
 
+        //PREVIO 45 actual 50
+
         if (previo < actual) // Efecto aumenta
         {
             valorSliderPositivo = actual;
             valorSlider = previo;
         }
-        else if (previo < actual) // Efecto disminuye
+        else if (previo > actual) // Efecto disminuye
         {
             valorSliderNegativo = previo;
             valorSlider = actual;
@@ -165,25 +170,23 @@ public class CanvasManager : MonoBehaviour
             //j = efecto
             for (int j = 0; j < gm.maxMisionesJugables; j++)
             {
-                if (pwrCensura == i)
+                if (gm.jugador.powerupActivo(PowerupsName.CENSURA, i))
                 {
-                    //Desactivamos powerup
-                    pwrCensura = -1;
-                    
-                    //Nos saltamos asignación de efectos, by default, esta misión aportará 0.
+                    //Aplicamos efecto del powerup
                     j = gm.maxMisionesJugables;
                     continue;
                 }
+
                 modificacionValores[i][j] = gm.noticiasIngame[gm.idMisionesSeleccionadas[i]].efectosNoticia[j].valor;
+                
                 //Si es última iteración del for(j) AKA ya se ha calculado todos los modificacionValores[i][k] & pwrPublicidad == mision.
-                if (j == gm.maxMisionesJugables-1 && pwrPublicidad == i )
+                if (j == gm.maxMisionesJugables-1 && gm.jugador.powerupActivo(PowerupsName.PUBLICIDAD, i))
                 {
                     //Aplicamos efecto del powerup
                     for (int k = 0; k < gm.maxMisionesJugables; k++)
                     {
                         modificacionValores[i][k] *= 2;
                     }
-                    pwrPublicidad = -1; //Desactivamos powerup
                 }
             }
         }       
