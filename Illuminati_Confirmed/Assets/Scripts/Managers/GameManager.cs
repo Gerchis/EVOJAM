@@ -56,6 +56,8 @@ public class GameManager : MonoBehaviour
     int apoyos;
     int seguidores;
 
+    public int[] precios;
+
     void InitGame()
     {
         sociedadActual = Random.Range(80, 101);
@@ -224,20 +226,26 @@ public class GameManager : MonoBehaviour
     {
 
 
-        if (_pw.precio <= jugador.influencia)
+        if (precios[(int)_pw] <= jugador.influencia)
         {
             for (int i = 0; i < jugador.inventario.Count; i++)
             {
-                if (jugador.inventario[i].pwrNombreEnum == _pw.pwrNombreEnum)
+                if (jugador.inventario[i].pwrNombreEnum == _pw)
                 {
+                    
                     jugador.inventario[i].cantidad++;
 
                     return;
                 }
             }
 
-            _pw.cantidad = 1;
-            jugador.inventario.Add(_pw);
+            Powerups powerUp = new Powerups();
+
+            powerUp.pwrNombreEnum = _pw;
+
+            powerUp.cantidad = 1;
+
+            jugador.inventario.Add(powerUp);
 
         }
     }
