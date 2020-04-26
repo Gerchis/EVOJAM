@@ -22,6 +22,9 @@ public class CanvasManager : MonoBehaviour
     public Sprite[] spritesEconomia;
     public Sprite[] spritesDesarrollo;
 
+    public TextMeshProUGUI[] preciosPowerUps;
+    public TextMeshProUGUI[] resultados;
+
         
     /*index
      * ###################
@@ -657,6 +660,15 @@ void Start()
         BotonPublicidad[0] = GameObject.Find("N1-BotonPublicidad").GetComponent<Button>();
         BotonPublicidad[0] = GameObject.Find("N1-BotonPublicidad").GetComponent<Button>();
 
+        preciosPowerUps[0] = GameObject.Find("Price 1").GetComponent<TextMeshProUGUI>();
+        preciosPowerUps[1] = GameObject.Find("Price 2").GetComponent<TextMeshProUGUI>();
+        preciosPowerUps[2] = GameObject.Find("Price 3").GetComponent<TextMeshProUGUI>();
+        preciosPowerUps[3] = GameObject.Find("Price 4").GetComponent<TextMeshProUGUI>();
+        preciosPowerUps[4] = GameObject.Find("Price 5").GetComponent<TextMeshProUGUI>();
+        preciosPowerUps[5] = GameObject.Find("Price 6").GetComponent<TextMeshProUGUI>();
+
+        resultados[0] = GameObject.Find("Elementos").GetComponent<TextMeshProUGUI>();
+        resultados[1] = GameObject.Find("Numeros").GetComponent<TextMeshProUGUI>();
 
 
         //Obtenemos referencias de los powerups...
@@ -695,6 +707,17 @@ void Start()
         parentTienda.SetActive(false);
         parentMisiones.SetActive(false);
 
+    }
+
+    public void continueToResult()
+    {
+        for (int i = 0; i < gm.precios.Length; i++)
+        {
+            preciosPowerUps[i].text = gm.precios[i].ToString();
+        }
+
+        resultados[0].text = "Seguidores Ganados\r\nInfluencia Ganada\r\n-----------------------------------------\r\nTOTAL";
+        resultados[1].text = gm.modificadorSeguidores.ToString() + "\r\n" + gm.jugador.seguidores.ToString() + "\r\n-----------------------------------------\r\n" + gm.jugador.influencia.ToString();
     }
 
     void verificarPowerUp(PowerupsName _name)
