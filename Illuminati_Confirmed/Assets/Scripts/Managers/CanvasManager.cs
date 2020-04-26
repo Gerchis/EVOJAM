@@ -18,9 +18,9 @@ public class CanvasManager : MonoBehaviour
     GameObject parentTienda;
     GameObject parentMisiones;
 
-    Image IconoSociedad;
-    Image IconoEconomia;
-    Image IconoDesarrollo;
+    Image[] IconoSociedad;
+    Image[] IconoEconomia;
+    Image[] IconoDesarrollo;
 
 
     /*index
@@ -233,15 +233,22 @@ public class CanvasManager : MonoBehaviour
         for (int i = 0; i < gm.maxMisionesJugables; i++)
         {
             titulosNoticias[i].text = gm.noticiasIngame[gm.idMisionesSeleccionadas[i]].titulo;
+            textosNoticias[i].text = gm.noticiasIngame[gm.idMisionesSeleccionadas[i]].texto;
+
         }
+        ObtenerResultados();
     }
 
-    void AsignarValoresPrensa()
+    void ObtenerResultados()
     {
-
+        for (int i = 0; i <3; i++)
+        {
+            efectoSociedad[i] = gm.noticiasIngame[gm.idMisionesSeleccionadas[i]].efectosNoticia[0].valor.ToString();
+            efectoEconomia[i] = gm.noticiasIngame[gm.idMisionesSeleccionadas[i]].efectosNoticia[1].valor.ToString();
+            efectoDesarrollo[i] = gm.noticiasIngame[gm.idMisionesSeleccionadas[i]].efectosNoticia[2].valor.ToString();
+        }
+        getModificacionValores();
     }
-
-
 
     /*index
     * ###################
@@ -285,12 +292,20 @@ public class CanvasManager : MonoBehaviour
         efectoDesarrollo[1] = GameObject.Find("N2-EfectoDesarrollo").GetComponent<TextMeshProUGUI>().text;
         efectoDesarrollo[2] = GameObject.Find("N3-EfectoDesarrollo").GetComponent<TextMeshProUGUI>().text;
 
-        IconoSociedad = GameObject.Find("N1-IconoSociedad").GetComponent<Image>();
-        IconoEconomia = GameObject.Find("N1-IconoEconomia").GetComponent<Image>();
-        IconoDesarrollo = GameObject.Find("N1-IconoDesarrollo").GetComponent<Image>();
+        IconoSociedad[0] = GameObject.Find("N1-IconoSociedad").GetComponent<Image>();
+        IconoSociedad[1] = GameObject.Find("N2-IconoSociedad").GetComponent<Image>();
+        IconoSociedad[2] = GameObject.Find("N3-IconoSociedad").GetComponent<Image>();
 
-        //Obtenemos referencias de los powerups...
-        pwrCensura = GameObject.Find("pwrCensura").GetComponent<Button>();
+        IconoEconomia[0] = GameObject.Find("N1-IconoEconomia").GetComponent<Image>();
+        IconoEconomia[1] = GameObject.Find("N2-IconoEconomia").GetComponent<Image>();
+        IconoEconomia[2] = GameObject.Find("N3-IconoEconomia").GetComponent<Image>();
+
+        IconoDesarrollo[0] = GameObject.Find("N1-IconoDesarrollo").GetComponent<Image>();
+        IconoDesarrollo[1] = GameObject.Find("N2-IconoDesarrollo").GetComponent<Image>();
+        IconoDesarrollo[2] = GameObject.Find("N3-IconoDesarrollo").GetComponent<Image>();
+
+    //Obtenemos referencias de los powerups...
+    pwrCensura = GameObject.Find("pwrCensura").GetComponent<Button>();
         pwrPublicidad = GameObject.Find("pwrPublicidad").GetComponent<Button>();
         pwrRevelar = GameObject.Find("pwrRevelar").GetComponent<Button>();
         pwrEspia = GameObject.Find("pwrEspia").GetComponent<Button>();
