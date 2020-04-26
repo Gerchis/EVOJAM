@@ -301,6 +301,8 @@ public class CanvasManager : MonoBehaviour
     Image[] IconoSociedad = new Image[3];
     Image[] IconoEconomia = new Image[3];
     Image[] IconoDesarrollo = new Image[3];
+    Button[] BotonCensura = new Button[3];
+    Button[] BotonPublicidad = new Button[3];
 
     void setCanvasNoticias()
     {
@@ -375,7 +377,17 @@ public class CanvasManager : MonoBehaviour
         IconoDesarrollo[1] = GameObject.Find("N2-IconoDesarrollo").GetComponent<Image>();
         IconoDesarrollo[2] = GameObject.Find("N3-IconoDesarrollo").GetComponent<Image>();
 
-    //Obtenemos referencias de los powerups...
+        BotonCensura[0] = GameObject.Find("N1-BotonCensura").GetComponent<Button>();
+        BotonCensura[1] = GameObject.Find("N1-BotonCensura").GetComponent<Button>();
+        BotonCensura[2] = GameObject.Find("N1-BotonCensura").GetComponent<Button>();
+
+        BotonPublicidad[0] = GameObject.Find("N1-BotonPublicidad").GetComponent<Button>();
+        BotonPublicidad[0] = GameObject.Find("N1-BotonPublicidad").GetComponent<Button>();
+        BotonPublicidad[0] = GameObject.Find("N1-BotonPublicidad").GetComponent<Button>();
+
+
+
+        //Obtenemos referencias de los powerups...
         pwrCensura = GameObject.Find("pwrCensura").GetComponent<Button>();
         pwrPublicidad = GameObject.Find("pwrPublicidad").GetComponent<Button>();
         pwrRevelar = GameObject.Find("pwrRevelar").GetComponent<Button>();
@@ -412,7 +424,7 @@ public class CanvasManager : MonoBehaviour
         parentMisiones.SetActive(false);
 
 
-
+        if(gm)
 
 
     }
