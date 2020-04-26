@@ -62,7 +62,7 @@ public class GameManager : MonoBehaviour
         desarrolloActual = Random.Range(80, 101);
 
         involucionActual = sociedadActual + economiaActual + desarrolloActual;
-        involucionObjectivo = 100;
+        involucionObjectivo = 120; //120 de 300
 
         turnActual = 0;
         turnMax = 12;
@@ -120,13 +120,9 @@ public class GameManager : MonoBehaviour
     int turnActual;
     int turnMax;
 
-    public int calcularInvolucion()
+    public void calcularInvolucion()
     {
-        int num = 0;
-        
-        //TODO: Calcular la involucion;
-
-        return num;
+        involucionActual = sociedadActual + economiaActual + desarrolloActual;
     }
 
 

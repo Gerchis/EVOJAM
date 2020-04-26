@@ -32,6 +32,163 @@ public class CanvasManager : MonoBehaviour
     /*index
      * CANVAS ESTATICO: INVOLUCION
      */
+    //Slider principal.
+    Slider sliderSociedad;
+    Slider sliderEconomia;
+    Slider sliderDesarrollo;
+    Slider sliderInvolucion;
+    
+    //Sliders complementarios para displayar progreso jugador en un efecto.
+    Slider sliderSociedadPositivo;
+    Slider sliderSociedadNegativo;
+    Slider sliderEconomiaPositivo;
+    Slider sliderEconomiaNegativo;
+    Slider sliderDesarrolloPositivo;
+    Slider sliderDesarrolloNegativo;
+    Slider sliderInvolucionPositivo;
+    Slider sliderInvolucionNegativo;
+
+    //Por cada noticia[] > efecto[]
+    int[][] modificacionValores;
+
+    void actualizarSliders()
+    {
+        int previoSociedad;
+        int previoEconomia;
+        int previoDesarrollo;
+        int previoInvolucion;
+
+        int modificacionSociedad = 0;
+        int modificacionEconomia = 0;
+        int modificacionDesarrollo = 0;
+
+        //Obtenemos la modificación final de los sliders
+        for (int i = 0; i < gm.maxMisionesJugables; i++)
+        {
+            modificacionSociedad += modificacionValores[i][0];
+            modificacionEconomia += modificacionValores[i][1];
+            modificacionDesarrollo += modificacionValores[i][2];
+        }
+
+        //Guardamos valor previo de los efectos actuales
+        previoSociedad = gm.sociedadActual;
+        previoEconomia = gm.economiaActual;
+        previoDesarrollo = gm.desarrolloActual;
+        previoInvolucion = gm.involucionActual;
+
+        //Modificamos el valor de los efectos actuales
+        gm.sociedadActual += modificacionSociedad;
+        gm.economiaActual += modificacionEconomia;
+        gm.desarrolloActual += modificacionDesarrollo;
+        gm.calcularInvolucion();
+
+        //Reseteamos a 0 los sliders de Positivo/Negativo
+        sliderSociedadPositivo.value = 0;
+        sliderSociedadNegativo.value = 0;
+        sliderEconomiaPositivo.value = 0;
+        sliderEconomiaNegativo.value = 0;
+        sliderDesarrolloPositivo.value = 0;
+        sliderDesarrolloNegativo.value = 0;
+        sliderInvolucionPositivo.value = 0;
+        sliderInvolucionNegativo.value = 0;
+
+        //Seteamos los sliders complementarios y principal en función de la evolución
+        setSlidersComplementario(previoSociedad, gm.sociedadActual, Estadisticas.SOCIEDAD);
+        setSlidersComplementario(previoEconomia, gm.economiaActual, Estadisticas.ECONOMIA);
+        setSlidersComplementario(previoDesarrollo, gm.desarrolloActual, Estadisticas.DESARROLLO);
+        setSlidersComplementario(previoDesarrollo, gm.desarrolloActual, Estadisticas.DESARROLLO);
+    }
+
+    void setSlidersComplementario (int previo, int actual, Estadisticas efecto)
+    {
+        int valorSliderPositivo=0;
+        int valorSliderNegativo=0;
+        int valorSlider=0;
+
+        if (previo < actual) // Efecto aumenta
+        {
+            valorSliderPositivo = actual;
+            valorSlider = previo;
+        }
+        else if (previo < actual) // Efecto disminuye
+        {
+            valorSliderNegativo = previo;
+            valorSlider = actual;
+        }
+        else //No hay cambios
+        {
+            valorSlider = actual;
+        }
+
+        switch (efecto)
+        {
+            case Estadisticas.SOCIEDAD:
+            sliderSociedadPositivo.value = valorSliderPositivo;
+            sliderSociedadNegativo.value = valorSliderNegativo;
+            sliderSociedad.value = valorSlider;
+            break;
+            case Estadisticas.ECONOMIA:
+            sliderEconomiaPositivo.value = valorSliderPositivo;
+            sliderEconomiaNegativo.value = valorSliderNegativo;
+            sliderEconomia.value = valorSlider;
+            break;
+            case Estadisticas.DESARROLLO:
+            sliderDesarrolloPositivo.value = valorSliderPositivo;
+            sliderDesarrolloNegativo.value = valorSliderNegativo;
+            sliderDesarrollo.value = valorSlider;
+            break;
+            case Estadisticas.TOTAL_ESTADISTICAS: //INVOLUCION
+            sliderInvolucionPositivo.value = valorSliderPositivo;
+            sliderInvolucionNegativo.value = valorSliderNegativo;
+            sliderInvolucion.value = valorSlider;
+            break;
+        }
+    }
+
+    void getModificacionValores()
+    {
+        //Limpiamos contenidos previos
+        for (int i = 0; i < gm.maxMisionesJugables; i++)
+        {
+            for (int j = 0; j < gm.maxMisionesJugables; j++)
+            {
+                modificacionValores[i][j] = 0;
+            }
+        }
+
+
+        //Calculamos nuevos contenidos.
+        //i = noticia
+        for (int i = 0; i < gm.maxMisionesJugables; i++)
+        {
+            
+            //j = efecto
+            for (int j = 0; j < gm.maxMisionesJugables; j++)
+            {
+                if (pwrCensura == i)
+                {
+                    //Desactivamos powerup
+                    pwrCensura = -1;
+                    
+                    //Nos saltamos asignación de efectos, by default, esta misión aportará 0.
+                    j = gm.maxMisionesJugables;
+                    continue;
+                }
+                modificacionValores[i][j] = gm.noticiasIngame[gm.idMisionesSeleccionadas[i]].efectosNoticia[j].valor;
+                //Si es última iteración del for(j) AKA ya se ha calculado todos los modificacionValores[i][k] & pwrPublicidad == mision.
+                if (j == gm.maxMisionesJugables-1 && pwrPublicidad == i )
+                {
+                    //Aplicamos efecto del powerup
+                    for (int k = 0; k < gm.maxMisionesJugables; k++)
+                    {
+                        modificacionValores[i][k] *= 2;
+                    }
+                    pwrPublicidad = -1; //Desactivamos powerup
+                }
+            }
+        }       
+
+    }
 
     /*index
      * CANVAS DINAMICO: MISIONES

@@ -64,9 +64,9 @@ public class Personajes
 
         if(!ia)
         {
-            if (afinidadesEstadisticas[0]) { GameManager.Instance.sociedadActual = 33; } else { GameManager.Instance.sociedadActual = -1; }
-            if (afinidadesEstadisticas[1]) { GameManager.Instance.economiaActual = 33; } else { GameManager.Instance.economiaActual = -1; }
-            if (afinidadesEstadisticas[2]) { GameManager.Instance.desarrolloActual = 33; } else { GameManager.Instance.desarrolloActual = -1; }
+            if (afinidadesEstadisticas[0]) { GameManager.Instance.sociedadObjetivo = 33; } else { GameManager.Instance.sociedadObjetivo = -1; }
+            if (afinidadesEstadisticas[1]) { GameManager.Instance.economiaObjetivo = 33; } else { GameManager.Instance.economiaObjetivo = -1; }
+            if (afinidadesEstadisticas[2]) { GameManager.Instance.desarrolloObjetivo = 33; } else { GameManager.Instance.desarrolloObjetivo = -1; }
         }
 
     }
