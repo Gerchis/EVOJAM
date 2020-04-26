@@ -164,49 +164,121 @@ MonoBehaviour:
   - titulo: 
     texto: 
     imagen: {fileID: 0}
-    efectosNoticia: []
+    efectosNoticia:
+    - estadistica: 0
+      valor: -10
+    - estadistica: 1
+      valor: -15
+    - estadistica: 2
+      valor: -10
   - titulo: 
     texto: 
     imagen: {fileID: 0}
-    efectosNoticia: []
+    efectosNoticia:
+    - estadistica: 0
+      valor: -10
+    - estadistica: 1
+      valor: -20
+    - estadistica: 2
+      valor: 10
   - titulo: 
     texto: 
     imagen: {fileID: 0}
-    efectosNoticia: []
+    efectosNoticia:
+    - estadistica: 0
+      valor: -10
+    - estadistica: 1
+      valor: 10
+    - estadistica: 2
+      valor: -10
   - titulo: 
     texto: 
     imagen: {fileID: 0}
-    efectosNoticia: []
+    efectosNoticia:
+    - estadistica: 0
+      valor: -5
+    - estadistica: 1
+      valor: 5
+    - estadistica: 2
+      valor: -15
   - titulo: 
     texto: 
     imagen: {fileID: 0}
-    efectosNoticia: []
+    efectosNoticia:
+    - estadistica: 0
+      valor: -5
+    - estadistica: 1
+      valor: 0
+    - estadistica: 2
+      valor: 0
   - titulo: 
     texto: 
     imagen: {fileID: 0}
-    efectosNoticia: []
+    efectosNoticia:
+    - estadistica: 0
+      valor: 0
+    - estadistica: 1
+      valor: -10
+    - estadistica: 2
+      valor: -15
   - titulo: 
     texto: 
     imagen: {fileID: 0}
-    efectosNoticia: []
+    efectosNoticia:
+    - estadistica: 0
+      valor: 5
+    - estadistica: 1
+      valor: -10
+    - estadistica: 2
+      valor: -15
   - titulo: 
     texto: 
     imagen: {fileID: 0}
-    efectosNoticia: []
+    efectosNoticia:
+    - estadistica: 0
+      valor: 5
+    - estadistica: 1
+      valor: -20
+    - estadistica: 2
+      valor: 20
   - titulo: 
     texto: 
     imagen: {fileID: 0}
-    efectosNoticia: []
+    efectosNoticia:
+    - estadistica: 0
+      valor: 10
+    - estadistica: 1
+      valor: -5
+    - estadistica: 2
+      valor: -5
   - titulo: 
     texto: 
     imagen: {fileID: 0}
-    efectosNoticia: []
+    efectosNoticia:
+    - estadistica: 0
+      valor: 10
+    - estadistica: 1
+      valor: -10
+    - estadistica: 2
+      valor: -10
   - titulo: 
     texto: 
     imagen: {fileID: 0}
-    efectosNoticia: []
+    efectosNoticia:
+    - estadistica: 0
+      valor: 15
+    - estadistica: 1
+      valor: -15
+    - estadistica: 2
+      valor: 10
   - titulo: 
     texto: 
     imagen: {fileID: 0}
-    efectosNoticia: []
-  modificadorSeguidores: 0
+    efectosNoticia:
+    - estadistica: 0
+      valor: 20
+    - estadistica: 1
+      valor: -15
+    - estadistica: 2
+      valor: 15
+  modificadorSeguidores: 1

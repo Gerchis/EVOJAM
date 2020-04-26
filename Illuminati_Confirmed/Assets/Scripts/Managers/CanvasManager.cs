@@ -23,13 +23,13 @@ public class CanvasManager : MonoBehaviour
     public Sprite[] spritesDesarrollo;
 
     public Sprite[] spriteVotaciones;
-    public Sprite spriteLocation; 
+    public Sprite spriteLocation;
 
 
     public TextMeshProUGUI[] preciosPowerUps;
     public TextMeshProUGUI[] resultados;
 
-        
+
     /*index
      * ###################
      * CANVAS ESTATICO: INVENTARIO
@@ -649,10 +649,6 @@ void Start()
         textosNoticias[1] = GameObject.Find("N2-Text").GetComponent<TextMeshProUGUI>();
         textosNoticias[2] = GameObject.Find("N3-Text").GetComponent<TextMeshProUGUI>();
 
-        imagenesNoticias[0] = GameObject.Find("N1-Imagen").GetComponent<TextMeshProUGUI>();
-        imagenesNoticias[1] = GameObject.Find("N2-Imagen").GetComponent<TextMeshProUGUI>();
-        imagenesNoticias[2] = GameObject.Find("N3-Imagen").GetComponent<TextMeshProUGUI>();
-
         efectoSociedad[0] = GameObject.Find("N1-EfectoSociedad").GetComponent<TextMeshProUGUI>().text;
         efectoSociedad[1] = GameObject.Find("N2-EfectoSociedad").GetComponent<TextMeshProUGUI>().text;
         efectoSociedad[2] = GameObject.Find("N3-EfectoSociedad").GetComponent<TextMeshProUGUI>().text;
@@ -690,12 +686,14 @@ void Start()
         ImagenNoticia[1] = GameObject.Find("N2-Imagen").GetComponent<Image>();
         ImagenNoticia[2] = GameObject.Find("N3-Imagen").GetComponent<Image>();
 
+        preciosPowerUps = new TextMeshProUGUI[6];
         preciosPowerUps[0] = GameObject.Find("Price 1").GetComponent<TextMeshProUGUI>();
         preciosPowerUps[1] = GameObject.Find("Price 2").GetComponent<TextMeshProUGUI>();
         preciosPowerUps[2] = GameObject.Find("Price 3").GetComponent<TextMeshProUGUI>();
         preciosPowerUps[3] = GameObject.Find("Price 4").GetComponent<TextMeshProUGUI>();
         preciosPowerUps[4] = GameObject.Find("Price 5").GetComponent<TextMeshProUGUI>();
         preciosPowerUps[5] = GameObject.Find("Price 6").GetComponent<TextMeshProUGUI>();
+
         BotonCensura[0] = GameObject.Find("N1-BotonCensurar").GetComponent<Button>();
         BotonCensura[1] = GameObject.Find("N2-BotonCensurar").GetComponent<Button>();
         BotonCensura[2] = GameObject.Find("N3-BotonCensurar").GetComponent<Button>();
@@ -704,6 +702,8 @@ void Start()
         BotonPublicidad[0] = GameObject.Find("N2-BotonPublicitar").GetComponent<Button>();
         BotonPublicidad[0] = GameObject.Find("N3-BotonPublicitar").GetComponent<Button>();
 
+
+        resultados = new TextMeshProUGUI[2];
         resultados[0] = GameObject.Find("Elementos").GetComponent<TextMeshProUGUI>();
         resultados[1] = GameObject.Find("Numeros").GetComponent<TextMeshProUGUI>();
 

@@ -193,14 +193,6 @@ public class Personajes
 
         for (int i = 0; i < (int)Estadisticas.TOTAL_ESTADISTICAS; i++)
         {
-            Debug.Log("noticiasIngame.Length: "+ GameManager.Instance.noticiasIngame.Length);
-            Debug.Log("misionActual: " + misionActual);
-            Debug.Log("noticiasIngame[misionActual]: " + GameManager.Instance.noticiasIngame[misionActual]);
-            
-            Debug.Log("i: " + i);
-            Debug.Log("GameManager.Instance.noticiasIngame[misionActual].efectosNoticia[i]: " + GameManager.Instance.noticiasIngame[misionActual].efectosNoticia[i]);
-            Debug.Log("GameManager.Instance.noticiasIngame[misionActual].efectosNoticia[i].valor: " + GameManager.Instance.noticiasIngame[misionActual].efectosNoticia[i].valor);
-
             int valorEstadistica = GameManager.Instance.noticiasIngame[misionActual].efectosNoticia[i].valor;
 
             if (afinidadesEstadisticas[i])
