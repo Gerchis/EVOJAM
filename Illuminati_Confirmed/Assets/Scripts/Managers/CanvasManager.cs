@@ -16,6 +16,10 @@ public class CanvasManager : MonoBehaviour
     GameObject parentTienda;
     GameObject parentMisiones;
 
+    Image IconoSociedad;
+    Image IconoEconomia;
+    Image IconoDesarrollo;
+
 
     /*index
      * CANVAS ESTATICO: INVENTARIO
@@ -262,6 +266,10 @@ public class CanvasManager : MonoBehaviour
         efectoDesarrollo[1] = GameObject.Find("N2-EfectoDesarrollo").GetComponent<TextMeshProUGUI>().text;
         efectoDesarrollo[2] = GameObject.Find("N3-EfectoDesarrollo").GetComponent<TextMeshProUGUI>().text;
 
+        IconoSociedad = GameObject.Find("N1-IconoSociedad").GetComponent<Image>();
+        IconoEconomia = GameObject.Find("N1-IconoEconomia").GetComponent<Image>();
+        IconoDesarrollo = GameObject.Find("N1-IconoDesarrollo").GetComponent<Image>();
+
         //Obtenemos referencias de los powerups...
         pwrCensura = GameObject.Find("pwrCensura").GetComponent<Button>();
         pwrPublicidad = GameObject.Find("pwrPublicidad").GetComponent<Button>();
@@ -273,5 +281,15 @@ public class CanvasManager : MonoBehaviour
         parentPrensa.SetActive(false);
         parentTienda.SetActive(false);
         parentMisiones.SetActive(false);
+    }
+
+    /*
+     ------------------
+     |     PRENSA     |
+     ------------------
+     */
+     void AsignarValoresPrensa()
+    {
+
     }
 }
