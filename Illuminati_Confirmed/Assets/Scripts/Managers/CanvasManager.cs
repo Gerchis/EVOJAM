@@ -214,14 +214,19 @@ public class CanvasManager : MonoBehaviour
     Image[] iconosM1 = new Image[3];
     Image[] iconosM0 = new Image[3];
 
-    
+    public GameObject[] informacionesConocidas;
+
+    //INTEGRACIÓN: Continue de la tienda.
     public void setCanvasMisiones()
-    {      
+    {
+        //Inicializamos misiones
+        gm.initMisiones();
+
+
         //Para cada mision en pantalla
         for (int i = 0; i < gm.maxMisionesJugables; i++)
         {
-            //Variables locales
-            
+            //Variables locales    
 
             //Mostramos/ocultamos los iconos relevantes de la misión
             switch (i)
@@ -239,6 +244,70 @@ public class CanvasManager : MonoBehaviour
                   
             //Seteamos los titulos
             titulosMisionesSeleccionadas[i].text = gm.misionesIngame[gm.idMisionesSeleccionadas[i]].titulo;
+
+            //Configuramos la información mostrada en canvas de la ficha de cada IA
+            for (int j=0; j < gm.misionesIngame[gm.idMisionesSeleccionadas[i]].listaPersonajes.Capacity; j++)
+            {
+                string id;
+
+                //Para cada IA de la misión...
+                if (j <gm.misionesIngame[gm.idMisionesSeleccionadas[i]].listaPersonajes.Count)
+                {
+                    //...activamos que se pueda abrir la ficha
+                    id = "M" + i + "-S" + j + "-Avatar";
+                    GameObject.Find(id).GetComponent<Button>().interactable = true;
+
+                    //...reiniciamos la intención de voto revelada del turno anterior
+                    id = "M" + i + "-S" + j + "-Voto";
+                    GameObject.Find(id).SetActive(false);
+
+                    id = "M" + i + "-S" + j + "-pwrVoto";
+                    GameObject pwrVoto = GameObject.Find(id);
+                    pwrVoto.SetActive(true);
+
+                    if(gm.jugador.VerificarDisponibilidad(PowerupsName.AVERIGUAR_VOTO))
+                    {
+                        pwrVoto.GetComponent<Button>().interactable = true;
+                    }
+                    else
+                    {
+                        pwrVoto.GetComponent<Button>().interactable = false;
+                    }                    
+
+
+                    //...ficha del personaje...
+                    if(gm.misionesIngame[gm.idMisionesSeleccionadas[i]].listaPersonajes[j].getPersonajeInvestigado())
+                    {
+                        //...actualizamos su valor de apoyos
+                        id = "M" + i + "-S" + j + "-ApoyosTexto";
+                        GameObject.Find(id).GetComponent<TextMeshProUGUI>().text = gm.misionesIngame[gm.idMisionesSeleccionadas[i]].listaPersonajes[j].getApoyosRAW().ToString();
+                        
+                        //...la mostramos por pantalla
+                        id = "M" + i + "-S" + j + "-Informacion";
+                        GameObject.Find(id).SetActive(true);
+
+                        id = "M" + i + "-S" + j + "-pwrInfo";
+                        GameObject pwrInfo = GameObject.Find(id);
+                        pwrInfo.SetActive(false);
+
+                        if (gm.jugador.VerificarDisponibilidad(PowerupsName.INVESTIGADO))
+                        {
+                            pwrInfo.GetComponent<Button>().interactable = true;
+                        }
+                        else
+                        {
+                            pwrInfo.GetComponent<Button>().interactable = false;
+                        }
+
+                    }
+                }
+                else //Para cada slot desocupado de la misión...
+                {
+                    //Desactivamos que se pueda abrir la ficha
+                    id = "M" + i + "-S" + j + "-Avatar";
+                    GameObject.Find(id).GetComponent<Button>().interactable = false;
+                }    
+            }
         }
     }
 
@@ -285,7 +354,138 @@ public class CanvasManager : MonoBehaviour
         return topEfecto;
     }
 
+
+    //NOTA: Podria unificar las dos funciones en una, y parsear 3 parametros. Pero el tercero dependeria de un enum, y no de un numero. Y casi que prefiero controlarlo con una funcion propia para cada powerup
+    public void aplicarPwrVoto(string idParams)
+    {
+        //Parseamos lo que obtenemos del inspector de Unity a 2 variables
+        //idMision-idSlot
+        string[] parametros = idParams.Split('-');
+
+        int i = int.Parse(parametros[0]);
+        int j = int.Parse(parametros[1]);
+
+        //Aplicamos powerup VOTO
+        string id;
+        id = "M" + i + "-S" + j + "-Voto";
+        GameObject.Find(id).SetActive(true);
+
+        id = "M" + i + "-S" + j + "-pwrVoto";
+        GameObject.Find(id).SetActive(false);
+
+        gm.jugador.ConsumirPowerup(PowerupsName.AVERIGUAR_VOTO);
+    }
+
+    public void aplicarPwrInfo(string idParams)
+    {
+        //Parseamos lo que obtenemos del inspector de Unity a 2 variables
+        //idMision-idSlot
+        string[] parametros = idParams.Split('-');
+
+        int i = int.Parse(parametros[0]);
+        int j = int.Parse(parametros[1]);
+
+        //Aplicamos powerup INVESTIGAR
+        gm.misionesIngame[gm.idMisionesSeleccionadas[i]].listaPersonajes[j].setPersonajeInvestigado(true);
+
+        string id;
+        id = "M" + i + "-S" + j + "-Informacion";
+        GameObject.Find(id).SetActive(true);
+
+        id = "M" + i + "-S" + j + "-pwrInfo";
+        GameObject.Find(id).SetActive(false);
+
+        gm.jugador.ConsumirPowerup(PowerupsName.INVESTIGADO);
+
+        //Actualizamos los sprites de las afiliaciones
+
+        bool[] afinidades = gm.misionesIngame[gm.idMisionesSeleccionadas[i]].listaPersonajes[j].getAfinidadesEstadisticas();
+        int num;
+
+        id = "M" + i + "-S" + j + "-SociedadIcono";
+        if (afinidades[0]) {num=1; } else {num=2; }
+        GameObject.Find(id).GetComponent<Image>().sprite = spritesSociedad[num];
+
+        id = "M" + i + "-S" + j + "-EconomiaIcono";
+        if (afinidades[1]) { num = 1; } else { num = 2; }
+        GameObject.Find(id).GetComponent<Image>().sprite = spritesEconomia[num];
+
+        id = "M" + i + "-S" + j + "-DesarrolloIcono";
+        if (afinidades[2]) { num = 1; } else { num = 2; }
+        GameObject.Find(id).GetComponent<Image>().sprite = spritesDesarrollo[num];
+
+    }
+
+
+    public void switchButton(string idParams)
+    {
+        //Parseamos lo que obtenemos del inspector de Unity a 2 variables
+        //idMision-Char(Y/N)
+        string[] parametros = idParams.Split('-');
+
+        int i = int.Parse(parametros[0]);
+        char[] vote = parametros[1].ToCharArray();
+
+        //Actualizamos comportamiento botones y seteamos su aportación de apoyos a la votación
+        string id;
+
+        if (vote[0] == 'Y')
+        {
+            id = "M" + i + "-SP-VotoSI";
+            GameObject.Find(id).GetComponent<Button>().interactable = false;
+            id = "M" + i + "-SP-VotoNO";
+            GameObject.Find(id).GetComponent<Button>().interactable = true;
+
+            //votacion = false >>>> suma apoyos al resultado
+            gm.jugador.SetVotacion(true);
+        }
+        else if (vote[0] == 'N')
+        {
+            id = "M" + i + "-SP-VotoNO";
+            GameObject.Find(id).GetComponent<Button>().interactable = false;
+            id = "M" + i + "-SP-VotoSI";
+            GameObject.Find(id).GetComponent<Button>().interactable = true;
+
+            //votacion = false >>>> resta apoyos al resultado
+            gm.jugador.SetVotacion(false);
+        }
+    }
+
     
+    public void enterPlayerSlot(int m)
+    {
+        string id;
+
+        for (int i = 0; i < gm.maxMisionesJugables; i++)
+        {
+            if (i != m) //Slots donde no estamos
+            {
+                //Seteamos que NO estamos en esa misión
+                gm.misionesIngame[gm.idMisionesSeleccionadas[i]].setJugadorEnMision(false);
+                
+                //Ocultamos popup
+                id = "M" + i + "-SP-BackGround";
+                GameObject.Find(id).SetActive(false);
+                id = "M" + i + "-SP-VotoSI";
+                GameObject.Find(id).SetActive(false);
+                id = "M" + i + "-SP-VotoNO";
+                GameObject.Find(id).SetActive(false);
+            }
+            else //Entramos en un SLOT
+            {
+                //Seteamos que estamos en esa misión
+                gm.misionesIngame[gm.idMisionesSeleccionadas[i]].setJugadorEnMision(true);
+                
+                //Mostramos popup
+                id = "M" + i + "-SP-BackGround";
+                GameObject.Find(id).SetActive(true);
+                id = "M" + i + "-SP-VotoSI";
+                GameObject.Find(id).SetActive(true);
+                id = "M" + i + "-SP-VotoNO";
+                GameObject.Find(id).SetActive(true);
+            }
+        }
+    }
 
     /*index
      * ###################

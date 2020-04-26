@@ -30,8 +30,8 @@ public enum PowerupsName
 {
     CENSURA,
     PUBLICIDAD,
-    REVELAR,
-    ESPIA,
+    INVESTIGADO,
+    AVERIGUAR_VOTO,
     TOTAL_POWERUPSNAME
 }
 
@@ -130,6 +130,21 @@ public class GameManager : MonoBehaviour
 
     public int[] idMisionesSeleccionadas; //Tamaño 3, las 3 misiones que pueden salir. Guardamos el ID de la mision.
 
+    public void initMisiones()
+    {
+        //Seleccionamos Misiones que se jugarán
+        seleccionarMisiones();
+        
+        //Asignamos IA a las Misiones
+        asignarPosiciones();
+
+        //Precalculamos el resultado de las Misiones.
+        for (int i = 0; i < maxMisionesJugables; i++)
+        {
+            misionesIngame[idMisionesSeleccionadas[i]].precalcularResultadoFinal();
+        }
+    }
+
     void seleccionarMisiones()
     {
         int num;
@@ -185,14 +200,45 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     public Noticias[] noticiasIngame;
 
-     
+
 
 
     //maxMisionesJugables
     //idMisionesSeleccionadas[i]
 
+    //Resultados
 
+    public int modificadorSeguidores;
 
+    public void AddInfluencia( Personajes _pj)
+    {
+        _pj.influencia += _pj.seguidores;
+    }
+
+    public void CheckSeguidores()
+    {
+        //Si el resultado de la votacion es favorable a los intereses gana seguidores
+    }
+
+    public void BuyPowerUp(Powerups _pw)
+    {
+        if (_pw.precio <= jugador.influencia)
+        {
+            for (int i = 0; i < jugador.inventario.Count; i++)
+            {
+                if (jugador.inventario[i].pwrNombreEnum == _pw.pwrNombreEnum)
+                {
+                    jugador.inventario[i].cantidad++;
+
+                    return;
+                }
+            }
+
+            _pw.cantidad = 1;
+            jugador.inventario.Add(_pw);
+
+        }
+    }
 
     //AL FINAL NO LO NECESITAMOS
     //public Dictionary<Misiones, Noticias> mapaMisionesNoticias = new Dictionary<Misiones, Noticias>();
