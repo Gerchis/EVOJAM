@@ -492,6 +492,9 @@ public class CanvasManager : MonoBehaviour
      * CANVAS DINAMICO: PRENSA
      * ###################
      */
+    public Sprite spriteCensura;
+    public Sprite spritePublicidad;
+
     TextMeshProUGUI[] titulosNoticias = new TextMeshProUGUI[3];
     TextMeshProUGUI[] textosNoticias = new TextMeshProUGUI[3];
     TextMeshProUGUI[] imagenesNoticias = new TextMeshProUGUI[3];
@@ -501,6 +504,8 @@ public class CanvasManager : MonoBehaviour
     Image[] IconoSociedad = new Image[3];
     Image[] IconoEconomia = new Image[3];
     Image[] IconoDesarrollo = new Image[3];
+    Image[] ImagenCensura = new Image[3];
+    Image[] ImagenPublicidad = new Image[3];
     Button[] BotonCensura = new Button[3];
     Button[] BotonPublicidad = new Button[3];
 
@@ -519,7 +524,37 @@ public class CanvasManager : MonoBehaviour
             IconoEconomia[i].sprite = spritesEconomia[0];
             IconoDesarrollo[i].sprite = spritesDesarrollo[0];
 
+            ImagenCensura[i].sprite = spriteCensura;
+            ImagenCensura[i].enabled = false;
+            ImagenPublicidad[i].sprite = spritePublicidad;
+            ImagenPublicidad[i].enabled = false;
         }
+        verificarPowerUp(PowerupsName.CENSURA);
+        verificarPowerUp(PowerupsName.PUBLICIDAD);
+    }
+
+    public void aplicarCensura(int idNoticia)
+    {
+        ImagenCensura[idNoticia].enabled = true;
+        efectoSociedad[idNoticia] = "0";
+        efectoEconomia[idNoticia] = "0";
+        efectoDesarrollo[idNoticia] = "0";
+    }
+
+    public void aplicarPublicidad(int idNoticia)
+    {
+        int aux;
+
+        ImagenPublicidad[idNoticia].enabled = true;
+
+        aux = gm.noticiasIngame[gm.idMisionesSeleccionadas[idNoticia]].efectosNoticia[0].valor * 2;
+        efectoSociedad[idNoticia] = aux.ToString();
+
+        aux = gm.noticiasIngame[gm.idMisionesSeleccionadas[idNoticia]].efectosNoticia[1].valor * 2;
+        efectoEconomia[idNoticia] = aux.ToString();
+
+        aux = gm.noticiasIngame[gm.idMisionesSeleccionadas[idNoticia]].efectosNoticia[2].valor * 2;
+        efectoDesarrollo[idNoticia] = aux.ToString();
     }
 
     /*index
@@ -577,6 +612,14 @@ public class CanvasManager : MonoBehaviour
         IconoDesarrollo[1] = GameObject.Find("N2-IconoDesarrollo").GetComponent<Image>();
         IconoDesarrollo[2] = GameObject.Find("N3-IconoDesarrollo").GetComponent<Image>();
 
+        ImagenCensura[0] = GameObject.Find("N1-ImagenCensura").GetComponent<Image>();
+        ImagenCensura[1] = GameObject.Find("N2-ImagenCensura").GetComponent<Image>();
+        ImagenCensura[2] = GameObject.Find("N3-ImagenCensura").GetComponent<Image>();
+
+        ImagenPublicidad[0] = GameObject.Find("N1-ImagenPublicidad").GetComponent<Image>();
+        ImagenPublicidad[1] = GameObject.Find("N2-ImagenPublicidad").GetComponent<Image>();
+        ImagenPublicidad[2] = GameObject.Find("N3-ImagenPublicidad").GetComponent<Image>();
+
         BotonCensura[0] = GameObject.Find("N1-BotonCensura").GetComponent<Button>();
         BotonCensura[1] = GameObject.Find("N1-BotonCensura").GetComponent<Button>();
         BotonCensura[2] = GameObject.Find("N1-BotonCensura").GetComponent<Button>();
@@ -623,10 +666,44 @@ public class CanvasManager : MonoBehaviour
         parentTienda.SetActive(false);
         parentMisiones.SetActive(false);
 
+    }
 
-        if(gm)
-
-
+    void verificarPowerUp(PowerupsName _name)
+    {
+        if (gm.jugador.VerificarDisponibilidad(_name))
+        {
+            for (int i = 0; i < gm.maxMisionesJugables; i++)
+            {
+                switch (_name)
+                {
+                    case PowerupsName.CENSURA:
+                        BotonCensura[i].interactable = true;
+                        break;
+                    case PowerupsName.PUBLICIDAD:
+                        BotonPublicidad[i].interactable = true;
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+        else
+        {
+            for (int i = 0; i < gm.maxMisionesJugables; i++)
+            {
+                switch (_name)
+                {
+                    case PowerupsName.CENSURA:
+                        BotonCensura[i].interactable = false;
+                        break;
+                    case PowerupsName.PUBLICIDAD:
+                        BotonPublicidad[i].interactable = false;
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
     }
 
 }
