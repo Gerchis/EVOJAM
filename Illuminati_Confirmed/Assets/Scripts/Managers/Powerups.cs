@@ -15,7 +15,9 @@ public class Powerups : InterfaceEffector
     public int precio;
     public PowerupsName pwrNombreEnum;
     public string nombre;
-    public string descripcion;
-    public int value;
+    public string descripcion;    
     public int cantidad;
+
+    //Valor interno de control
+    public int noticiaAfectada;
 }

@@ -160,7 +160,7 @@ public class Personajes
 
     public bool powerupActivo(PowerupsName pwrNombre, int _value)
     {
-        for (int k = 0; k<gm.jugador.inventario.Length; k++)
+        for (int k = 0; k<gm.jugador.inventario.Count; k++)
         {
             if (gm.jugador.inventario[k].pwrNombreEnum == pwrNombre && gm.jugador.inventario[k].value == _value)
             {

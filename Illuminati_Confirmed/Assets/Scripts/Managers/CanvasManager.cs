@@ -265,7 +265,7 @@ public class CanvasManager : MonoBehaviour
                     GameObject pwrVoto = GameObject.Find(id);
                     pwrVoto.SetActive(true);
 
-                    if(gm.jugador.Equals(PowerupsName.AVERIGUAR_VOTO))
+                    if(gm.jugador.VerificarDisponibilidad(PowerupsName.AVERIGUAR_VOTO))
                     {
                         pwrVoto.GetComponent<Button>().interactable = true;
                     }
@@ -274,14 +274,6 @@ public class CanvasManager : MonoBehaviour
                         pwrVoto.GetComponent<Button>().interactable = false;
                     }                    
 
-                    for (int k = 0; k < gm.jugador.inventario.Count; k++)
-                    {
-                        if(PowerupsName.AVERIGUAR_VOTO == gm.jugador.inventario[k].pwrNombreEnum)
-                        {
-                            gm.jugador.Consumir(PowerupsName.AVERIGUAR_VOTO);
-                            
-                        }
-                    }
 
                     //...ficha del personaje...
                     if(gm.misionesIngame[gm.idMisionesSeleccionadas[i]].listaPersonajes[j].getPersonajeInvestigado())
@@ -295,7 +287,18 @@ public class CanvasManager : MonoBehaviour
                         GameObject.Find(id).SetActive(true);
 
                         id = "M" + i + "-S" + j + "-pwrInfo";
-                        GameObject.Find(id).SetActive(false);
+                        GameObject pwrInfo = GameObject.Find(id);
+                        pwrInfo.SetActive(false);
+
+                        if (gm.jugador.VerificarDisponibilidad(PowerupsName.INVESTIGADO))
+                        {
+                            pwrInfo.GetComponent<Button>().interactable = true;
+                        }
+                        else
+                        {
+                            pwrInfo.GetComponent<Button>().interactable = false;
+                        }
+
                     }
                 }
                 else //Para cada slot desocupado de la misión...
@@ -369,6 +372,8 @@ public class CanvasManager : MonoBehaviour
 
         id = "M" + i + "-S" + j + "-pwrVoto";
         GameObject.Find(id).SetActive(false);
+
+        gm.jugador.ConsumirPowerup(PowerupsName.AVERIGUAR_VOTO);
     }
 
     public void aplicarPwrInfo(string idParams)
@@ -389,6 +394,8 @@ public class CanvasManager : MonoBehaviour
 
         id = "M" + i + "-S" + j + "-pwrInfo";
         GameObject.Find(id).SetActive(false);
+
+        gm.jugador.ConsumirPowerup(PowerupsName.INVESTIGADO);
 
         //Actualizamos los sprites de las afiliaciones
 
@@ -494,6 +501,8 @@ public class CanvasManager : MonoBehaviour
     Image[] IconoSociedad = new Image[3];
     Image[] IconoEconomia = new Image[3];
     Image[] IconoDesarrollo = new Image[3];
+    Button[] BotonCensura = new Button[3];
+    Button[] BotonPublicidad = new Button[3];
 
     void setCanvasNoticias()
     {
@@ -568,7 +577,17 @@ public class CanvasManager : MonoBehaviour
         IconoDesarrollo[1] = GameObject.Find("N2-IconoDesarrollo").GetComponent<Image>();
         IconoDesarrollo[2] = GameObject.Find("N3-IconoDesarrollo").GetComponent<Image>();
 
-    //Obtenemos referencias de los powerups...
+        BotonCensura[0] = GameObject.Find("N1-BotonCensura").GetComponent<Button>();
+        BotonCensura[1] = GameObject.Find("N1-BotonCensura").GetComponent<Button>();
+        BotonCensura[2] = GameObject.Find("N1-BotonCensura").GetComponent<Button>();
+
+        BotonPublicidad[0] = GameObject.Find("N1-BotonPublicidad").GetComponent<Button>();
+        BotonPublicidad[0] = GameObject.Find("N1-BotonPublicidad").GetComponent<Button>();
+        BotonPublicidad[0] = GameObject.Find("N1-BotonPublicidad").GetComponent<Button>();
+
+
+
+        //Obtenemos referencias de los powerups...
         pwrCensura = GameObject.Find("pwrCensura").GetComponent<Button>();
         pwrPublicidad = GameObject.Find("pwrPublicidad").GetComponent<Button>();
         pwrRevelar = GameObject.Find("pwrRevelar").GetComponent<Button>();
@@ -605,7 +624,7 @@ public class CanvasManager : MonoBehaviour
         parentMisiones.SetActive(false);
 
 
-
+        if(gm)
 
 
     }
