@@ -13,13 +13,15 @@ public class Misiones
         misionJugada = false;
     }
 
-    public void resultadoFinal()
+    public int resultadoFinal()
     {
         if (!jugadorEnMision)
         {
-            return;
+            return resultado;
         }
         resultado += GameManager.Instance.jugador.getApoyos();
+
+        return resultado;
     }
     
     public void InitMisiones()

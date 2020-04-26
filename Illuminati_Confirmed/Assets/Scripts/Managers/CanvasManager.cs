@@ -18,6 +18,9 @@ public class CanvasManager : MonoBehaviour
     GameObject parentTienda;
     GameObject parentMisiones;
 
+    public Sprite[] spritesSociedad;
+    public Sprite[] spritesEconomia;
+    public Sprite[] spritesDesarrollo;
 
         
     /*index
@@ -295,21 +298,27 @@ public class CanvasManager : MonoBehaviour
     string[] efectoSociedad = new string[3];
     string[] efectoEconomia = new string[3];
     string[] efectoDesarrollo = new string[3];
+    Image[] IconoSociedad = new Image[3];
+    Image[] IconoEconomia = new Image[3];
+    Image[] IconoDesarrollo = new Image[3];
 
     void setCanvasNoticias()
     {
         for (int i = 0; i < gm.maxMisionesJugables; i++)
         {
             titulosNoticias[i].text = gm.noticiasIngame[gm.idMisionesSeleccionadas[i]].titulo;
+            textosNoticias[i].text = gm.noticiasIngame[gm.idMisionesSeleccionadas[i]].texto;
+
+            efectoSociedad[i] = gm.noticiasIngame[gm.idMisionesSeleccionadas[i]].efectosNoticia[0].valor.ToString();
+            efectoEconomia[i] = gm.noticiasIngame[gm.idMisionesSeleccionadas[i]].efectosNoticia[1].valor.ToString();
+            efectoDesarrollo[i] = gm.noticiasIngame[gm.idMisionesSeleccionadas[i]].efectosNoticia[2].valor.ToString();
+
+            IconoSociedad[i].sprite = spritesSociedad[0];
+            IconoEconomia[i].sprite = spritesEconomia[0];
+            IconoDesarrollo[i].sprite = spritesDesarrollo[0];
+
         }
     }
-
-    void AsignarValoresPrensa()
-    {
-
-    }
-
-
 
     /*index
     * ###################
@@ -342,10 +351,6 @@ public class CanvasManager : MonoBehaviour
         imagenesNoticias[1] = GameObject.Find("N2-Imagen").GetComponent<TextMeshProUGUI>();
         imagenesNoticias[2] = GameObject.Find("N3-Imagen").GetComponent<TextMeshProUGUI>();
 
-        imagenesNoticias[0] = GameObject.Find("N1-Imagen").GetComponent<TextMeshProUGUI>();
-        imagenesNoticias[1] = GameObject.Find("N2-Imagen").GetComponent<TextMeshProUGUI>();
-        imagenesNoticias[2] = GameObject.Find("N3-Imagen").GetComponent<TextMeshProUGUI>();
-
         efectoSociedad[0] = GameObject.Find("N1-EfectoSociedad").GetComponent<TextMeshProUGUI>().text;
         efectoSociedad[1] = GameObject.Find("N2-EfectoSociedad").GetComponent<TextMeshProUGUI>().text;
         efectoSociedad[2] = GameObject.Find("N3-EfectoSociedad").GetComponent<TextMeshProUGUI>().text;
@@ -358,11 +363,19 @@ public class CanvasManager : MonoBehaviour
         efectoDesarrollo[1] = GameObject.Find("N2-EfectoDesarrollo").GetComponent<TextMeshProUGUI>().text;
         efectoDesarrollo[2] = GameObject.Find("N3-EfectoDesarrollo").GetComponent<TextMeshProUGUI>().text;
 
-        IconoSociedad = GameObject.Find("N1-IconoSociedad").GetComponent<Image>();
-        IconoEconomia = GameObject.Find("N1-IconoEconomia").GetComponent<Image>();
-        IconoDesarrollo = GameObject.Find("N1-IconoDesarrollo").GetComponent<Image>();
+        IconoSociedad[0] = GameObject.Find("N1-IconoSociedad").GetComponent<Image>();
+        IconoSociedad[1] = GameObject.Find("N2-IconoSociedad").GetComponent<Image>();
+        IconoSociedad[2] = GameObject.Find("N3-IconoSociedad").GetComponent<Image>();
 
-        //Obtenemos referencias de los powerups...
+        IconoEconomia[0] = GameObject.Find("N1-IconoEconomia").GetComponent<Image>();
+        IconoEconomia[1] = GameObject.Find("N2-IconoEconomia").GetComponent<Image>();
+        IconoEconomia[2] = GameObject.Find("N3-IconoEconomia").GetComponent<Image>();
+
+        IconoDesarrollo[0] = GameObject.Find("N1-IconoDesarrollo").GetComponent<Image>();
+        IconoDesarrollo[1] = GameObject.Find("N2-IconoDesarrollo").GetComponent<Image>();
+        IconoDesarrollo[2] = GameObject.Find("N3-IconoDesarrollo").GetComponent<Image>();
+
+    //Obtenemos referencias de los powerups...
         pwrCensura = GameObject.Find("pwrCensura").GetComponent<Button>();
         pwrPublicidad = GameObject.Find("pwrPublicidad").GetComponent<Button>();
         pwrRevelar = GameObject.Find("pwrRevelar").GetComponent<Button>();
