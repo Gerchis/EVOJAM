@@ -32,6 +32,8 @@ public enum PowerupsName
     PUBLICIDAD,
     INVESTIGADO,
     AVERIGUAR_VOTO,
+    APOYOS,
+    SEGUIDORES,
     TOTAL_POWERUPSNAME
 }
 
@@ -44,10 +46,12 @@ public class GameManager : MonoBehaviour
      */  
     public int maxMisionesJugables = 3;
     public Personajes jugador;
-    Personajes[] pnjs;
-    Image[] avatares;
-    bool[] avataresControl = new bool[] { false };
-    bool[] rolControl = new bool[] { false };
+    Personajes[] pnjs = new Personajes[7];
+    public Sprite[] avatares;
+    bool[] avataresControl = new bool[(int)RolSecreto.TOTAL_ROLES];
+    bool[] rolControl = new bool[(int)RolSecreto.TOTAL_ROLES];
+
+
 
     //VALUES PJS
     int randRol;
@@ -58,8 +62,9 @@ public class GameManager : MonoBehaviour
 
     public int[] precios;
 
-    void InitGame()
+    public void InitGame()
     {
+
         sociedadActual = Random.Range(80, 101);
         economiaActual = Random.Range(80, 101);
         desarrolloActual = Random.Range(80, 101);
@@ -67,12 +72,19 @@ public class GameManager : MonoBehaviour
         involucionActual = sociedadActual + economiaActual + desarrolloActual;
         involucionObjectivo = 120; //120 de 300
 
-        turnActual = 0;
-        turnMax = 12;
+        //TODO: Hacer flujo de rondas. Win/Lose GAME
+        //turnActual = 0;
+        //turnMax = 12;
+
+        for (int i = 0; i < (int)RolSecreto.TOTAL_ROLES; i++)
+        {
+            avataresControl[i] = false;
+            rolControl[i] = false;
+        }
+        
 
         SetValuesPjs();
         jugador = new Personajes((RolSecreto)randRol, avatares[randAvatar], influencia, apoyos, seguidores, false);
-
         for (int i = 0; i < pnjs.Length; i++)
         {
             SetValuesPjs();
@@ -89,6 +101,7 @@ public class GameManager : MonoBehaviour
             randAvatar = Random.Range(0, avatares.Length);
         } while (avataresControl[randAvatar] && rolControl[randRol]);
         avataresControl[randAvatar] = true;
+        
         rolControl[randRol] = true;
 
         influencia = Random.Range(100, 300);
@@ -113,8 +126,9 @@ public class GameManager : MonoBehaviour
     public int involucionActual;
     public int involucionObjectivo;
     
-    int turnActual;
-    int turnMax;
+    //TODO HACER FLOW JUEGO
+    //int turnActual;
+    //int turnMax;
 
     public void calcularInvolucion()
     {
@@ -152,6 +166,7 @@ public class GameManager : MonoBehaviour
         int num;
         bool controlFail = false;
         int control = 0;
+        idMisionesSeleccionadas = new int[3];
 
         for (int i = 0; i < maxMisionesJugables; i++)
         {
@@ -159,7 +174,7 @@ public class GameManager : MonoBehaviour
             {
                 control++;
                 num = Random.Range(0, misionesIngame.Length);
-                if (control >= 100000) { controlFail = true; }
+                if (control >= 100000) { controlFail = true; } //Paranonia de MARC
             } while (misionesIngame[num].misionJugada  || controlFail);
 
             if (controlFail)
@@ -291,6 +306,14 @@ public class GameManager : MonoBehaviour
             Debug.Log("Warning: multiple " + this + " in scene!");
         }
 
+    }
+
+    private void Start()
+    {
+        for (int i = 0; i < misionesIngame.Length; i++)
+        {
+            noticiasIngame[i].titulo = misionesIngame[i].titulo;
+        }
     }
 
 }

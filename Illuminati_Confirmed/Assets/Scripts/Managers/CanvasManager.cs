@@ -13,16 +13,17 @@ public class CanvasManager : MonoBehaviour
      * ###################
      */
 
-    GameManager gm = GameObject.Find("GameManager").GetComponent<GameManager>();
-    GameObject parentPrensa;
-    GameObject parentTienda;
-    GameObject parentMisiones;
+    GameManager gm;
+    GameObject canvasPrensa;
+    GameObject canvasResultados;
+    GameObject canvasMisiones;
 
     public Sprite[] spritesSociedad;
     public Sprite[] spritesEconomia;
     public Sprite[] spritesDesarrollo;
 
-    public Sprite[] votaciones;
+    public Sprite[] spriteVotaciones;
+    public Sprite spriteLocation; 
 
 
     /*index
@@ -31,10 +32,10 @@ public class CanvasManager : MonoBehaviour
      * ###################
      */
 
-    Button pwrCensura;
-    Button pwrPublicidad;
-    Button pwrRevelar;
-    Button pwrEspia;
+    //Button pwrCensura;
+    //Button pwrPublicidad;
+    //Button pwrRevelar;
+    //Button pwrEspia;
 
     //gm.jugador.inventario.pwrCensura;
 
@@ -257,7 +258,11 @@ public class CanvasManager : MonoBehaviour
                 {
                     //...activamos que se pueda abrir la ficha
                     id = "M" + i + "-S" + j + "-Avatar";
-                    GameObject.Find(id).GetComponent<Button>().interactable = true;
+                    GameObject avatar = GameObject.Find(id);
+                    avatar.GetComponent<Button>().interactable = true;
+
+                    //...añadimos su avatar
+                    avatar.GetComponent<Image>().sprite = gm.misionesIngame[gm.idMisionesSeleccionadas[i]].listaPersonajes[j].avatar;
 
                     //...reiniciamos la intención de voto revelada del turno anterior
                     id = "M" + i + "-S" + j + "-Voto";
@@ -339,13 +344,14 @@ public class CanvasManager : MonoBehaviour
 
     Estadisticas getEfectoPrincipal(int i)
     {
-        int valorMin = 0;
+        int valorMin=0;
+        
         Estadisticas topEfecto = Estadisticas.TOTAL_ESTADISTICAS;
 
         for (int j = 0; j < gm.maxMisionesJugables; j++)
         {
             int num = gm.noticiasIngame[gm.idMisionesSeleccionadas[i]].efectosNoticia[j].valor;
-
+        
             if ( num < valorMin)
             {
                 valorMin = num;
@@ -375,10 +381,10 @@ public class CanvasManager : MonoBehaviour
         id = "M" + i + "-S" + j + "-VotoIcono";
         if(gm.misionesIngame[gm.idMisionesSeleccionadas[i]].listaPersonajes[j].GetVotacion())
         {
-            GameObject.Find(id).GetComponent<Image>().sprite = votaciones[1];
+            GameObject.Find(id).GetComponent<Image>().sprite = spriteVotaciones[1];
         } else
         {
-            GameObject.Find(id).GetComponent<Image>().sprite = votaciones[0];
+            GameObject.Find(id).GetComponent<Image>().sprite = spriteVotaciones[0];
         }
 
         id = "M" + i + "-S" + j + "-pwrVoto";
@@ -473,7 +479,11 @@ public class CanvasManager : MonoBehaviour
             {
                 //Seteamos que NO estamos en esa misión
                 gm.misionesIngame[gm.idMisionesSeleccionadas[i]].setJugadorEnMision(false);
-                
+
+                //Asignamos avatar neutro
+                id = "M" + i + "-SP-Avatar";
+                GameObject.Find(id).GetComponent<Image>().sprite = spriteLocation;
+
                 //Ocultamos popup
                 id = "M" + i + "-SP-BackGround";
                 GameObject.Find(id).SetActive(false);
@@ -486,7 +496,11 @@ public class CanvasManager : MonoBehaviour
             {
                 //Seteamos que estamos en esa misión
                 gm.misionesIngame[gm.idMisionesSeleccionadas[i]].setJugadorEnMision(true);
-                
+
+                //Asignamos avatar del jugador
+                id = "M" + i + "-SP-Avatar";
+                GameObject.Find(id).GetComponent<Image>().sprite = gm.jugador.avatar;
+
                 //Mostramos popup
                 id = "M" + i + "-SP-BackGround";
                 GameObject.Find(id).SetActive(true);
@@ -500,7 +514,7 @@ public class CanvasManager : MonoBehaviour
 
     /*index
      * ###################
-     * CANVAS DINAMICO: MISIONES
+     * CANVAS DINAMICO: TIENDA
      * ###################
      */
 
@@ -553,6 +567,7 @@ public class CanvasManager : MonoBehaviour
         }
         verificarPowerUp(PowerupsName.CENSURA);
         verificarPowerUp(PowerupsName.PUBLICIDAD);
+        actualizarSliders();
     }
 
     public void aplicarCensura(int idNoticia)
@@ -563,6 +578,7 @@ public class CanvasManager : MonoBehaviour
         efectoDesarrollo[idNoticia] = "0";
         setNoticiaAfectada(PowerupsName.CENSURA, idNoticia);
         verificarPowerUp(PowerupsName.CENSURA);
+        actualizarSliders();
     }
 
     public void aplicarPublicidad(int idNoticia)
@@ -582,6 +598,7 @@ public class CanvasManager : MonoBehaviour
 
         setNoticiaAfectada(PowerupsName.PUBLICIDAD, idNoticia);
         verificarPowerUp(PowerupsName.PUBLICIDAD);
+        actualizarSliders();
     }
 
 
@@ -608,9 +625,10 @@ void Start()
         // -----------------
         // |    GENERAL    |
         // -----------------
-        parentPrensa = GameObject.Find("parentPrensa");
-        parentTienda = GameObject.Find("parentTienda");
-        parentMisiones = GameObject.Find("parentMisiones");
+        canvasPrensa = GameObject.Find("CanvasPrensa");
+        canvasResultados = GameObject.Find("CanvasResultados");
+        canvasMisiones = GameObject.Find("CanvasVotaciones");
+        gm = GameObject.Find("GameManager").GetComponent<GameManager>();
 
         // ----------------
         // |    PRENSA    |
@@ -660,21 +678,21 @@ void Start()
         ImagenPublicidad[1] = GameObject.Find("N2-ImagenPublicidad").GetComponent<Image>();
         ImagenPublicidad[2] = GameObject.Find("N3-ImagenPublicidad").GetComponent<Image>();
 
-        BotonCensura[0] = GameObject.Find("N1-BotonCensura").GetComponent<Button>();
-        BotonCensura[1] = GameObject.Find("N1-BotonCensura").GetComponent<Button>();
-        BotonCensura[2] = GameObject.Find("N1-BotonCensura").GetComponent<Button>();
+        BotonCensura[0] = GameObject.Find("N1-BotonCensurar").GetComponent<Button>();
+        BotonCensura[1] = GameObject.Find("N2-BotonCensurar").GetComponent<Button>();
+        BotonCensura[2] = GameObject.Find("N3-BotonCensurar").GetComponent<Button>();
 
-        BotonPublicidad[0] = GameObject.Find("N1-BotonPublicidad").GetComponent<Button>();
-        BotonPublicidad[0] = GameObject.Find("N1-BotonPublicidad").GetComponent<Button>();
-        BotonPublicidad[0] = GameObject.Find("N1-BotonPublicidad").GetComponent<Button>();
+        BotonPublicidad[0] = GameObject.Find("N1-BotonPublicitar").GetComponent<Button>();
+        BotonPublicidad[0] = GameObject.Find("N2-BotonPublicitar").GetComponent<Button>();
+        BotonPublicidad[0] = GameObject.Find("N3-BotonPublicitar").GetComponent<Button>();
 
 
 
-        //Obtenemos referencias de los powerups...
-        pwrCensura = GameObject.Find("pwrCensura").GetComponent<Button>();
-        pwrPublicidad = GameObject.Find("pwrPublicidad").GetComponent<Button>();
-        pwrRevelar = GameObject.Find("pwrRevelar").GetComponent<Button>();
-        pwrEspia = GameObject.Find("pwrEspia").GetComponent<Button>();
+        //Obtenemos referencias de los powerups... DEPRECATED
+        //pwrCensura = GameObject.Find("pwrCensura").GetComponent<Button>();
+        //pwrPublicidad = GameObject.Find("pwrPublicidad").GetComponent<Button>();
+        //pwrRevelar = GameObject.Find("pwrRevelar").GetComponent<Button>();
+        //pwrEspia = GameObject.Find("pwrEspia").GetComponent<Button>();
 
 
         // ------------------
@@ -701,10 +719,35 @@ void Start()
         // |    GENERAL    |
         // -----------------
 
+        sliderSociedad = GameObject.Find("SS-sliderSociedad").GetComponent<Slider>();
+        sliderEconomia = GameObject.Find("SE-sliderEconomia").GetComponent<Slider>();
+        sliderDesarrollo = GameObject.Find("SD-sliderDesarrollo").GetComponent<Slider>();
+        sliderInvolucion = GameObject.Find("SI-sliderInvolucion").GetComponent<Slider>();
+
+        sliderSociedadPositivo = GameObject.Find("SS-sliderSociedadPositivo").GetComponent<Slider>();
+        sliderSociedadNegativo = GameObject.Find("SS-sliderSociedadNegativo").GetComponent<Slider>();
+
+        sliderEconomiaPositivo = GameObject.Find("SE-sliderEconomiaPositivo").GetComponent<Slider>();
+        sliderEconomiaNegativo = GameObject.Find("SE-sliderEconomiaNegativo").GetComponent<Slider>();
+
+        sliderDesarrolloPositivo = GameObject.Find("SD-sliderDesarrolloPositivo").GetComponent<Slider>();
+        sliderDesarrolloNegativo = GameObject.Find("SD-sliderDesarrolloNegativo").GetComponent<Slider>();
+
+        sliderInvolucionPositivo = GameObject.Find("SI-sliderInvolucionPositivo").GetComponent<Slider>();
+        sliderInvolucionNegativo = GameObject.Find("SI-sliderInvolucionPositivo").GetComponent<Slider>();
+
+
+        // -----------------
+        // |    GENERAL    |
+        // -----------------
+
+        gm.InitGame();
+
         //Desactivamos parents...
-        parentPrensa.SetActive(false);
-        parentTienda.SetActive(false);
-        parentMisiones.SetActive(false);
+        canvasPrensa.SetActive(false);
+        canvasResultados.SetActive(false);
+        setCanvasMisiones();
+        canvasMisiones.SetActive(true);
 
     }
 

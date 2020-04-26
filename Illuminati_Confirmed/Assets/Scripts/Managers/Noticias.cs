@@ -14,8 +14,7 @@ public class Noticias
 
     }
 
-
-
+    public void SetTitulo(string _titulo) { titulo = _titulo; }
 
     [Header("Variables Noticia")]
     public string titulo;

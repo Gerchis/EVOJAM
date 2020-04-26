@@ -44,6 +44,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxMisionesJugables: 3
+  avatares:
+  - {fileID: 21300000, guid: dbea17651de3e1445a7f1952f122aa50, type: 3}
+  - {fileID: 21300000, guid: 12d11a14997455549936c06bc1073a98, type: 3}
+  - {fileID: 21300000, guid: 44bc6e44d8672ac47808546a3bb694ab, type: 3}
+  - {fileID: 21300000, guid: f9aa8e2a501944c458ce1f465d29baab, type: 3}
+  - {fileID: 21300000, guid: 9cf1c6fae229c20449ce4a89504535c8, type: 3}
+  - {fileID: 21300000, guid: b6059f9b0b4a2df43a7036444b665f82, type: 3}
+  - {fileID: 21300000, guid: 94f5f0651e0ed204098818689e8ddf67, type: 3}
+  - {fileID: 21300000, guid: 8b86003dc3a232e46a9a86557ace5874, type: 3}
+  precios: 000000000000000000000000000000000000000000000000
   sociedadActual: 0
   economiaActual: 0
   desarrolloActual: 0
@@ -53,41 +63,41 @@ MonoBehaviour:
   involucionActual: 0
   involucionObjectivo: 0
   misionesIngame:
-  - titulo: Reinstaurar ley de esclavitud
+  - titulo: Reinstaurar ley de esclavitud.
     misionJugada: 0
-  - titulo: Derogar ley de sufragio femenino
+  - titulo: Derogar ley de sufragio femenino.
     misionJugada: 0
-  - titulo: Reinstaurar el feudalismo
+  - titulo: Reinstaurar el feudalismo.
     misionJugada: 0
-  - titulo: Prohibir las energias renovables
+  - titulo: Prohibir las energias renovables.
     misionJugada: 0
-  - titulo: "Eliminaci\xF3n de octogenarios"
+  - titulo: "Eliminaci\xF3n de octogenarios."
     misionJugada: 0
-  - titulo: "Instaurar el d\xEDa de LA PURGA"
+  - titulo: "Instaurar el d\xEDa de LA PURGA."
     misionJugada: 0
-  - titulo: Prohibir ser educado
+  - titulo: Prohibir ser educado.
     misionJugada: 0
-  - titulo: "Prohibir la pornograf\xEDa"
+  - titulo: "Prohibir la pornograf\xEDa."
     misionJugada: 0
-  - titulo: Legalizar lo ilegal
+  - titulo: Legalizar lo ilegal.
     misionJugada: 0
-  - titulo: Otorgar poderes del estado a la Iglesia
+  - titulo: Otorgar poderes del estado a la Iglesia.
     misionJugada: 0
-  - titulo: Desmantelar la ONU
+  - titulo: Desmantelar la ONU.
     misionJugada: 0
-  - titulo: Criminalizar
+  - titulo: Invertir en zepelines.
     misionJugada: 0
-  - titulo: 
+  - titulo: "A\xF1adir el Lunes y Viernes al fin de semana festivo."
     misionJugada: 0
-  - titulo: 
+  - titulo: Invertir el poder I+D en viajar en el tiempo.
     misionJugada: 0
-  - titulo: 
+  - titulo: Actividades de ocio subvencionadas por el estado.
     misionJugada: 0
-  - titulo: 
+  - titulo: "Invertir en la producci\xF3n de RealityShows inimaginables."
     misionJugada: 0
-  - titulo: 
+  - titulo: "Descubrir porqu\xE9 el significado de la vida es 42."
     misionJugada: 0
-  - titulo: 
+  - titulo: Invertir el poder I+D en viajar en el tiempo.
     misionJugada: 0
   idMisionesSeleccionadas: 
   noticiasIngame:
@@ -96,23 +106,61 @@ MonoBehaviour:
     imagen: {fileID: 0}
     efectosNoticia:
     - estadistica: 0
-      valor: 5
+      valor: -20
     - estadistica: 1
-      valor: 3
+      valor: 10
     - estadistica: 2
-      valor: 2
+      valor: 5
   - titulo: 
     texto: 
     imagen: {fileID: 0}
-    efectosNoticia: []
+    efectosNoticia:
+    - estadistica: 0
+      valor: -20
+    - estadistica: 1
+      valor: -5
+    - estadistica: 2
+      valor: -5
   - titulo: 
     texto: 
     imagen: {fileID: 0}
-    efectosNoticia: []
+    efectosNoticia:
+    - estadistica: 0
+      valor: -15
+    - estadistica: 1
+      valor: 5
+    - estadistica: 2
+      valor: -20
   - titulo: 
     texto: 
     imagen: {fileID: 0}
-    efectosNoticia: []
+    efectosNoticia:
+    - estadistica: 0
+      valor: -15
+    - estadistica: 0
+      valor: 20
+    - estadistica: 0
+      valor: -20
+  - titulo: 
+    texto: 
+    imagen: {fileID: 0}
+    efectosNoticia:
+    - estadistica: 0
+      valor: -15
+    - estadistica: 1
+      valor: 15
+    - estadistica: 2
+      valor: 5
+  - titulo: 
+    texto: 
+    imagen: {fileID: 0}
+    efectosNoticia:
+    - estadistica: 0
+      valor: -10
+    - estadistica: 1
+      valor: -10
+    - estadistica: 2
+      valor: -10
   - titulo: 
     texto: 
     imagen: {fileID: 0}
