@@ -332,7 +332,7 @@ public class CanvasManager : MonoBehaviour
     Image[,] SociedadIcono = new Image[3, 3];
     Image[,] EconomiaIcono = new Image[3, 3];
     Image[,] DesarrolloIcono = new Image[3, 3];
-    Image [,] VotoIcono = new Image[3, 3];
+    GameObject [,] VotoIcono = new GameObject[3, 3];
     GameObject[,] Poderes = new GameObject[3, 3];
 
     //public GameObject[] informacionesConocidas;
@@ -402,12 +402,39 @@ public class CanvasManager : MonoBehaviour
                         //...la mostramos por pantalla la info
                         InformacionInfo[i,j].SetActive(true);
                         pwrInfo[i,j].SetActive(false);
+
+
+                        //Actualizamos los sprites de las afiliaciones
+                        bool[] afinidades = gm.misionesIngame[gm.idMisionesSeleccionadas[i]].listaPersonajes[j].getAfinidadesEstadisticas();
+                        int num;
+
+                        if (afinidades[0]) { num = 1; } else { num = 2; }
+                        SociedadIcono[i, j].GetComponent<Image>().sprite = spritesSociedad[num];
+
+                        if (afinidades[1]) { num = 1; } else { num = 2; }
+                        EconomiaIcono[i, j].GetComponent<Image>().sprite = spritesEconomia[num];
+
+                        if (afinidades[2]) { num = 1; } else { num = 2; }
+                        DesarrolloIcono[i, j].GetComponent<Image>().sprite = spritesDesarrollo[num];
+
+
                     }
                     else
                     {
                         //...la mostramos por pantalla el powerup
                         InformacionInfo[i, j].SetActive(false);
                         pwrInfo[i, j].SetActive(true);
+
+                        //Limpiamos info por si compra que se setee de nuevo
+                        
+
+                        
+                        SociedadIcono[i, j].GetComponent<Image>().sprite = spritesSociedad[0];
+
+                        EconomiaIcono[i, j].GetComponent<Image>().sprite = spritesEconomia[0];
+                        
+                        DesarrolloIcono[i, j].GetComponent<Image>().sprite = spritesDesarrollo[0];
+
 
                         if (gm.jugador.VerificarDisponibilidad(PowerupsName.INVESTIGADO))
                         {
@@ -494,15 +521,20 @@ public class CanvasManager : MonoBehaviour
 
         if(gm.misionesIngame[gm.idMisionesSeleccionadas[i]].listaPersonajes[j].GetVotacion())
         {
-            VotoIcono[i,j].sprite = spriteVotaciones[1];
+            VotoIcono[i,j].GetComponent<Image>().sprite = spriteVotaciones[1];
         } else
         {
-            VotoIcono[i, j].sprite = spriteVotaciones[0];
+            VotoIcono[i, j].GetComponent<Image>().sprite = spriteVotaciones[0];
         }
 
         pwrVoto[i, j].SetActive(false);        
 
         gm.jugador.ConsumirPowerup(PowerupsName.AVERIGUAR_VOTO);
+        if (!gm.jugador.VerificarDisponibilidad(PowerupsName.AVERIGUAR_VOTO))
+        {
+            desactivarPowerUp(PowerupsName.AVERIGUAR_VOTO);
+        }
+
         UpdateInventario();
 
     }
@@ -523,6 +555,12 @@ public class CanvasManager : MonoBehaviour
         pwrInfo[i, j].SetActive(false);
         
         gm.jugador.ConsumirPowerup(PowerupsName.INVESTIGADO);
+        Debug.Log("investigado disponible: " + gm.jugador.VerificarDisponibilidad(PowerupsName.INVESTIGADO));
+
+        if (!gm.jugador.VerificarDisponibilidad(PowerupsName.INVESTIGADO))
+        {
+            desactivarPowerUp(PowerupsName.INVESTIGADO);
+        }
 
         //Actualizamos los sprites de las afiliaciones
         bool[] afinidades = gm.misionesIngame[gm.idMisionesSeleccionadas[i]].listaPersonajes[j].getAfinidadesEstadisticas();
@@ -986,6 +1024,16 @@ void Start()
         Voto[2, 0] = GameObject.Find("M2-S0-Voto");
         Voto[2, 1] = GameObject.Find("M2-S1-Voto");
         Voto[2, 2] = GameObject.Find("M2-S2-Voto");
+
+        VotoIcono[0, 0] = GameObject.Find("M0-S0-VotoInfo");
+        VotoIcono[0, 1] = GameObject.Find("M0-S1-VotoInfo");
+        VotoIcono[0, 2] = GameObject.Find("M0-S2-VotoInfo");
+        VotoIcono[1, 0] = GameObject.Find("M1-S0-VotoInfo");
+        VotoIcono[1, 1] = GameObject.Find("M1-S1-VotoInfo");
+        VotoIcono[1, 2] = GameObject.Find("M1-S2-VotoInfo");
+        VotoIcono[2, 0] = GameObject.Find("M2-S0-VotoInfo");
+        VotoIcono[2, 1] = GameObject.Find("M2-S1-VotoInfo");
+        VotoIcono[2, 2] = GameObject.Find("M2-S2-VotoInfo");
 
         VotoInfo[0, 0] = GameObject.Find("M0-S0-VotoInfo");
         VotoInfo[0, 1] = GameObject.Find("M0-S1-VotoInfo");
