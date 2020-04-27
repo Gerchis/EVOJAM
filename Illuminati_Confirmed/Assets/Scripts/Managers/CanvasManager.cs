@@ -1413,10 +1413,6 @@ void Start()
                 SceneManager.LoadScene(4);
             }
         }
-
-        canvasTurn.SetActive(false);
-        setCanvasMisiones();
-        canvasMisiones.SetActive(true);
         turnoActualNumero++;
 
     }
