@@ -200,16 +200,9 @@ public class GameManager : MonoBehaviour
             do
             {
                 num = Random.Range(0, maxMisionesJugables);
-            } while (misionesIngame[idMisionesSeleccionadas[num]].listaPersonajes.Count >= 3);
-            Debug.LogWarning("ITERACION: " + i);
-            Debug.Log("Random num: " + num);
-            Debug.Log("ID mision random: " + idMisionesSeleccionadas[num]);
-            Debug.Log("Capacidad mision: " + misionesIngame[idMisionesSeleccionadas[num]].listaPersonajes.Capacity);
-            Debug.Log("Count mision: " + misionesIngame[idMisionesSeleccionadas[num]].listaPersonajes.Count);
+            } while (misionesIngame[idMisionesSeleccionadas[num]].listaPersonajes.Count >= 3);            
             misionesIngame[idMisionesSeleccionadas[num]].listaPersonajes.Add(pnjs[i]);
             pnjs[i].setMisionActual(idMisionesSeleccionadas[num]);
-            Debug.Log("POST Capacidad mision: " + misionesIngame[idMisionesSeleccionadas[num]].listaPersonajes.Capacity);
-            Debug.Log("POST Count mision: " + misionesIngame[idMisionesSeleccionadas[num]].listaPersonajes.Count);
         }
     }
 
