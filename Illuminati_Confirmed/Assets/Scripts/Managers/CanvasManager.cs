@@ -1090,7 +1090,7 @@ void Start()
         //Desactivamos parents...
         canvasPrensa.SetActive(false);
         canvasResultados.SetActive(false);
-        canvasTurn.SetActive(true);
+        canvasTurn.SetActive(false);
         setCanvasMisiones();
         canvasMisiones.SetActive(true);
 
