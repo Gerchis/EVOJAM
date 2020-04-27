@@ -594,6 +594,10 @@ public class CanvasManager : MonoBehaviour
     Button[] BotonCensura = new Button[3];
     Button[] BotonPublicidad = new Button[3];
 
+    Image[] iconosPU = new Image[6];
+    public Sprite[] powerUpSprites;
+    Text[] countPU = new Text[6];
+
     void setCanvasNoticias()
     {
         for (int i = 0; i < gm.maxMisionesJugables; i++)
@@ -749,6 +753,8 @@ void Start()
         resultados = new TextMeshProUGUI[2];
         resultados[0] = GameObject.Find("Elementos").GetComponent<TextMeshProUGUI>();
         resultados[1] = GameObject.Find("Numeros").GetComponent<TextMeshProUGUI>();
+
+
 
 
         //Obtenemos referencias de los powerups... DEPRECATED
@@ -958,6 +964,19 @@ void Start()
         sliderInvolucionPositivo = GameObject.Find("SI-sliderInvolucionPositivo").GetComponent<Slider>();
         sliderInvolucionNegativo = GameObject.Find("SI-sliderInvolucionPositivo").GetComponent<Slider>();
 
+        iconosPU[0] = GameObject.Find("IconPU1").GetComponent<Image>();
+        iconosPU[1] = GameObject.Find("IconPU2").GetComponent<Image>();
+        iconosPU[2] = GameObject.Find("IconPU3").GetComponent<Image>();
+        iconosPU[3] = GameObject.Find("IconPU4").GetComponent<Image>();
+        iconosPU[4] = GameObject.Find("IconPU5").GetComponent<Image>();
+        iconosPU[5] = GameObject.Find("IconPU6").GetComponent<Image>();
+
+        countPU[0] = GameObject.Find("Slot1").GetComponent<Text>();
+        countPU[1] = GameObject.Find("Slot2").GetComponent<Text>();
+        countPU[2] = GameObject.Find("Slot3").GetComponent<Text>();
+        countPU[3] = GameObject.Find("Slot4").GetComponent<Text>();
+        countPU[4] = GameObject.Find("Slot5").GetComponent<Text>();
+        countPU[5] = GameObject.Find("Slot6").GetComponent<Text>();
 
         // -----------------
         // |    GENERAL    |
@@ -971,6 +990,39 @@ void Start()
         setCanvasMisiones();
         canvasMisiones.SetActive(true);
 
+    }
+
+    public void UpdateInventario()
+    {
+        for (int i = 0; i < iconosPU.Length; i++)
+        {
+            iconosPU[i].sprite = null;
+            countPU[i].text = null;
+        }
+
+        for (int i = 0; i < gm.jugador.inventario.Count; i++)
+        {
+            iconosPU[i].sprite = powerUpSprites[(int)gm.jugador.inventario[i].pwrNombreEnum];
+
+            switch (gm.jugador.inventario[i].pwrNombreEnum)
+            {
+                case PowerupsName.APOYOS:
+
+                    countPU[i].text = gm.jugador.apoyos.ToString();
+
+                    break;
+                case PowerupsName.SEGUIDORES:
+
+                    countPU[i].text = gm.jugador.seguidores.ToString();
+
+                    break;
+                default:
+
+                    countPU[i].text = gm.jugador.inventario[i].cantidad.ToString();
+
+                    break;
+            }
+        }
     }
 
     public void continueToResult()
