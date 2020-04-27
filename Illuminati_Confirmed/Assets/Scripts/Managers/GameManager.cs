@@ -257,11 +257,6 @@ public class GameManager : MonoBehaviour
         _pj.influencia += _pj.seguidores * 25;
     }
 
-    public void CheckSeguidores()
-    {
-        //Si el resultado de la votacion es favorable a los intereses gana seguidores
-    }
-
     void UpdateInventario()
     {
         GameObject.Find("CanvasManager").GetComponent<CanvasManager>().UpdateInventario();

@@ -1147,8 +1147,14 @@ void Start()
         gm.jugador.inventario[2].pwrNombreEnum = PowerupsName.APOYOS;
     }
 
+    public void AddSeguidores()
+    {
+        gm.jugador.seguidores += gm.modificadorSeguidores;
+    }
+
     public void continueToResult()
     {
+        AddSeguidores();
         gm.AddInfluencia(gm.jugador);
 
         resultados[0].text = "Seguidores Ganados\r\nInfluencia Ganada\r\n-----------------------------------------\r\nTOTAL";
