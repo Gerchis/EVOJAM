@@ -80,6 +80,8 @@ public class CanvasManager : MonoBehaviour
     
     public void setDefinitiveSliders()
     {
+        actualizarSliders(true);
+
         sliderSociedad.value = gm.sociedadActual;
         sliderEconomia.value = gm.economiaActual;
         sliderDesarrollo.value = gm.desarrolloActual;
@@ -141,12 +143,17 @@ public class CanvasManager : MonoBehaviour
         sliderInvolucionNegativo.value = 0;
     }
 
-    public void actualizarSliders()
+    public void actualizarSliders(bool updateActual)
     {
         int previoSociedad;
         int previoEconomia;
         int previoDesarrollo;
         int previoInvolucion;
+
+        int previsionSociedad=0;
+        int previsionEconomia=0;
+        int previsionDesarrollo=0;
+        int previsionInvolucion=0;
 
         int modificacionSociedad = 0;
         int modificacionEconomia = 0;
@@ -169,20 +176,41 @@ public class CanvasManager : MonoBehaviour
         previoDesarrollo = gm.desarrolloActual;
         previoInvolucion = gm.involucionActual;
 
-        //Modificamos el valor de los efectos actuales
-        gm.sociedadActual += modificacionSociedad;
-        gm.economiaActual += modificacionEconomia;
-        gm.desarrolloActual += modificacionDesarrollo;
-        gm.calcularInvolucion();
+        if(updateActual)
+        {
+            //Modificamos el valor de los efectos actuales
+            gm.sociedadActual += modificacionSociedad;
+            gm.economiaActual += modificacionEconomia;
+            gm.desarrolloActual += modificacionDesarrollo;
+            gm.calcularInvolucion();
+        }
+        else
+        {
+            previsionSociedad = previoSociedad + modificacionSociedad;
+            previsionEconomia = previoEconomia + modificacionEconomia;
+            previsionDesarrollo = previoDesarrollo + modificacionDesarrollo;
+            previsionInvolucion = previoInvolucion + modificacionSociedad;
+        }
 
         //Reseteamos a 0 los sliders de Positivo/Negativo
         resetSliders();
 
         //Seteamos los sliders complementarios y principal en función de la evolución
-        setSlidersComplementario(previoSociedad, gm.sociedadActual, Estadisticas.SOCIEDAD);
-        setSlidersComplementario(previoEconomia, gm.economiaActual, Estadisticas.ECONOMIA);
-        setSlidersComplementario(previoDesarrollo, gm.desarrolloActual, Estadisticas.DESARROLLO);
-        setSlidersComplementario(previoInvolucion, gm.involucionActual, Estadisticas.TOTAL_ESTADISTICAS);
+        if (updateActual)
+        {
+            setSlidersComplementario(previoSociedad, gm.sociedadActual, Estadisticas.SOCIEDAD);
+            setSlidersComplementario(previoEconomia, gm.economiaActual, Estadisticas.ECONOMIA);
+            setSlidersComplementario(previoDesarrollo, gm.desarrolloActual, Estadisticas.DESARROLLO);
+            setSlidersComplementario(previoInvolucion, gm.involucionActual, Estadisticas.TOTAL_ESTADISTICAS);
+        }
+        else
+        {
+            setSlidersComplementario(previoSociedad, previsionSociedad, Estadisticas.SOCIEDAD);
+            setSlidersComplementario(previoEconomia, previsionEconomia, Estadisticas.ECONOMIA);
+            setSlidersComplementario(previoDesarrollo, previsionDesarrollo, Estadisticas.DESARROLLO);
+            setSlidersComplementario(previoInvolucion, previsionInvolucion, Estadisticas.TOTAL_ESTADISTICAS);
+        }
+
     }
 
     void setSlidersComplementario(int previo, int actual, Estadisticas efecto)
@@ -701,7 +729,27 @@ public class CanvasManager : MonoBehaviour
         }
         verificarPowerUp(PowerupsName.CENSURA);
         verificarPowerUp(PowerupsName.PUBLICIDAD);
-        actualizarSliders();
+        actualizarSliders(false);
+    }
+
+    void desactivarPowerUp(PowerupsName _pwrName)
+    {
+        for (int i = 0; i < gm.maxMisionesJugables; i++)
+        {
+            switch (_pwrName)
+            {
+                case PowerupsName.CENSURA:
+                BotonCensura[i].interactable = false;
+                break;
+                case PowerupsName.PUBLICIDAD:
+                BotonPublicidad[i].interactable = false;
+                break;
+                case PowerupsName.AVERIGUAR_VOTO:
+                break;
+                case PowerupsName.INVESTIGADO:
+                break;
+            }
+        }
     }
 
     public void aplicarCensura(int idNoticia)
@@ -711,8 +759,17 @@ public class CanvasManager : MonoBehaviour
         efectoEconomia[idNoticia].text = "0";
         efectoDesarrollo[idNoticia].text = "0";
         setNoticiaAfectada(PowerupsName.CENSURA, idNoticia);
-        verificarPowerUp(PowerupsName.CENSURA);
-        actualizarSliders();
+        gm.jugador.ConsumirPowerup(PowerupsName.CENSURA);
+        //verificarPowerUp(PowerupsName.CENSURA);
+        BotonPublicidad[idNoticia].interactable = false;
+        BotonCensura[idNoticia].interactable = false;
+
+        if(!gm.jugador.VerificarDisponibilidad(PowerupsName.CENSURA))
+        {
+            desactivarPowerUp(PowerupsName.CENSURA);
+        }
+
+        actualizarSliders(false);
         UpdateInventario();
     }
 
@@ -732,8 +789,14 @@ public class CanvasManager : MonoBehaviour
         efectoDesarrollo[idNoticia].text = aux.ToString();
 
         setNoticiaAfectada(PowerupsName.PUBLICIDAD, idNoticia);
-        verificarPowerUp(PowerupsName.PUBLICIDAD);
-        actualizarSliders();
+        gm.jugador.ConsumirPowerup(PowerupsName.PUBLICIDAD);
+        //verificarPowerUp(PowerupsName.PUBLICIDAD);
+        BotonPublicidad[idNoticia].interactable = false;
+        if (!gm.jugador.VerificarDisponibilidad(PowerupsName.PUBLICIDAD))
+        {
+            desactivarPowerUp(PowerupsName.PUBLICIDAD);
+        }
+        actualizarSliders(false);
         UpdateInventario();
     }
 
