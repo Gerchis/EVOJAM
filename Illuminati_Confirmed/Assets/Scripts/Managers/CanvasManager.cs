@@ -17,6 +17,7 @@ public class CanvasManager : MonoBehaviour
     GameObject canvasPrensa;
     GameObject canvasResultados;
     GameObject canvasMisiones;
+    GameObject canvasTurn;
 
     public Sprite[] spritesSociedad;
     public Sprite[] spritesEconomia;
@@ -628,6 +629,9 @@ public class CanvasManager : MonoBehaviour
     TextMeshProUGUI[] textosNoticias = new TextMeshProUGUI[3];
     TextMeshProUGUI[] imagenesNoticias = new TextMeshProUGUI[3];
 
+    TextMeshProUGUI turnoActualTexto;
+    int turnoActualNumero;
+
     string[] efectoSociedad = new string[3];
     string[] efectoEconomia = new string[3];
     string[] efectoDesarrollo = new string[3];
@@ -728,10 +732,13 @@ void Start()
         // -----------------
         // |    GENERAL    |
         // -----------------
+        canvasTurn = GameObject.Find("CanvasTurn");
         canvasPrensa = GameObject.Find("CanvasPrensa");
         canvasResultados = GameObject.Find("CanvasResultados");
         canvasMisiones = GameObject.Find("CanvasVotaciones");
         gm = GameObject.Find("GameManager").GetComponent<GameManager>();
+
+        turnoActualNumero = 1;
 
         // ----------------
         // |    PRENSA    |
@@ -803,7 +810,7 @@ void Start()
         resultados[0] = GameObject.Find("Elementos").GetComponent<TextMeshProUGUI>();
         resultados[1] = GameObject.Find("Numeros").GetComponent<TextMeshProUGUI>();
 
-
+        turnoActualTexto = GameObject.Find("TextTurno").GetComponent<TextMeshProUGUI>();
 
 
         //Obtenemos referencias de los powerups... DEPRECATED
@@ -1130,4 +1137,18 @@ void Start()
         }
     }
 
+    public void ActualizarTurno()
+    {    
+        string aux = "Mes " + turnoActualNumero.ToString();
+        turnoActualTexto.text = aux;
+        canvasTurn.SetActive(true);
+        turnoActualNumero++;
+    }
+
+    public void StartNextTurn()
+    {
+        canvasTurn.SetActive(false);
+        setCanvasMisiones();
+        canvasMisiones.SetActive(true);
+    }
 }

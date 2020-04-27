@@ -325,4 +325,21 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    /*index
+        #########################
+        #                       #
+        #  GAME OPTIONS: SOUND  #
+        #                       #
+        ######################### 
+     */
+
+    //Valores actuales de audio
+    public float volumen;
+
+    //Al cambiar desde opciones el volumen se llama a esta funcion
+    public void saveVolumenValue(float _volumen)
+    {
+        volumen = _volumen;
+    }
+
 }
