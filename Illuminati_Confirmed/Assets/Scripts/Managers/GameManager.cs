@@ -28,6 +28,7 @@ public enum RolSecreto
 
 public enum PowerupsName
 {
+    INFLUENCIA,
     CENSURA,
     PUBLICIDAD,
     INVESTIGADO,

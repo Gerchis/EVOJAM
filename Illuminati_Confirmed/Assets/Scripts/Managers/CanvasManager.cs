@@ -662,9 +662,9 @@ public class CanvasManager : MonoBehaviour
     Button[] BotonCensura = new Button[3];
     Button[] BotonPublicidad = new Button[3];
 
-    Image[] iconosPU = new Image[6];
+    Image[] iconosPU = new Image[7];
     public Sprite[] powerUpSprites;
-    Text[] countPU = new Text[6];
+    Text[] countPU = new Text[7];
 
     public void setCanvasNoticias()
     {
@@ -1049,6 +1049,7 @@ void Start()
         iconosPU[3] = GameObject.Find("IconPU4").GetComponent<Image>();
         iconosPU[4] = GameObject.Find("IconPU5").GetComponent<Image>();
         iconosPU[5] = GameObject.Find("IconPU6").GetComponent<Image>();
+        iconosPU[6] = GameObject.Find("IconPU7").GetComponent<Image>();
 
         countPU[0] = GameObject.Find("Slot1").GetComponent<Text>();
         countPU[1] = GameObject.Find("Slot2").GetComponent<Text>();
@@ -1056,6 +1057,7 @@ void Start()
         countPU[3] = GameObject.Find("Slot4").GetComponent<Text>();
         countPU[4] = GameObject.Find("Slot5").GetComponent<Text>();
         countPU[5] = GameObject.Find("Slot6").GetComponent<Text>();
+        countPU[6] = GameObject.Find("Slot7").GetComponent<Text>();
 
         // -----------------
         // |    GENERAL    |
@@ -1096,6 +1098,12 @@ void Start()
                     countPU[i].text = gm.jugador.seguidores.ToString();
 
                     break;
+                case PowerupsName.INFLUENCIA:
+
+                    countPU[i].text = gm.jugador.influencia.ToString();
+
+                    break;
+
                 default:
 
                     countPU[i].text = gm.jugador.inventario[i].cantidad.ToString();
@@ -1108,10 +1116,13 @@ void Start()
     public void initSeguidores()
     {
         gm.jugador.inventario.Add(new Powerups());
-        gm.jugador.inventario[0].pwrNombreEnum = PowerupsName.SEGUIDORES;
+        gm.jugador.inventario[0].pwrNombreEnum = PowerupsName.INFLUENCIA;
 
         gm.jugador.inventario.Add(new Powerups());
-        gm.jugador.inventario[1].pwrNombreEnum = PowerupsName.APOYOS;
+        gm.jugador.inventario[1].pwrNombreEnum = PowerupsName.SEGUIDORES;
+
+        gm.jugador.inventario.Add(new Powerups());
+        gm.jugador.inventario[2].pwrNombreEnum = PowerupsName.APOYOS;
     }
 
     public void continueToResult()
