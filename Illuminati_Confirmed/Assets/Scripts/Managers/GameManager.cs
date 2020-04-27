@@ -269,7 +269,7 @@ public class GameManager : MonoBehaviour
 
     public void BuyPowerUp(PowerupsName _pw)
     {
-        if (precios[(int)_pw + 1] <= jugador.influencia)
+        if (precios[(int)_pw - 1] <= jugador.influencia)
         {
             for (int i = 0; i < jugador.inventario.Count; i++)
             {
@@ -278,7 +278,7 @@ public class GameManager : MonoBehaviour
                     
                     jugador.inventario[i].cantidad++;
 
-                    jugador.influencia -= precios[(int)_pw + 1];
+                    jugador.influencia -= precios[(int)_pw - 1];
                     UpdateInventario();
                     return;
                 }
@@ -292,7 +292,7 @@ public class GameManager : MonoBehaviour
 
             jugador.inventario.Add(powerUp);
 
-            jugador.influencia -= precios[(int)_pw + 1];
+            jugador.influencia -= precios[(int)_pw -1 ];
 
             UpdateInventario();
         }
