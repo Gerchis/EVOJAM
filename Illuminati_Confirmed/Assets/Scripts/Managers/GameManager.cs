@@ -76,14 +76,13 @@ public class GameManager : MonoBehaviour
 
         //TODO: Hacer flujo de rondas. Win/Lose GAME
         turnActual = 0;
-        turnMax = 12;
+        turnMax = 6;
 
         for (int i = 0; i < (int)RolSecreto.TOTAL_ROLES; i++)
         {
             avataresControl[i] = false;
             rolControl[i] = false;
         }
-
 
         SetValuesPjs();
         Debug.Log("InitPlayer Seguidores: " + seguidores);

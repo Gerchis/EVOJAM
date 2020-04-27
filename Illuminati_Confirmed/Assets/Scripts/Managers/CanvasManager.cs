@@ -715,7 +715,6 @@ public class CanvasManager : MonoBehaviour
      */
     public Sprite spriteCensura;
     public Sprite spritePublicidad;
-    public Sprite spriteNoticia;
 
     TextMeshProUGUI[] titulosNoticias = new TextMeshProUGUI[3];
     TextMeshProUGUI[] textosNoticias = new TextMeshProUGUI[3];
@@ -751,7 +750,6 @@ public class CanvasManager : MonoBehaviour
         {
             titulosNoticias[i].text = gm.noticiasIngame[gm.idMisionesSeleccionadas[i]].titulo;
             textosNoticias[i].text = gm.noticiasIngame[gm.idMisionesSeleccionadas[i]].texto;
-            ImagenNoticia[i].sprite = spriteNoticia;
 
             efectoSociedad[i].text = gm.noticiasIngame[gm.idMisionesSeleccionadas[i]].efectosNoticia[0].valor.ToString();
             efectoEconomia[i].text = gm.noticiasIngame[gm.idMisionesSeleccionadas[i]].efectosNoticia[1].valor.ToString();
@@ -1213,13 +1211,17 @@ void Start()
         // -----------------
 
         gm.InitGame();
+        for (int i = 0; i < gm.misionesIngame.Length; i++)
+        {
+            gm.misionesIngame[i].misionJugada = false;
+        }
 
         //Desactivamos parents...
         canvasPrensa.SetActive(false);
         canvasResultados.SetActive(false);
-        canvasTurn.SetActive(false);
-        setCanvasMisiones();
-        canvasMisiones.SetActive(true);
+        canvasTurn.SetActive(true);
+        canvasMisiones.SetActive(false);
+        
 
     }
 
