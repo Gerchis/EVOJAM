@@ -1221,6 +1221,8 @@ void Start()
         setCanvasMisiones();
         canvasMisiones.SetActive(true);
 
+        ActualizarTurno();
+
     }
 
     public void UpdateInventario()
