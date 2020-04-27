@@ -27,8 +27,8 @@ public class CanvasManager : MonoBehaviour
     public Sprite spriteLocation;
 
 
-    public TextMeshProUGUI[] preciosPowerUps;
-    public TextMeshProUGUI[] resultados;
+    Text[] preciosPowerUps = new Text[6];
+    TextMeshProUGUI[] resultados = new TextMeshProUGUI[2];
 
 
     /*index
@@ -77,15 +77,20 @@ public class CanvasManager : MonoBehaviour
     //Por cada noticia[] > efecto[]
     int[,] modificacionValores = new int[3,3];
 
+    
+    public void setDefinitiveSliders()
+    {
+        sliderSociedad.value = gm.sociedadActual;
+        sliderEconomia.value = gm.economiaActual;
+        sliderDesarrollo.value = gm.desarrolloActual;
+        sliderInvolucion.value = gm.involucionActual;
+
+        resetSliders();
+
+    }
 
     public void initSlidersValues()
     {
-        Debug.Log("PLAYER INFO");
-        Debug.Log("Rol: "+gm.jugador.getRol());
-        Debug.Log("SO: "+gm.sociedadObjetivo);
-        Debug.Log("EO: "+ gm.economiaObjetivo);
-        Debug.Log("DO: "+ gm.desarrolloObjetivo);
-        Debug.Log("IO: " + gm.involucionObjetivo);
 
         if(gm.sociedadObjetivo == -1)
         {
@@ -112,15 +117,30 @@ public class CanvasManager : MonoBehaviour
         {
             sliderDesarrolloObjetivo.GetComponent<Slider>().value = gm.desarrolloObjetivo;
         }
-        
-        sliderInvolucionObjetivo.GetComponent<Slider>().value = gm.involucionObjetivo;
 
         sliderSociedad.value = gm.sociedadActual;
         sliderEconomia.value = gm.economiaActual;
         sliderDesarrollo.value = gm.desarrolloActual;
+
+        sliderInvolucionObjetivo.GetComponent<Slider>().value = gm.involucionObjetivo;
+        gm.calcularInvolucion();
         sliderInvolucion.value = gm.involucionActual;
     }
 
+    void resetSliders()
+    {
+        sliderSociedadPositivo.value = 0;
+        sliderSociedadNegativo.value = 0;
+
+        sliderEconomiaPositivo.value = 0;
+        sliderEconomiaNegativo.value = 0;
+
+        sliderDesarrolloPositivo.value = 0;
+        sliderDesarrolloNegativo.value = 0;
+
+        sliderInvolucionPositivo.value = 0;
+        sliderInvolucionNegativo.value = 0;
+    }
 
     public void actualizarSliders()
     {
@@ -157,20 +177,13 @@ public class CanvasManager : MonoBehaviour
         gm.calcularInvolucion();
 
         //Reseteamos a 0 los sliders de Positivo/Negativo
-        sliderSociedadPositivo.value = 0;
-        sliderSociedadNegativo.value = 0;
-        sliderEconomiaPositivo.value = 0;
-        sliderEconomiaNegativo.value = 0;
-        sliderDesarrolloPositivo.value = 0;
-        sliderDesarrolloNegativo.value = 0;
-        sliderInvolucionPositivo.value = 0;
-        sliderInvolucionNegativo.value = 0;
+        resetSliders();
 
         //Seteamos los sliders complementarios y principal en función de la evolución
         setSlidersComplementario(previoSociedad, gm.sociedadActual, Estadisticas.SOCIEDAD);
         setSlidersComplementario(previoEconomia, gm.economiaActual, Estadisticas.ECONOMIA);
         setSlidersComplementario(previoDesarrollo, gm.desarrolloActual, Estadisticas.DESARROLLO);
-        setSlidersComplementario(previoDesarrollo, gm.desarrolloActual, Estadisticas.TOTAL_ESTADISTICAS);
+        setSlidersComplementario(previoInvolucion, gm.involucionActual, Estadisticas.TOTAL_ESTADISTICAS);
     }
 
     void setSlidersComplementario(int previo, int actual, Estadisticas efecto)
@@ -292,7 +305,6 @@ public class CanvasManager : MonoBehaviour
     Image[,] DesarrolloIcono = new Image[3, 3];
     Image [,] VotoIcono = new Image[3, 3];
     GameObject[,] Poderes = new GameObject[3, 3];
-    
 
     //public GameObject[] informacionesConocidas;
 
@@ -305,7 +317,10 @@ public class CanvasManager : MonoBehaviour
         //Para cada mision en pantalla
         for (int i = 0; i < gm.maxMisionesJugables; i++)
         {
-            //Variables locales    
+            //Ocultamos panel de playerSlot
+            spBackground[i].SetActive(false);
+            spVotoSI[i].SetActive(false);
+            spVotoNO[i].SetActive(false);
 
             //Mostramos/ocultamos los iconos relevantes de la misión
             switch (i)
@@ -378,7 +393,9 @@ public class CanvasManager : MonoBehaviour
                 else //Para cada slot desocupado de la misión...
                 {
                     //Desactivamos que se pueda abrir la ficha
+                    iaAvatar[i, j].GetComponent<Image>().sprite = null;
                     iaAvatar[i,j].interactable = false;
+                    
                 }    
             }
         }
@@ -457,6 +474,8 @@ public class CanvasManager : MonoBehaviour
         pwrVoto[i, j].SetActive(false);        
 
         gm.jugador.ConsumirPowerup(PowerupsName.AVERIGUAR_VOTO);
+        UpdateInventario();
+
     }
 
     public void aplicarPwrInfo(string idParams)
@@ -488,6 +507,8 @@ public class CanvasManager : MonoBehaviour
 
         if (afinidades[2]) { num = 1; } else { num = 2; }
         DesarrolloIcono[i, j].GetComponent<Image>().sprite = spritesDesarrollo[num];
+
+        UpdateInventario();
     }
 
 
@@ -522,6 +543,11 @@ public class CanvasManager : MonoBehaviour
     
     public void enterPlayerSlot(int m)
     {
+        //BY DEFAULT: Si usuario no selecciona una opción SI/NO. Vota automaticamente SI.
+        gm.jugador.SetVotacion(true);
+
+
+        //Logica de acceso:
         for (int i = 0; i < gm.maxMisionesJugables; i++)
         {
             if (i != m) //Slots donde no estamos
@@ -647,12 +673,14 @@ public class CanvasManager : MonoBehaviour
     Button[] BotonCensura = new Button[3];
     Button[] BotonPublicidad = new Button[3];
 
-    Image[] iconosPU = new Image[6];
+    Image[] iconosPU = new Image[7];
     public Sprite[] powerUpSprites;
-    Text[] countPU = new Text[6];
+    Text[] countPU = new Text[7];
 
-    void setCanvasNoticias()
+    public void setCanvasNoticias()
     {
+        gm.exitMisiones();
+
         for (int i = 0; i < gm.maxMisionesJugables; i++)
         {
             titulosNoticias[i].text = gm.noticiasIngame[gm.idMisionesSeleccionadas[i]].titulo;
@@ -686,6 +714,7 @@ public class CanvasManager : MonoBehaviour
         setNoticiaAfectada(PowerupsName.CENSURA, idNoticia);
         verificarPowerUp(PowerupsName.CENSURA);
         actualizarSliders();
+        UpdateInventario();
     }
 
     public void aplicarPublicidad(int idNoticia)
@@ -706,6 +735,7 @@ public class CanvasManager : MonoBehaviour
         setNoticiaAfectada(PowerupsName.PUBLICIDAD, idNoticia);
         verificarPowerUp(PowerupsName.PUBLICIDAD);
         actualizarSliders();
+        UpdateInventario();
     }
 
 
@@ -789,27 +819,38 @@ void Start()
         ImagenNoticia[1] = GameObject.Find("N2-Imagen").GetComponent<Image>();
         ImagenNoticia[2] = GameObject.Find("N3-Imagen").GetComponent<Image>();
 
-        preciosPowerUps = new TextMeshProUGUI[6];
-        preciosPowerUps[0] = GameObject.Find("Price 1").GetComponent<TextMeshProUGUI>();
-        preciosPowerUps[1] = GameObject.Find("Price 2").GetComponent<TextMeshProUGUI>();
-        preciosPowerUps[2] = GameObject.Find("Price 3").GetComponent<TextMeshProUGUI>();
-        preciosPowerUps[3] = GameObject.Find("Price 4").GetComponent<TextMeshProUGUI>();
-        preciosPowerUps[4] = GameObject.Find("Price 5").GetComponent<TextMeshProUGUI>();
-        preciosPowerUps[5] = GameObject.Find("Price 6").GetComponent<TextMeshProUGUI>();
+        preciosPowerUps[0] = GameObject.Find("Price1").GetComponent<Text>();
+        preciosPowerUps[1] = GameObject.Find("Price2").GetComponent<Text>();
+        preciosPowerUps[2] = GameObject.Find("Price3").GetComponent<Text>();
+        preciosPowerUps[3] = GameObject.Find("Price4").GetComponent<Text>();
+        preciosPowerUps[4] = GameObject.Find("Price5").GetComponent<Text>();
+        preciosPowerUps[5] = GameObject.Find("Price6").GetComponent<Text>();
+
+        preciosPowerUps[0].text = gm.precios[0].ToString();
+        preciosPowerUps[1].text = gm.precios[1].ToString();
+        preciosPowerUps[2].text = gm.precios[2].ToString();
+        preciosPowerUps[3].text = gm.precios[3].ToString();
+        preciosPowerUps[4].text = gm.precios[4].ToString();
+        preciosPowerUps[5].text = gm.precios[5].ToString();
 
         BotonCensura[0] = GameObject.Find("N1-BotonCensurar").GetComponent<Button>();
         BotonCensura[1] = GameObject.Find("N2-BotonCensurar").GetComponent<Button>();
         BotonCensura[2] = GameObject.Find("N3-BotonCensurar").GetComponent<Button>();
 
         BotonPublicidad[0] = GameObject.Find("N1-BotonPublicitar").GetComponent<Button>();
-        BotonPublicidad[0] = GameObject.Find("N2-BotonPublicitar").GetComponent<Button>();
-        BotonPublicidad[0] = GameObject.Find("N3-BotonPublicitar").GetComponent<Button>();
+        BotonPublicidad[1] = GameObject.Find("N2-BotonPublicitar").GetComponent<Button>();
+        BotonPublicidad[2] = GameObject.Find("N3-BotonPublicitar").GetComponent<Button>();
 
-
-        resultados = new TextMeshProUGUI[2];
         resultados[0] = GameObject.Find("Elementos").GetComponent<TextMeshProUGUI>();
         resultados[1] = GameObject.Find("Numeros").GetComponent<TextMeshProUGUI>();
 
+        GameObject.Find("Price1").SetActive(false);
+        GameObject.Find("Price2").SetActive(false);
+        GameObject.Find("Price3").SetActive(false);
+        GameObject.Find("Price4").SetActive(false);
+        GameObject.Find("Price5").SetActive(false);
+        GameObject.Find("Price6").SetActive(false);
+        
         turnoActualTexto = GameObject.Find("TextTurno").GetComponent<TextMeshProUGUI>();
 
 
@@ -989,12 +1030,12 @@ void Start()
         spVotoSI[2] = GameObject.Find("M2-SP-VotoSI");
 
         spAvatar[0] = GameObject.Find("M0-SP-Avatar");
-        spAvatar[1] = GameObject.Find("M0-SP-Avatar");
-        spAvatar[2] = GameObject.Find("M0-SP-Avatar");
+        spAvatar[1] = GameObject.Find("M1-SP-Avatar");
+        spAvatar[2] = GameObject.Find("M2-SP-Avatar");
 
         spBackground[0] = GameObject.Find("M0-SP-Background");
-        spBackground[1] = GameObject.Find("M0-SP-Background");
-        spBackground[2] = GameObject.Find("M0-SP-Background");
+        spBackground[1] = GameObject.Find("M1-SP-Background");
+        spBackground[2] = GameObject.Find("M2-SP-Background");
 
 
 
@@ -1031,6 +1072,7 @@ void Start()
         iconosPU[3] = GameObject.Find("IconPU4").GetComponent<Image>();
         iconosPU[4] = GameObject.Find("IconPU5").GetComponent<Image>();
         iconosPU[5] = GameObject.Find("IconPU6").GetComponent<Image>();
+        iconosPU[6] = GameObject.Find("IconPU7").GetComponent<Image>();
 
         countPU[0] = GameObject.Find("Slot1").GetComponent<Text>();
         countPU[1] = GameObject.Find("Slot2").GetComponent<Text>();
@@ -1038,6 +1080,7 @@ void Start()
         countPU[3] = GameObject.Find("Slot4").GetComponent<Text>();
         countPU[4] = GameObject.Find("Slot5").GetComponent<Text>();
         countPU[5] = GameObject.Find("Slot6").GetComponent<Text>();
+        countPU[6] = GameObject.Find("Slot7").GetComponent<Text>();
 
         // -----------------
         // |    GENERAL    |
@@ -1057,13 +1100,14 @@ void Start()
     {
         for (int i = 0; i < iconosPU.Length; i++)
         {
-            iconosPU[i].sprite = null;
+            iconosPU[i].color = new Color(255, 255, 255, 0);
             countPU[i].text = null;
         }
 
         for (int i = 0; i < gm.jugador.inventario.Count; i++)
         {
             iconosPU[i].sprite = powerUpSprites[(int)gm.jugador.inventario[i].pwrNombreEnum];
+            iconosPU[i].color = new Color(255, 255, 255, 1);
 
             switch (gm.jugador.inventario[i].pwrNombreEnum)
             {
@@ -1077,6 +1121,12 @@ void Start()
                     countPU[i].text = gm.jugador.seguidores.ToString();
 
                     break;
+                case PowerupsName.INFLUENCIA:
+
+                    countPU[i].text = gm.jugador.influencia.ToString();
+
+                    break;
+
                 default:
 
                     countPU[i].text = gm.jugador.inventario[i].cantidad.ToString();
@@ -1086,12 +1136,21 @@ void Start()
         }
     }
 
+    public void initSeguidores()
+    {
+        gm.jugador.inventario.Add(new Powerups());
+        gm.jugador.inventario[0].pwrNombreEnum = PowerupsName.INFLUENCIA;
+
+        gm.jugador.inventario.Add(new Powerups());
+        gm.jugador.inventario[1].pwrNombreEnum = PowerupsName.SEGUIDORES;
+
+        gm.jugador.inventario.Add(new Powerups());
+        gm.jugador.inventario[2].pwrNombreEnum = PowerupsName.APOYOS;
+    }
+
     public void continueToResult()
     {
-        for (int i = 0; i < gm.precios.Length; i++)
-        {
-            preciosPowerUps[i].text = gm.precios[i].ToString();
-        }
+    
 
         resultados[0].text = "Seguidores Ganados\r\nInfluencia Ganada\r\n-----------------------------------------\r\nTOTAL";
         resultados[1].text = gm.modificadorSeguidores.ToString() + "\r\n" + gm.jugador.seguidores.ToString() + "\r\n-----------------------------------------\r\n" + gm.jugador.influencia.ToString();

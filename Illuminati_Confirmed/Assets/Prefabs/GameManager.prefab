@@ -55,7 +55,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 94f5f0651e0ed204098818689e8ddf67, type: 3}
   - {fileID: 21300000, guid: 8b86003dc3a232e46a9a86557ace5874, type: 3}
   playerAvatar: {fileID: 0}
-  precios: 000000000000000000000000000000000000000000000000
+  precios: fa00000096000000f4010000320000006400000032000000
   sociedadActual: 0
   economiaActual: 0
   desarrolloActual: 0
@@ -63,7 +63,7 @@ MonoBehaviour:
   economiaObjetivo: 0
   desarrolloObjetivo: 0
   involucionActual: 0
-  involucionObjectivo: 0
+  involucionObjetivo: 0
   misionesIngame:
   - titulo: Reinstaurar ley de esclavitud.
     misionJugada: 0
@@ -283,4 +283,4 @@ MonoBehaviour:
       valor: -15
     - estadistica: 2
       valor: 15
-  modificadorSeguidores: 1
+  modificadorSeguidores: 50
