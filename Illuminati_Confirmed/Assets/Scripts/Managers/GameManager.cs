@@ -85,6 +85,7 @@ public class GameManager : MonoBehaviour
 
 
         SetValuesPjs();
+        Debug.Log("InitPlayer Seguidores: " + seguidores);
         jugador = new Personajes((RolSecreto)randRol, avatares[randAvatar], influencia, apoyos, seguidores, false);
         playerAvatar = GameObject.Find("PlayerAvatar").GetComponent<Image>();
         playerAvatar.sprite = avatares[randAvatar];
@@ -94,8 +95,9 @@ public class GameManager : MonoBehaviour
             pnjs[i] = new Personajes((RolSecreto)randRol, avatares[randAvatar], influencia, apoyos, seguidores, true);
         }
 
-        //TODO: Hacer INIT de sliders
         initSlidersValues();
+        initSeguidores();
+        UpdateInventario();
     }
 
     void actualizarSliders()
@@ -251,7 +253,7 @@ public class GameManager : MonoBehaviour
 
     public void AddInfluencia( Personajes _pj)
     {
-        _pj.influencia += _pj.seguidores;
+        _pj.influencia += _pj.seguidores * 25;
     }
 
     public void CheckSeguidores()
@@ -262,6 +264,11 @@ public class GameManager : MonoBehaviour
     void UpdateInventario()
     {
         GameObject.Find("CanvasManager").GetComponent<CanvasManager>().UpdateInventario();
+    }
+
+    void initSeguidores()
+    {
+        GameObject.Find("CanvasManager").GetComponent<CanvasManager>().initSeguidores();
     }
 
     public void BuyPowerUp(PowerupsName _pw)

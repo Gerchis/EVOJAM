@@ -85,7 +85,6 @@ public class CanvasManager : MonoBehaviour
         sliderInvolucion.value = gm.involucionActual;
 
         resetSliders();
-
     }
 
     public void initSlidersValues()
@@ -1130,7 +1129,7 @@ void Start()
 
     public void continueToResult()
     {
-    
+        gm.AddInfluencia(gm.jugador);
 
         resultados[0].text = "Seguidores Ganados\r\nInfluencia Ganada\r\n-----------------------------------------\r\nTOTAL";
         resultados[1].text = gm.modificadorSeguidores.ToString() + "\r\n" + gm.jugador.seguidores.ToString() + "\r\n-----------------------------------------\r\n" + gm.jugador.influencia.ToString();
