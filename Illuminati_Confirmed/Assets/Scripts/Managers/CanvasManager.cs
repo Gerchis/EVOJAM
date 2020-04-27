@@ -30,6 +30,8 @@ public class CanvasManager : MonoBehaviour
     Text[] preciosPowerUps = new Text[6];
     TextMeshProUGUI[] resultados = new TextMeshProUGUI[2];
 
+    Button[] botonesTienda = new Button[6];
+
 
     /*index
      * ###################
@@ -667,6 +669,8 @@ public class CanvasManager : MonoBehaviour
     public void ComprarPowerup(int pwrName)
     {
         gm.BuyPowerUp((PowerupsName)pwrName);
+
+        checkPrices();
     }
 
     /*index
@@ -1144,6 +1148,13 @@ void Start()
         countPU[5] = GameObject.Find("Slot6").GetComponent<Text>();
         countPU[6] = GameObject.Find("Slot7").GetComponent<Text>();
 
+        botonesTienda[0] = GameObject.Find("ButtonShop1").GetComponent<Button>();
+        botonesTienda[1] = GameObject.Find("ButtonShop2").GetComponent<Button>();
+        botonesTienda[2] = GameObject.Find("ButtonShop3").GetComponent<Button>();
+        botonesTienda[3] = GameObject.Find("ButtonShop4").GetComponent<Button>();
+        botonesTienda[4] = GameObject.Find("ButtonShop5").GetComponent<Button>();
+        botonesTienda[5] = GameObject.Find("ButtonShop6").GetComponent<Button>();
+
         // -----------------
         // |    GENERAL    |
         // -----------------
@@ -1222,10 +1233,26 @@ void Start()
         gm.AddInfluencia(gm.jugador);
         
 
-        resultados[0].text = "Seguidores Ganados\r\nInfluencia Ganada\r\n-----------------------------------------\r\nTOTAL";
-        resultados[1].text = gm.modificadorSeguidores.ToString() + "\r\n" + (gm.jugador.seguidores * 25).ToString() + "\r\n-----------------------------------------\r\n" + gm.jugador.influencia.ToString();
+        resultados[0].text = "Seguidores Ganados\r\nInfluencia Actual\r\nInfluencia Ganada\r\n-----------------------------------------\r\nTOTAL";
+        resultados[1].text = gm.modificadorSeguidores.ToString() + "\r\n" + (gm.jugador.influencia - gm.jugador.seguidores*25) + "\r\n" + (gm.jugador.seguidores * 25).ToString() + "\r\n-----------------------------------------\r\n" + gm.jugador.influencia.ToString();
 
         UpdateInventario();
+        checkPrices();
+    }
+
+    public void checkPrices()
+    {
+        for (int i = 0; i < botonesTienda.Length; i++)
+        {
+            if (gm.precios[i] > gm.jugador.influencia)
+            {
+                botonesTienda[i].interactable = false;
+            }
+            else
+            {
+                botonesTienda[i].interactable = true;
+            }
+        }
     }
 
     void verificarPowerUp(PowerupsName _name)
