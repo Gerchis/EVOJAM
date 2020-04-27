@@ -1307,5 +1307,21 @@ void Start()
         canvasTurn.SetActive(false);
         setCanvasMisiones();
         canvasMisiones.SetActive(true);
+
+        //TODO verifica victoria o derrota: 
+        /*
+         * sociedadObjetivo
+         * sociedadActual
+    economiaObjetivo;
+    economiaActual
+    desarrolloObjetivo;  
+    desarrolloActual
+    
+        USA SOLO ESTA!!!!! >>>>
+    gm.involucionActual;
+    gm.involucionObjetivo;
+         */
+
+
     }
 }

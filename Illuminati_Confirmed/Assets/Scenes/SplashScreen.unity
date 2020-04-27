@@ -316,8 +316,8 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_text: "El r\xE1pido desarrollo de la humanidad esta atrayendo atenciones de fuera
     de nuestro sistema solar. Tu eres un iluminati cuya tarea es lograr que la humanidad
-    involucione segun tus intereses para que cuando dentro de un a\xF1o llegue la
-    nave de exploracion alienigena, no nos considere una amenaza y deje a la humanidad
+    involucione segun tus intereses para que cuando dentro de 6 meses llegue la nave
+    de exploracion alienigena, no nos considere una amenaza y deje a la humanidad
     intacta.\n\xA1Buena suerte!"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -387,7 +387,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_textInfo:
     textComponent: {fileID: 1048922292}
-    characterCount: 338
+    characterCount: 339
     spriteCount: 0
     spaceCount: 55
     wordCount: 56
