@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class CanvasManager : MonoBehaviour
@@ -1310,8 +1311,8 @@ void Start()
 
         //TODO verifica victoria o derrota: 
         /*
-         * sociedadObjetivo
-         * sociedadActual
+    sociedadObjetivo
+    sociedadActual
     economiaObjetivo;
     economiaActual
     desarrolloObjetivo;  
@@ -1321,6 +1322,24 @@ void Start()
     gm.involucionActual;
     gm.involucionObjetivo;
          */
+
+        if(turnoActualNumero == 6)
+        {
+            //Derrota
+            if (gm.involucionActual >= gm.involucionObjetivo)
+            {
+                SceneManager.LoadScene(3);
+            }
+            //Victoria
+            if( gm.sociedadActual >= gm.sociedadObjetivo && gm.economiaActual >= gm.economiaObjetivo && gm.desarrolloActual >= gm.desarrolloObjetivo && gm.involucionActual < gm.involucionObjetivo)
+            {
+                SceneManager.LoadScene(5);
+            }
+            if (gm.involucionActual < gm.involucionObjetivo)
+            {
+                SceneManager.LoadScene(4);
+            }
+        }
 
 
     }

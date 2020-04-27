@@ -4,5 +4,23 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/SplashScreen.unity
+    guid: 7b24a95edf357764a843adeecdeee987
+  - enabled: 1
+    path: Assets/Scenes/Menu.unity
+    guid: cc5197340da0fb04183b82d875c4a586
+  - enabled: 1
+    path: Assets/Scenes/Juego.unity
+    guid: b0cb2f16654af164da5f7ca771e0319b
+  - enabled: 1
+    path: Assets/Scenes/Derrota.unity
+    guid: 074b079ff0a322e49950f89ace903b30
+  - enabled: 1
+    path: Assets/Scenes/Victoria.unity
+    guid: 8f63ab6dc2f7f8f429a6aed1c32f524a
+  - enabled: 1
+    path: Assets/Scenes/VictoriaTotal.unity
+    guid: 7d7f4d2aa95bcd64e84785b8fb2cf459
   m_configObjects: {}
