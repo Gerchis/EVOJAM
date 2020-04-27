@@ -1219,11 +1219,13 @@ void Start()
         // |    GENERAL    |
         // -----------------
 
-        gm.InitGame();
         for (int i = 0; i < gm.misionesIngame.Length; i++)
         {
             gm.misionesIngame[i].misionJugada = false;
+            gm.misionesIngame[i].listaPersonajes.Clear();
         }
+        gm.InitGame();
+        
 
         //Desactivamos parents...
         canvasPrensa.SetActive(false);
