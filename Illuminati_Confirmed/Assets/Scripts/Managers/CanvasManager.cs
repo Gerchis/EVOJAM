@@ -1354,7 +1354,6 @@ void Start()
         turnoActualTexto.text = aux;
         canvasResultados.SetActive(false);
         canvasTurn.SetActive(true);
-        turnoActualNumero++;
     }
 
     public void StartNextTurn()
@@ -1394,7 +1393,7 @@ void Start()
                 SceneManager.LoadScene(4);
             }
         }
-
+        turnoActualNumero++;
 
     }
 }
