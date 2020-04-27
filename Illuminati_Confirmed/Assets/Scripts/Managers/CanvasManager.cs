@@ -17,6 +17,7 @@ public class CanvasManager : MonoBehaviour
     GameObject canvasPrensa;
     GameObject canvasResultados;
     GameObject canvasMisiones;
+    GameObject canvasTurn;
 
     public Sprite[] spritesSociedad;
     public Sprite[] spritesEconomia;
@@ -653,6 +654,9 @@ public class CanvasManager : MonoBehaviour
     TextMeshProUGUI[] textosNoticias = new TextMeshProUGUI[3];
     TextMeshProUGUI[] imagenesNoticias = new TextMeshProUGUI[3];
 
+    TextMeshProUGUI turnoActualTexto;
+    int turnoActualNumero;
+
     string[] efectoSociedad = new string[3];
     string[] efectoEconomia = new string[3];
     string[] efectoDesarrollo = new string[3];
@@ -668,9 +672,9 @@ public class CanvasManager : MonoBehaviour
     Button[] BotonCensura = new Button[3];
     Button[] BotonPublicidad = new Button[3];
 
-    Image[] iconosPU = new Image[6];
+    Image[] iconosPU = new Image[7];
     public Sprite[] powerUpSprites;
-    Text[] countPU = new Text[6];
+    Text[] countPU = new Text[7];
 
     public void setCanvasNoticias()
     {
@@ -757,10 +761,13 @@ void Start()
         // -----------------
         // |    GENERAL    |
         // -----------------
+        canvasTurn = GameObject.Find("CanvasTurn");
         canvasPrensa = GameObject.Find("CanvasPrensa");
         canvasResultados = GameObject.Find("CanvasResultados");
         canvasMisiones = GameObject.Find("CanvasVotaciones");
         gm = GameObject.Find("GameManager").GetComponent<GameManager>();
+
+        turnoActualNumero = 1;
 
         // ----------------
         // |    PRENSA    |
@@ -842,6 +849,8 @@ void Start()
         GameObject.Find("Price4").SetActive(false);
         GameObject.Find("Price5").SetActive(false);
         GameObject.Find("Price6").SetActive(false);
+        
+        turnoActualTexto = GameObject.Find("TextTurno").GetComponent<TextMeshProUGUI>();
 
 
         //Obtenemos referencias de los powerups... DEPRECATED
@@ -1062,6 +1071,7 @@ void Start()
         iconosPU[3] = GameObject.Find("IconPU4").GetComponent<Image>();
         iconosPU[4] = GameObject.Find("IconPU5").GetComponent<Image>();
         iconosPU[5] = GameObject.Find("IconPU6").GetComponent<Image>();
+        iconosPU[6] = GameObject.Find("IconPU7").GetComponent<Image>();
 
         countPU[0] = GameObject.Find("Slot1").GetComponent<Text>();
         countPU[1] = GameObject.Find("Slot2").GetComponent<Text>();
@@ -1069,6 +1079,7 @@ void Start()
         countPU[3] = GameObject.Find("Slot4").GetComponent<Text>();
         countPU[4] = GameObject.Find("Slot5").GetComponent<Text>();
         countPU[5] = GameObject.Find("Slot6").GetComponent<Text>();
+        countPU[6] = GameObject.Find("Slot7").GetComponent<Text>();
 
         // -----------------
         // |    GENERAL    |
@@ -1109,6 +1120,12 @@ void Start()
                     countPU[i].text = gm.jugador.seguidores.ToString();
 
                     break;
+                case PowerupsName.INFLUENCIA:
+
+                    countPU[i].text = gm.jugador.influencia.ToString();
+
+                    break;
+
                 default:
 
                     countPU[i].text = gm.jugador.inventario[i].cantidad.ToString();
@@ -1121,10 +1138,13 @@ void Start()
     public void initSeguidores()
     {
         gm.jugador.inventario.Add(new Powerups());
-        gm.jugador.inventario[0].pwrNombreEnum = PowerupsName.SEGUIDORES;
+        gm.jugador.inventario[0].pwrNombreEnum = PowerupsName.INFLUENCIA;
 
         gm.jugador.inventario.Add(new Powerups());
-        gm.jugador.inventario[1].pwrNombreEnum = PowerupsName.APOYOS;
+        gm.jugador.inventario[1].pwrNombreEnum = PowerupsName.SEGUIDORES;
+
+        gm.jugador.inventario.Add(new Powerups());
+        gm.jugador.inventario[2].pwrNombreEnum = PowerupsName.APOYOS;
     }
 
     public void continueToResult()
@@ -1175,4 +1195,18 @@ void Start()
         }
     }
 
+    public void ActualizarTurno()
+    {    
+        string aux = "Mes " + turnoActualNumero.ToString();
+        turnoActualTexto.text = aux;
+        canvasTurn.SetActive(true);
+        turnoActualNumero++;
+    }
+
+    public void StartNextTurn()
+    {
+        canvasTurn.SetActive(false);
+        setCanvasMisiones();
+        canvasMisiones.SetActive(true);
+    }
 }

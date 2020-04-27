@@ -154,7 +154,7 @@ public class Personajes
             {
                 inventario[i].cantidad--;
 
-                if (inventario[i].cantidad <= 0 && inventario[i].pwrNombreEnum != PowerupsName.SEGUIDORES && inventario[i].pwrNombreEnum != PowerupsName.APOYOS)
+                if (inventario[i].cantidad <= 0 && inventario[i].pwrNombreEnum == PowerupsName.INFLUENCIA && inventario[i].pwrNombreEnum != PowerupsName.SEGUIDORES && inventario[i].pwrNombreEnum != PowerupsName.APOYOS)
                 {
                     inventario.RemoveAt(i);
                 }
