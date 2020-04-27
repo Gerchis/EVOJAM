@@ -26,7 +26,7 @@ public class CanvasManager : MonoBehaviour
     public Sprite spriteLocation;
 
 
-    TextMeshProUGUI[] preciosPowerUps = new TextMeshProUGUI[6];
+    Text[] preciosPowerUps = new Text[6];
     TextMeshProUGUI[] resultados = new TextMeshProUGUI[2];
 
 
@@ -83,6 +83,9 @@ public class CanvasManager : MonoBehaviour
         sliderEconomia.value = gm.economiaActual;
         sliderDesarrollo.value = gm.desarrolloActual;
         sliderInvolucion.value = gm.involucionActual;
+
+        resetSliders();
+
     }
 
     public void initSlidersValues()
@@ -123,6 +126,20 @@ public class CanvasManager : MonoBehaviour
         sliderInvolucion.value = gm.involucionActual;
     }
 
+    void resetSliders()
+    {
+        sliderSociedadPositivo.value = 0;
+        sliderSociedadNegativo.value = 0;
+
+        sliderEconomiaPositivo.value = 0;
+        sliderEconomiaNegativo.value = 0;
+
+        sliderDesarrolloPositivo.value = 0;
+        sliderDesarrolloNegativo.value = 0;
+
+        sliderInvolucionPositivo.value = 0;
+        sliderInvolucionNegativo.value = 0;
+    }
 
     public void actualizarSliders()
     {
@@ -159,17 +176,7 @@ public class CanvasManager : MonoBehaviour
         gm.calcularInvolucion();
 
         //Reseteamos a 0 los sliders de Positivo/Negativo
-        sliderSociedadPositivo.value = 0;
-        sliderSociedadNegativo.value = 0;
-
-        sliderEconomiaPositivo.value = 0;
-        sliderEconomiaNegativo.value = 0;
-
-        sliderDesarrolloPositivo.value = 0;
-        sliderDesarrolloNegativo.value = 0;
-
-        sliderInvolucionPositivo.value = 0;
-        sliderInvolucionNegativo.value = 0;
+        resetSliders();
 
         //Seteamos los sliders complementarios y principal en función de la evolución
         setSlidersComplementario(previoSociedad, gm.sociedadActual, Estadisticas.SOCIEDAD);
@@ -805,12 +812,19 @@ void Start()
         ImagenNoticia[1] = GameObject.Find("N2-Imagen").GetComponent<Image>();
         ImagenNoticia[2] = GameObject.Find("N3-Imagen").GetComponent<Image>();
 
-        preciosPowerUps[0] = GameObject.Find("Price1").GetComponent<TextMeshProUGUI>();
-        preciosPowerUps[1] = GameObject.Find("Price2").GetComponent<TextMeshProUGUI>();
-        preciosPowerUps[2] = GameObject.Find("Price3").GetComponent<TextMeshProUGUI>();
-        preciosPowerUps[3] = GameObject.Find("Price4").GetComponent<TextMeshProUGUI>();
-        preciosPowerUps[4] = GameObject.Find("Price5").GetComponent<TextMeshProUGUI>();
-        preciosPowerUps[5] = GameObject.Find("Price6").GetComponent<TextMeshProUGUI>();
+        preciosPowerUps[0] = GameObject.Find("Price1").GetComponent<Text>();
+        preciosPowerUps[1] = GameObject.Find("Price2").GetComponent<Text>();
+        preciosPowerUps[2] = GameObject.Find("Price3").GetComponent<Text>();
+        preciosPowerUps[3] = GameObject.Find("Price4").GetComponent<Text>();
+        preciosPowerUps[4] = GameObject.Find("Price5").GetComponent<Text>();
+        preciosPowerUps[5] = GameObject.Find("Price6").GetComponent<Text>();
+
+        preciosPowerUps[0].text = gm.precios[0].ToString();
+        preciosPowerUps[1].text = gm.precios[1].ToString();
+        preciosPowerUps[2].text = gm.precios[2].ToString();
+        preciosPowerUps[3].text = gm.precios[3].ToString();
+        preciosPowerUps[4].text = gm.precios[4].ToString();
+        preciosPowerUps[5].text = gm.precios[5].ToString();
 
         BotonCensura[0] = GameObject.Find("N1-BotonCensurar").GetComponent<Button>();
         BotonCensura[1] = GameObject.Find("N2-BotonCensurar").GetComponent<Button>();
@@ -1106,17 +1120,7 @@ void Start()
 
     public void continueToResult()
     {
-        for (int i = 0; i < gm.precios.Length; i++)
-        {
-            Debug.LogWarning(i);
-            Debug.Log(preciosPowerUps.Length);
-            Debug.Log(gm.precios.Length);
-            Debug.Log(gm.precios[i].ToString());
-            Debug.Log(preciosPowerUps[i].text);
-            
-            preciosPowerUps[i].text = "casa";
-            //preciosPowerUps[i].text = gm.precios[i].ToString();
-        }
+    
 
         resultados[0].text = "Seguidores Ganados\r\nInfluencia Ganada\r\n-----------------------------------------\r\nTOTAL";
         resultados[1].text = gm.modificadorSeguidores.ToString() + "\r\n" + gm.jugador.seguidores.ToString() + "\r\n-----------------------------------------\r\n" + gm.jugador.influencia.ToString();
