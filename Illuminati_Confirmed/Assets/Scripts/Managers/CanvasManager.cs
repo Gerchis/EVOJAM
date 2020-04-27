@@ -748,8 +748,17 @@ public class CanvasManager : MonoBehaviour
 
         for (int i = 0; i < gm.maxMisionesJugables; i++)
         {
-            titulosNoticias[i].text = gm.noticiasIngame[gm.idMisionesSeleccionadas[i]].titulo;
-            textosNoticias[i].text = gm.noticiasIngame[gm.idMisionesSeleccionadas[i]].texto;
+            string head;
+            if (gm.misionesIngame[gm.idMisionesSeleccionadas[i]].getResultado() >= 0)
+            {
+                head = "ÉXITO: ";
+            }
+            else
+            {
+                head = "FRACASO: ";
+            }
+            titulosNoticias[i].text = head + gm.noticiasIngame[gm.idMisionesSeleccionadas[i]].titulo;
+            textosNoticias[i].text = "Lore ipsum...."+gm.noticiasIngame[gm.idMisionesSeleccionadas[i]].texto;
 
             efectoSociedad[i].text = gm.noticiasIngame[gm.idMisionesSeleccionadas[i]].efectosNoticia[0].valor.ToString();
             efectoEconomia[i].text = gm.noticiasIngame[gm.idMisionesSeleccionadas[i]].efectosNoticia[1].valor.ToString();

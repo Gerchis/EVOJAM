@@ -37,6 +37,8 @@ public class Misiones
 
     }
 
+    public int getResultado() { return resultado; }
+
     public string titulo;
     Image[] avatarPosiciones;
     public List<Personajes> listaPersonajes;
