@@ -76,15 +76,17 @@ public class CanvasManager : MonoBehaviour
     //Por cada noticia[] > efecto[]
     int[,] modificacionValores = new int[3,3];
 
+    
+    public void setDefinitiveSliders()
+    {
+        sliderSociedad.value = gm.sociedadActual;
+        sliderEconomia.value = gm.economiaActual;
+        sliderDesarrollo.value = gm.desarrolloActual;
+        sliderInvolucion.value = gm.involucionActual;
+    }
 
     public void initSlidersValues()
     {
-        Debug.Log("PLAYER INFO");
-        Debug.Log("Rol: "+gm.jugador.getRol());
-        Debug.Log("SO: "+gm.sociedadObjetivo);
-        Debug.Log("EO: "+ gm.economiaObjetivo);
-        Debug.Log("DO: "+ gm.desarrolloObjetivo);
-        Debug.Log("IO: " + gm.involucionObjetivo);
 
         if(gm.sociedadObjetivo == -1)
         {
@@ -111,12 +113,13 @@ public class CanvasManager : MonoBehaviour
         {
             sliderDesarrolloObjetivo.GetComponent<Slider>().value = gm.desarrolloObjetivo;
         }
-        
-        sliderInvolucionObjetivo.GetComponent<Slider>().value = gm.involucionObjetivo;
 
         sliderSociedad.value = gm.sociedadActual;
         sliderEconomia.value = gm.economiaActual;
         sliderDesarrollo.value = gm.desarrolloActual;
+
+        sliderInvolucionObjetivo.GetComponent<Slider>().value = gm.involucionObjetivo;
+        gm.calcularInvolucion();
         sliderInvolucion.value = gm.involucionActual;
     }
 
@@ -158,10 +161,13 @@ public class CanvasManager : MonoBehaviour
         //Reseteamos a 0 los sliders de Positivo/Negativo
         sliderSociedadPositivo.value = 0;
         sliderSociedadNegativo.value = 0;
+
         sliderEconomiaPositivo.value = 0;
         sliderEconomiaNegativo.value = 0;
+
         sliderDesarrolloPositivo.value = 0;
         sliderDesarrolloNegativo.value = 0;
+
         sliderInvolucionPositivo.value = 0;
         sliderInvolucionNegativo.value = 0;
 
@@ -169,7 +175,7 @@ public class CanvasManager : MonoBehaviour
         setSlidersComplementario(previoSociedad, gm.sociedadActual, Estadisticas.SOCIEDAD);
         setSlidersComplementario(previoEconomia, gm.economiaActual, Estadisticas.ECONOMIA);
         setSlidersComplementario(previoDesarrollo, gm.desarrolloActual, Estadisticas.DESARROLLO);
-        setSlidersComplementario(previoDesarrollo, gm.desarrolloActual, Estadisticas.TOTAL_ESTADISTICAS);
+        setSlidersComplementario(previoInvolucion, gm.involucionActual, Estadisticas.TOTAL_ESTADISTICAS);
     }
 
     void setSlidersComplementario(int previo, int actual, Estadisticas efecto)
@@ -291,7 +297,6 @@ public class CanvasManager : MonoBehaviour
     Image[,] DesarrolloIcono = new Image[3, 3];
     Image [,] VotoIcono = new Image[3, 3];
     GameObject[,] Poderes = new GameObject[3, 3];
-    
 
     //public GameObject[] informacionesConocidas;
 
@@ -304,7 +309,10 @@ public class CanvasManager : MonoBehaviour
         //Para cada mision en pantalla
         for (int i = 0; i < gm.maxMisionesJugables; i++)
         {
-            //Variables locales    
+            //Ocultamos panel de playerSlot
+            spBackground[i].SetActive(false);
+            spVotoSI[i].SetActive(false);
+            spVotoNO[i].SetActive(false);
 
             //Mostramos/ocultamos los iconos relevantes de la misión
             switch (i)
@@ -377,7 +385,9 @@ public class CanvasManager : MonoBehaviour
                 else //Para cada slot desocupado de la misión...
                 {
                     //Desactivamos que se pueda abrir la ficha
+                    iaAvatar[i, j].GetComponent<Image>().sprite = null;
                     iaAvatar[i,j].interactable = false;
+                    
                 }    
             }
         }
@@ -521,6 +531,11 @@ public class CanvasManager : MonoBehaviour
     
     public void enterPlayerSlot(int m)
     {
+        //BY DEFAULT: Si usuario no selecciona una opción SI/NO. Vota automaticamente SI.
+        gm.jugador.SetVotacion(true);
+
+
+        //Logica de acceso:
         for (int i = 0; i < gm.maxMisionesJugables; i++)
         {
             if (i != m) //Slots donde no estamos
@@ -647,8 +662,10 @@ public class CanvasManager : MonoBehaviour
     public Sprite[] powerUpSprites;
     Text[] countPU = new Text[6];
 
-    void setCanvasNoticias()
+    public void setCanvasNoticias()
     {
+        gm.exitMisiones();
+
         for (int i = 0; i < gm.maxMisionesJugables; i++)
         {
             titulosNoticias[i].text = gm.noticiasIngame[gm.idMisionesSeleccionadas[i]].titulo;
@@ -795,8 +812,8 @@ void Start()
         BotonCensura[2] = GameObject.Find("N3-BotonCensurar").GetComponent<Button>();
 
         BotonPublicidad[0] = GameObject.Find("N1-BotonPublicitar").GetComponent<Button>();
-        BotonPublicidad[0] = GameObject.Find("N2-BotonPublicitar").GetComponent<Button>();
-        BotonPublicidad[0] = GameObject.Find("N3-BotonPublicitar").GetComponent<Button>();
+        BotonPublicidad[1] = GameObject.Find("N2-BotonPublicitar").GetComponent<Button>();
+        BotonPublicidad[2] = GameObject.Find("N3-BotonPublicitar").GetComponent<Button>();
 
 
         resultados = new TextMeshProUGUI[2];
@@ -982,12 +999,12 @@ void Start()
         spVotoSI[2] = GameObject.Find("M2-SP-VotoSI");
 
         spAvatar[0] = GameObject.Find("M0-SP-Avatar");
-        spAvatar[1] = GameObject.Find("M0-SP-Avatar");
-        spAvatar[2] = GameObject.Find("M0-SP-Avatar");
+        spAvatar[1] = GameObject.Find("M1-SP-Avatar");
+        spAvatar[2] = GameObject.Find("M2-SP-Avatar");
 
         spBackground[0] = GameObject.Find("M0-SP-Background");
-        spBackground[1] = GameObject.Find("M0-SP-Background");
-        spBackground[2] = GameObject.Find("M0-SP-Background");
+        spBackground[1] = GameObject.Find("M1-SP-Background");
+        spBackground[2] = GameObject.Find("M2-SP-Background");
 
 
 

@@ -180,6 +180,15 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public void exitMisiones()
+    {
+        //Calculamos el resultado de las Misiones donde está participando el jugador.
+        for (int i = 0; i < maxMisionesJugables; i++)
+        {
+            misionesIngame[idMisionesSeleccionadas[i]].resultadoFinal();
+        }
+    }
+
     void seleccionarMisiones()
     {
         int num;
