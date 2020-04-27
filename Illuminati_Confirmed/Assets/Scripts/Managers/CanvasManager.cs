@@ -1034,6 +1034,8 @@ void Start()
 
         resultados[0].text = "Seguidores Ganados\r\nInfluencia Ganada\r\n-----------------------------------------\r\nTOTAL";
         resultados[1].text = gm.modificadorSeguidores.ToString() + "\r\n" + gm.jugador.seguidores.ToString() + "\r\n-----------------------------------------\r\n" + gm.jugador.influencia.ToString();
+
+        UpdateInventario();
     }
 
     void verificarPowerUp(PowerupsName _name)
