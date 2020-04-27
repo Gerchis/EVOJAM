@@ -1375,7 +1375,7 @@ void Start()
     gm.involucionObjetivo;
          */
 
-        if(turnoActualNumero == 6)
+        if(turnoActualNumero == 7)
         {
             //Derrota
             if (gm.involucionActual >= gm.involucionObjetivo)
