@@ -85,7 +85,6 @@ public class GameManager : MonoBehaviour
         }
 
         SetValuesPjs();
-        Debug.Log("InitPlayer Seguidores: " + seguidores);
         jugador = new Personajes((RolSecreto)randRol, avatares[randAvatar], influencia, apoyos, seguidores, false);
         playerAvatar = GameObject.Find("PlayerAvatar").GetComponent<Image>();
         playerAvatar.sprite = avatares[randAvatar];

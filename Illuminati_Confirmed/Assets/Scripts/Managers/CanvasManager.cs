@@ -354,6 +354,9 @@ public class CanvasManager : MonoBehaviour
             spVotoSI[i].SetActive(false);
             spVotoNO[i].SetActive(false);
 
+            //Reseteamos sprite neutro en slot player
+            spAvatar[i].GetComponent<Image>().sprite = spriteLocation;
+
             //Mostramos/ocultamos los iconos relevantes de la misión
             switch (i)
             {
@@ -1386,23 +1389,13 @@ void Start()
 
     public void StartNextTurn()
     {
-        canvasTurn.SetActive(false);
-        setCanvasMisiones();
-        canvasMisiones.SetActive(true);
-
-        //TODO verifica victoria o derrota: 
-        /*
-    sociedadObjetivo
-    sociedadActual
-    economiaObjetivo;
-    economiaActual
-    desarrolloObjetivo;  
-    desarrolloActual
-    
-        USA SOLO ESTA!!!!! >>>>
-    gm.involucionActual;
-    gm.involucionObjetivo;
-         */
+        if(turnoActualNumero <= 6)
+        {
+            canvasTurn.SetActive(false);
+            setCanvasMisiones();
+            canvasMisiones.SetActive(true);
+        }
+        
 
         if(turnoActualNumero == 7)
         {
