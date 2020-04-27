@@ -221,6 +221,20 @@ public class CanvasManager : MonoBehaviour
     Image[] iconosM1 = new Image[3];
     Image[] iconosM0 = new Image[3];
 
+    GameObject[,] Background = new GameObject[3, 3];
+    GameObject[,] Informacion = new GameObject[3, 3];
+    GameObject[,] Voto = new GameObject[3, 3];
+    GameObject[,] pwrVoto = new GameObject[3, 3];
+    GameObject[,] pwrInfo = new GameObject[3, 3];
+    GameObject[] spVotoSI = new GameObject[3];
+    GameObject[] spVotoNO = new GameObject[3];
+    GameObject[] spAvatar = new GameObject[3];
+    GameObject[] spBackground = new GameObject[3];
+    Image[,] SociedadIcono = new Image[3, 3];
+    Image[,] EconomiaIcono = new Image[3, 3];
+    Image[,] DesarrolloIcono = new Image[3, 3];
+    Image [,] VotoIcono = new Image[3, 3];
+
     //public GameObject[] informacionesConocidas;
 
     //INTEGRACIÓN: Continue de la tienda.
@@ -253,10 +267,9 @@ public class CanvasManager : MonoBehaviour
             titulosMisionesSeleccionadas[i].text = gm.misionesIngame[gm.idMisionesSeleccionadas[i]].titulo;
 
             //Configuramos la información mostrada en canvas de la ficha de cada IA
-            for (int j=0; j < gm.misionesIngame[gm.idMisionesSeleccionadas[i]].listaPersonajes.Capacity; j++)
+            for (int j=0; j < gm.maxSlotsMisiones; j++)
             {
                 string id;
-
                 //Para cada IA de la misión...
                 if (j <gm.misionesIngame[gm.idMisionesSeleccionadas[i]].listaPersonajes.Count)
                 {
@@ -274,9 +287,9 @@ public class CanvasManager : MonoBehaviour
 
                     id = "M" + i + "-S" + j + "-pwrVoto";
                     GameObject pwrVoto = GameObject.Find(id);
-                    pwrVoto.SetActive(true);
+                    pwrVoto.SetActive(true);                  
 
-                    if(gm.jugador.VerificarDisponibilidad(PowerupsName.AVERIGUAR_VOTO))
+                    if (gm.jugador.VerificarDisponibilidad(PowerupsName.AVERIGUAR_VOTO))
                     {
                         pwrVoto.GetComponent<Button>().interactable = true;
                     }
@@ -294,20 +307,16 @@ public class CanvasManager : MonoBehaviour
                         GameObject.Find(id).GetComponent<TextMeshProUGUI>().text = gm.misionesIngame[gm.idMisionesSeleccionadas[i]].listaPersonajes[j].getApoyosRAW().ToString();
                         
                         //...la mostramos por pantalla
-                        id = "M" + i + "-S" + j + "-Informacion";
-                        GameObject.Find(id).SetActive(true);
-
-                        id = "M" + i + "-S" + j + "-pwrInfo";
-                        GameObject pwrInfo = GameObject.Find(id);
-                        pwrInfo.SetActive(false);
+                        Informacion[i,j].SetActive(true);
+                        pwrInfo[i,j].SetActive(false);
 
                         if (gm.jugador.VerificarDisponibilidad(PowerupsName.INVESTIGADO))
                         {
-                            pwrInfo.GetComponent<Button>().interactable = true;
+                            pwrInfo[i, j].GetComponent<Button>().interactable = true;
                         }
                         else
                         {
-                            pwrInfo.GetComponent<Button>().interactable = false;
+                            pwrInfo[i, j].GetComponent<Button>().interactable = false;
                         }
 
                     }
@@ -316,6 +325,7 @@ public class CanvasManager : MonoBehaviour
                 {
                     //Desactivamos que se pueda abrir la ficha
                     id = "M" + i + "-S" + j + "-Avatar";
+                    Debug.Log(id);
                     GameObject.Find(id).GetComponent<Button>().interactable = false;
                 }    
             }
@@ -377,22 +387,18 @@ public class CanvasManager : MonoBehaviour
         int i = int.Parse(parametros[0]);
         int j = int.Parse(parametros[1]);
 
-        //Aplicamos powerup VOTO
-        string id;
-        id = "M" + i + "-S" + j + "-Voto";
-        GameObject.Find(id).SetActive(true);
+        //Aplicamos powerup VOTO        
+        Voto[i, j].SetActive(true);
 
-        id = "M" + i + "-S" + j + "-VotoIcono";
         if(gm.misionesIngame[gm.idMisionesSeleccionadas[i]].listaPersonajes[j].GetVotacion())
         {
-            GameObject.Find(id).GetComponent<Image>().sprite = spriteVotaciones[1];
+            VotoIcono[i,j].sprite = spriteVotaciones[1];
         } else
         {
-            GameObject.Find(id).GetComponent<Image>().sprite = spriteVotaciones[0];
+            VotoIcono[i, j].sprite = spriteVotaciones[0];
         }
 
-        id = "M" + i + "-S" + j + "-pwrVoto";
-        GameObject.Find(id).SetActive(false);
+        pwrVoto[i, j].SetActive(false);        
 
         gm.jugador.ConsumirPowerup(PowerupsName.AVERIGUAR_VOTO);
     }
@@ -408,33 +414,24 @@ public class CanvasManager : MonoBehaviour
 
         //Aplicamos powerup INVESTIGAR
         gm.misionesIngame[gm.idMisionesSeleccionadas[i]].listaPersonajes[j].setPersonajeInvestigado(true);
-
-        string id;
-        id = "M" + i + "-S" + j + "-Informacion";
-        GameObject.Find(id).SetActive(true);
-
-        id = "M" + i + "-S" + j + "-pwrInfo";
-        GameObject.Find(id).SetActive(false);
-
+        
+        Informacion[i, j].SetActive(true);        
+        pwrInfo[i, j].SetActive(false);
+        
         gm.jugador.ConsumirPowerup(PowerupsName.INVESTIGADO);
 
         //Actualizamos los sprites de las afiliaciones
-
         bool[] afinidades = gm.misionesIngame[gm.idMisionesSeleccionadas[i]].listaPersonajes[j].getAfinidadesEstadisticas();
         int num;
-
-        id = "M" + i + "-S" + j + "-SociedadIcono";
+        
         if (afinidades[0]) {num=1; } else {num=2; }
-        GameObject.Find(id).GetComponent<Image>().sprite = spritesSociedad[num];
+        SociedadIcono[i, j].GetComponent<Image>().sprite = spritesSociedad[num];
 
-        id = "M" + i + "-S" + j + "-EconomiaIcono";
         if (afinidades[1]) { num = 1; } else { num = 2; }
-        GameObject.Find(id).GetComponent<Image>().sprite = spritesEconomia[num];
+        EconomiaIcono[i, j].GetComponent<Image>().sprite = spritesEconomia[num];
 
-        id = "M" + i + "-S" + j + "-DesarrolloIcono";
         if (afinidades[2]) { num = 1; } else { num = 2; }
-        GameObject.Find(id).GetComponent<Image>().sprite = spritesDesarrollo[num];
-
+        DesarrolloIcono[i, j].GetComponent<Image>().sprite = spritesDesarrollo[num];
     }
 
 
@@ -448,24 +445,18 @@ public class CanvasManager : MonoBehaviour
         char[] vote = parametros[1].ToCharArray();
 
         //Actualizamos comportamiento botones y seteamos su aportación de apoyos a la votación
-        string id;
-
         if (vote[0] == 'Y')
         {
-            id = "M" + i + "-SP-VotoSI";
-            GameObject.Find(id).GetComponent<Button>().interactable = false;
-            id = "M" + i + "-SP-VotoNO";
-            GameObject.Find(id).GetComponent<Button>().interactable = true;
+            spVotoSI[i].GetComponent<Button>().interactable = false;
+            spVotoNO[i].GetComponent<Button>().interactable = true;
 
             //votacion = false >>>> suma apoyos al resultado
             gm.jugador.SetVotacion(true);
         }
         else if (vote[0] == 'N')
         {
-            id = "M" + i + "-SP-VotoNO";
-            GameObject.Find(id).GetComponent<Button>().interactable = false;
-            id = "M" + i + "-SP-VotoSI";
-            GameObject.Find(id).GetComponent<Button>().interactable = true;
+            spVotoNO[i].GetComponent<Button>().interactable = false;
+            spVotoSI[i].GetComponent<Button>().interactable = true;
 
             //votacion = false >>>> resta apoyos al resultado
             gm.jugador.SetVotacion(false);
@@ -475,8 +466,6 @@ public class CanvasManager : MonoBehaviour
     
     public void enterPlayerSlot(int m)
     {
-        string id;
-
         for (int i = 0; i < gm.maxMisionesJugables; i++)
         {
             if (i != m) //Slots donde no estamos
@@ -485,16 +474,12 @@ public class CanvasManager : MonoBehaviour
                 gm.misionesIngame[gm.idMisionesSeleccionadas[i]].setJugadorEnMision(false);
 
                 //Asignamos avatar neutro
-                id = "M" + i + "-SP-Avatar";
-                GameObject.Find(id).GetComponent<Image>().sprite = spriteLocation;
+                spAvatar[i].GetComponent<Image>().sprite = spriteLocation;
 
                 //Ocultamos popup
-                id = "M" + i + "-SP-BackGround";
-                GameObject.Find(id).SetActive(false);
-                id = "M" + i + "-SP-VotoSI";
-                GameObject.Find(id).SetActive(false);
-                id = "M" + i + "-SP-VotoNO";
-                GameObject.Find(id).SetActive(false);
+                spBackground[i].SetActive(false);
+                spVotoSI[i].SetActive(false);
+                spVotoNO[i].SetActive(false);
             }
             else //Entramos en un SLOT
             {
@@ -502,18 +487,43 @@ public class CanvasManager : MonoBehaviour
                 gm.misionesIngame[gm.idMisionesSeleccionadas[i]].setJugadorEnMision(true);
 
                 //Asignamos avatar del jugador
-                id = "M" + i + "-SP-Avatar";
-                GameObject.Find(id).GetComponent<Image>().sprite = gm.jugador.avatar;
+                spAvatar[i].GetComponent<Image>().sprite = gm.jugador.avatar;
 
                 //Mostramos popup
-                id = "M" + i + "-SP-BackGround";
-                GameObject.Find(id).SetActive(true);
-                id = "M" + i + "-SP-VotoSI";
-                GameObject.Find(id).SetActive(true);
-                id = "M" + i + "-SP-VotoNO";
-                GameObject.Find(id).SetActive(true);
+                spBackground[i].SetActive(true);
+                spVotoSI[i].SetActive(true);
+                spVotoNO[i].SetActive(true);
             }
         }
+    }
+
+
+    public void VisibilidadFicha(string idParams)
+    {
+        //Parseamos lo que obtenemos del inspector de Unity a 2 variables
+        //idMision-idSlot-Activar(T)/Desactivar(F)
+        string[] parametros = idParams.Split('-');
+
+        int i = int.Parse(parametros[0]);
+        int j = int.Parse(parametros[1]);
+        char[] estado = parametros[2].ToCharArray();
+        bool activado;
+
+        if (estado[0]=='Y')
+        {
+            activado = true;
+        }
+        else
+        {
+            activado = false;
+        }
+
+        //Actualizamos comportamiento botones y seteamos su aportación de apoyos a la votación
+        Background[i,j].SetActive(activado);
+        Informacion[i,j].SetActive(activado);
+        Voto[i,j].SetActive(activado);
+        pwrVoto[i,j].SetActive(activado);
+        pwrInfo[i,j].SetActive(activado);
     }
 
     /*index
@@ -539,15 +549,19 @@ public class CanvasManager : MonoBehaviour
     TextMeshProUGUI[] titulosNoticias = new TextMeshProUGUI[3];
     TextMeshProUGUI[] textosNoticias = new TextMeshProUGUI[3];
     TextMeshProUGUI[] imagenesNoticias = new TextMeshProUGUI[3];
+
     string[] efectoSociedad = new string[3];
     string[] efectoEconomia = new string[3];
     string[] efectoDesarrollo = new string[3];
+
     Image[] IconoSociedad = new Image[3];
     Image[] IconoEconomia = new Image[3];
     Image[] IconoDesarrollo = new Image[3];
+
     Image[] ImagenCensura = new Image[3];
     Image[] ImagenPublicidad = new Image[3];
     Image[] ImagenNoticia = new Image[3];
+
     Button[] BotonCensura = new Button[3];
     Button[] BotonPublicidad = new Button[3];
 
@@ -727,13 +741,112 @@ void Start()
         iconosM0[1] = GameObject.Find("M0-EconomiaIcono").GetComponent<Image>();
         iconosM0[2] = GameObject.Find("M0-DesarrolloIcono").GetComponent<Image>();
 
-        iconosM1[0] = GameObject.Find("M0-SociedadIcono").GetComponent<Image>();
-        iconosM1[1] = GameObject.Find("M0-EconomiaIcono").GetComponent<Image>();
-        iconosM1[2] = GameObject.Find("M0-DesarrolloIcono").GetComponent<Image>();
+        iconosM1[0] = GameObject.Find("M1-SociedadIcono").GetComponent<Image>();
+        iconosM1[1] = GameObject.Find("M1-EconomiaIcono").GetComponent<Image>();
+        iconosM1[2] = GameObject.Find("M1-DesarrolloIcono").GetComponent<Image>();
 
-        iconosM2[0] = GameObject.Find("M0-SociedadIcono").GetComponent<Image>();
-        iconosM2[1] = GameObject.Find("M0-EconomiaIcono").GetComponent<Image>();
-        iconosM2[2] = GameObject.Find("M0-DesarrolloIcono").GetComponent<Image>();
+        iconosM2[0] = GameObject.Find("M2-SociedadIcono").GetComponent<Image>();
+        iconosM2[1] = GameObject.Find("M2-EconomiaIcono").GetComponent<Image>();
+        iconosM2[2] = GameObject.Find("M2-DesarrolloIcono").GetComponent<Image>();
+
+        Background[0, 0] = GameObject.Find("M0-S0-Background");
+        Background[0, 1] = GameObject.Find("M0-S1-Background");
+        Background[0, 2] = GameObject.Find("M0-S2-Background");
+        Background[1, 0] = GameObject.Find("M1-S0-Background");
+        Background[1, 1] = GameObject.Find("M1-S1-Background");
+        Background[1, 2] = GameObject.Find("M1-S2-Background");
+        Background[2, 0] = GameObject.Find("M2-S0-Background");
+        Background[2, 1] = GameObject.Find("M2-S1-Background");
+        Background[2, 2] = GameObject.Find("M2-S2-Background");
+
+        Informacion[0, 0] = GameObject.Find("M0-S0-Informacion");
+        Informacion[0, 1] = GameObject.Find("M0-S1-Informacion");
+        Informacion[0, 2] = GameObject.Find("M0-S2-Informacion");
+        Informacion[1, 0] = GameObject.Find("M1-S0-Informacion");
+        Informacion[1, 1] = GameObject.Find("M1-S1-Informacion");
+        Informacion[1, 2] = GameObject.Find("M1-S2-Informacion");
+        Informacion[2, 0] = GameObject.Find("M2-S0-Informacion");
+        Informacion[2, 1] = GameObject.Find("M2-S1-Informacion");
+        Informacion[2, 2] = GameObject.Find("M2-S2-Informacion");
+
+        Voto[0, 0] = GameObject.Find("M0-S0-Voto");
+        Voto[0, 1] = GameObject.Find("M0-S1-Voto");
+        Voto[0, 2] = GameObject.Find("M0-S2-Voto");
+        Voto[1, 0] = GameObject.Find("M1-S0-Voto");
+        Voto[1, 1] = GameObject.Find("M1-S1-Voto");
+        Voto[1, 2] = GameObject.Find("M1-S2-Voto");
+        Voto[2, 0] = GameObject.Find("M2-S0-Voto");
+        Voto[2, 1] = GameObject.Find("M2-S1-Voto");
+        Voto[2, 2] = GameObject.Find("M2-S2-Voto");
+
+        pwrVoto[0, 0] = GameObject.Find("M0-S0-pwrVoto");
+        pwrVoto[0, 1] = GameObject.Find("M0-S1-pwrVoto");
+        pwrVoto[0, 2] = GameObject.Find("M0-S2-pwrVoto");
+        pwrVoto[1, 0] = GameObject.Find("M1-S0-pwrVoto");
+        pwrVoto[1, 1] = GameObject.Find("M1-S1-pwrVoto");
+        pwrVoto[1, 2] = GameObject.Find("M1-S2-pwrVoto");
+        pwrVoto[2, 0] = GameObject.Find("M2-S0-pwrVoto");
+        pwrVoto[2, 1] = GameObject.Find("M2-S1-pwrVoto");
+        pwrVoto[2, 2] = GameObject.Find("M2-S2-pwrVoto");
+
+        pwrInfo[0, 0] = GameObject.Find("M0-S0-pwrInfo");
+        pwrInfo[0, 1] = GameObject.Find("M0-S1-pwrInfo");
+        pwrInfo[0, 2] = GameObject.Find("M0-S2-pwrInfo");
+        pwrInfo[1, 0] = GameObject.Find("M1-S0-pwrInfo");
+        pwrInfo[1, 1] = GameObject.Find("M1-S1-pwrInfo");
+        pwrInfo[1, 2] = GameObject.Find("M1-S2-pwrInfo");
+        pwrInfo[2, 0] = GameObject.Find("M2-S0-pwrInfo");
+        pwrInfo[2, 1] = GameObject.Find("M2-S1-pwrInfo");
+        pwrInfo[2, 2] = GameObject.Find("M2-S2-pwrInfo");
+
+        SociedadIcono[0, 0] = GameObject.Find("M0-S0-SociedadIcono").GetComponent<Image>();
+        SociedadIcono[0, 1] = GameObject.Find("M0-S1-SociedadIcono").GetComponent<Image>();
+        SociedadIcono[0, 2] = GameObject.Find("M0-S2-SociedadIcono").GetComponent<Image>();
+        SociedadIcono[1, 0] = GameObject.Find("M1-S0-SociedadIcono").GetComponent<Image>();
+        SociedadIcono[1, 1] = GameObject.Find("M1-S1-SociedadIcono").GetComponent<Image>();
+        SociedadIcono[1, 2] = GameObject.Find("M1-S2-SociedadIcono").GetComponent<Image>();
+        SociedadIcono[2, 0] = GameObject.Find("M2-S0-SociedadIcono").GetComponent<Image>();
+        SociedadIcono[2, 1] = GameObject.Find("M2-S1-SociedadIcono").GetComponent<Image>();
+        SociedadIcono[2, 2] = GameObject.Find("M2-S2-SociedadIcono").GetComponent<Image>();
+
+        EconomiaIcono[0, 0] = GameObject.Find("M0-S0-EconomiaIcono").GetComponent<Image>();
+        EconomiaIcono[0, 1] = GameObject.Find("M0-S1-EconomiaIcono").GetComponent<Image>();
+        EconomiaIcono[0, 2] = GameObject.Find("M0-S2-EconomiaIcono").GetComponent<Image>();
+        EconomiaIcono[1, 0] = GameObject.Find("M1-S0-EconomiaIcono").GetComponent<Image>();
+        EconomiaIcono[1, 1] = GameObject.Find("M1-S1-EconomiaIcono").GetComponent<Image>();
+        EconomiaIcono[1, 2] = GameObject.Find("M1-S2-EconomiaIcono").GetComponent<Image>();
+        EconomiaIcono[2, 0] = GameObject.Find("M2-S0-EconomiaIcono").GetComponent<Image>();
+        EconomiaIcono[2, 1] = GameObject.Find("M2-S1-EconomiaIcono").GetComponent<Image>();
+        EconomiaIcono[2, 2] = GameObject.Find("M2-S2-EconomiaIcono").GetComponent<Image>();
+
+        DesarrolloIcono[0, 0] = GameObject.Find("M0-S0-DesarrolloIcono").GetComponent<Image>();
+        DesarrolloIcono[0, 1] = GameObject.Find("M0-S1-DesarrolloIcono").GetComponent<Image>();
+        DesarrolloIcono[0, 2] = GameObject.Find("M0-S2-DesarrolloIcono").GetComponent<Image>();
+        DesarrolloIcono[1, 0] = GameObject.Find("M1-S0-DesarrolloIcono").GetComponent<Image>();
+        DesarrolloIcono[1, 1] = GameObject.Find("M1-S1-DesarrolloIcono").GetComponent<Image>();
+        DesarrolloIcono[1, 2] = GameObject.Find("M1-S2-DesarrolloIcono").GetComponent<Image>();
+        DesarrolloIcono[2, 0] = GameObject.Find("M2-S0-DesarrolloIcono").GetComponent<Image>();
+        DesarrolloIcono[2, 1] = GameObject.Find("M2-S1-DesarrolloIcono").GetComponent<Image>();
+        DesarrolloIcono[2, 2] = GameObject.Find("M2-S2-DesarrolloIcono").GetComponent<Image>();
+
+        spVotoNO[0] = GameObject.Find("M0-SP-VotoNO");
+        spVotoNO[1] = GameObject.Find("M1-SP-VotoNO");
+        spVotoNO[2] = GameObject.Find("M2-SP-VotoNO");
+
+        spVotoSI[0] = GameObject.Find("M0-SP-VotoSI");
+        spVotoSI[1] = GameObject.Find("M1-SP-VotoSI");
+        spVotoSI[2] = GameObject.Find("M2-SP-VotoSI");
+
+        spAvatar[0] = GameObject.Find("M0-SP-Avatar");
+        spAvatar[1] = GameObject.Find("M0-SP-Avatar");
+        spAvatar[2] = GameObject.Find("M0-SP-Avatar");
+
+        spBackground[0] = GameObject.Find("M0-SP-Background");
+        spBackground[1] = GameObject.Find("M0-SP-Background");
+        spBackground[2] = GameObject.Find("M0-SP-Background");
+
+
+
 
         // -----------------
         // |    GENERAL    |

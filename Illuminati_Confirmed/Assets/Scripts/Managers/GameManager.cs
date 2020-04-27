@@ -45,12 +45,13 @@ public class GameManager : MonoBehaviour
      * VARIABLES DE JUEGO
      */  
     public int maxMisionesJugables = 3;
+    public int maxSlotsMisiones = 3;
     public Personajes jugador;
     Personajes[] pnjs = new Personajes[7];
     public Sprite[] avatares;
     bool[] avataresControl = new bool[(int)RolSecreto.TOTAL_ROLES];
     bool[] rolControl = new bool[(int)RolSecreto.TOTAL_ROLES];
-
+    
 
 
     //VALUES PJS
@@ -199,16 +200,18 @@ public class GameManager : MonoBehaviour
             do
             {
                 num = Random.Range(0, maxMisionesJugables);
-            } while (misionesIngame[idMisionesSeleccionadas[num]].listaPersonajes.Count == 3);
-
+            } while (misionesIngame[idMisionesSeleccionadas[num]].listaPersonajes.Count >= 3);
+            Debug.LogWarning("ITERACION: " + i);
+            Debug.Log("Random num: " + num);
+            Debug.Log("ID mision random: " + idMisionesSeleccionadas[num]);
+            Debug.Log("Capacidad mision: " + misionesIngame[idMisionesSeleccionadas[num]].listaPersonajes.Capacity);
+            Debug.Log("Count mision: " + misionesIngame[idMisionesSeleccionadas[num]].listaPersonajes.Count);
             misionesIngame[idMisionesSeleccionadas[num]].listaPersonajes.Add(pnjs[i]);
             pnjs[i].setMisionActual(idMisionesSeleccionadas[num]);
-
+            Debug.Log("POST Capacidad mision: " + misionesIngame[idMisionesSeleccionadas[num]].listaPersonajes.Capacity);
+            Debug.Log("POST Count mision: " + misionesIngame[idMisionesSeleccionadas[num]].listaPersonajes.Count);
         }
-
     }
-    
-
 
     /*index
      * LOGICA: PRENSA

@@ -127,10 +127,11 @@ public class Personajes
     //POWERUPS
 
     GameManager gm = GameObject.Find("GameManager").GetComponent<GameManager>();
-    public List<Powerups> inventario;
+    public List<Powerups> inventario = new List<Powerups>();
 
     public bool VerificarDisponibilidad(PowerupsName pwrNombre)
     {
+
         for (int i = 0; i < inventario.Count; i++)
         {
             if (pwrNombre == inventario[i].pwrNombreEnum)
