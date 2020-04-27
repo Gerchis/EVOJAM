@@ -657,9 +657,9 @@ public class CanvasManager : MonoBehaviour
     TextMeshProUGUI turnoActualTexto;
     int turnoActualNumero;
 
-    string[] efectoSociedad = new string[3];
-    string[] efectoEconomia = new string[3];
-    string[] efectoDesarrollo = new string[3];
+    TextMeshProUGUI[] efectoSociedad = new TextMeshProUGUI[3];
+    TextMeshProUGUI[] efectoEconomia = new TextMeshProUGUI[3];
+    TextMeshProUGUI[] efectoDesarrollo = new TextMeshProUGUI[3];
 
     Image[] IconoSociedad = new Image[3];
     Image[] IconoEconomia = new Image[3];
@@ -686,9 +686,9 @@ public class CanvasManager : MonoBehaviour
             textosNoticias[i].text = gm.noticiasIngame[gm.idMisionesSeleccionadas[i]].texto;
             ImagenNoticia[i].sprite = spriteNoticia;
 
-            efectoSociedad[i] = gm.noticiasIngame[gm.idMisionesSeleccionadas[i]].efectosNoticia[0].valor.ToString();
-            efectoEconomia[i] = gm.noticiasIngame[gm.idMisionesSeleccionadas[i]].efectosNoticia[1].valor.ToString();
-            efectoDesarrollo[i] = gm.noticiasIngame[gm.idMisionesSeleccionadas[i]].efectosNoticia[2].valor.ToString();
+            efectoSociedad[i].text = gm.noticiasIngame[gm.idMisionesSeleccionadas[i]].efectosNoticia[0].valor.ToString();
+            efectoEconomia[i].text = gm.noticiasIngame[gm.idMisionesSeleccionadas[i]].efectosNoticia[1].valor.ToString();
+            efectoDesarrollo[i].text = gm.noticiasIngame[gm.idMisionesSeleccionadas[i]].efectosNoticia[2].valor.ToString();
 
             IconoSociedad[i].sprite = spritesSociedad[0];
             IconoEconomia[i].sprite = spritesEconomia[0];
@@ -707,9 +707,9 @@ public class CanvasManager : MonoBehaviour
     public void aplicarCensura(int idNoticia)
     {
         ImagenCensura[idNoticia].enabled = true;
-        efectoSociedad[idNoticia] = "0";
-        efectoEconomia[idNoticia] = "0";
-        efectoDesarrollo[idNoticia] = "0";
+        efectoSociedad[idNoticia].text = "0";
+        efectoEconomia[idNoticia].text = "0";
+        efectoDesarrollo[idNoticia].text = "0";
         setNoticiaAfectada(PowerupsName.CENSURA, idNoticia);
         verificarPowerUp(PowerupsName.CENSURA);
         actualizarSliders();
@@ -723,13 +723,13 @@ public class CanvasManager : MonoBehaviour
         ImagenPublicidad[idNoticia].enabled = true;
 
         aux = gm.noticiasIngame[gm.idMisionesSeleccionadas[idNoticia]].efectosNoticia[0].valor * 2;
-        efectoSociedad[idNoticia] = aux.ToString();
+        efectoSociedad[idNoticia].text = aux.ToString();
 
         aux = gm.noticiasIngame[gm.idMisionesSeleccionadas[idNoticia]].efectosNoticia[1].valor * 2;
-        efectoEconomia[idNoticia] = aux.ToString();
+        efectoEconomia[idNoticia].text = aux.ToString();
 
         aux = gm.noticiasIngame[gm.idMisionesSeleccionadas[idNoticia]].efectosNoticia[2].valor * 2;
-        efectoDesarrollo[idNoticia] = aux.ToString();
+        efectoDesarrollo[idNoticia].text = aux.ToString();
 
         setNoticiaAfectada(PowerupsName.PUBLICIDAD, idNoticia);
         verificarPowerUp(PowerupsName.PUBLICIDAD);
@@ -781,17 +781,17 @@ void Start()
         textosNoticias[1] = GameObject.Find("N2-Text").GetComponent<TextMeshProUGUI>();
         textosNoticias[2] = GameObject.Find("N3-Text").GetComponent<TextMeshProUGUI>();
 
-        efectoSociedad[0] = GameObject.Find("N1-EfectoSociedad").GetComponent<TextMeshProUGUI>().text;
-        efectoSociedad[1] = GameObject.Find("N2-EfectoSociedad").GetComponent<TextMeshProUGUI>().text;
-        efectoSociedad[2] = GameObject.Find("N3-EfectoSociedad").GetComponent<TextMeshProUGUI>().text;
+        efectoSociedad[0] = GameObject.Find("N1-EfectoSociedad").GetComponent<TextMeshProUGUI>();
+        efectoSociedad[1] = GameObject.Find("N2-EfectoSociedad").GetComponent<TextMeshProUGUI>();
+        efectoSociedad[2] = GameObject.Find("N3-EfectoSociedad").GetComponent<TextMeshProUGUI>();
 
-        efectoEconomia[0] = GameObject.Find("N1-EfectoEconomia").GetComponent<TextMeshProUGUI>().text;
-        efectoEconomia[1] = GameObject.Find("N2-EfectoEconomia").GetComponent<TextMeshProUGUI>().text;
-        efectoEconomia[2] = GameObject.Find("N3-EfectoEconomia").GetComponent<TextMeshProUGUI>().text;
+        efectoEconomia[0] = GameObject.Find("N1-EfectoEconomia").GetComponent<TextMeshProUGUI>();
+        efectoEconomia[1] = GameObject.Find("N2-EfectoEconomia").GetComponent<TextMeshProUGUI>();
+        efectoEconomia[2] = GameObject.Find("N3-EfectoEconomia").GetComponent<TextMeshProUGUI>();
 
-        efectoDesarrollo[0] = GameObject.Find("N1-EfectoDesarrollo").GetComponent<TextMeshProUGUI>().text;
-        efectoDesarrollo[1] = GameObject.Find("N2-EfectoDesarrollo").GetComponent<TextMeshProUGUI>().text;
-        efectoDesarrollo[2] = GameObject.Find("N3-EfectoDesarrollo").GetComponent<TextMeshProUGUI>().text;
+        efectoDesarrollo[0] = GameObject.Find("N1-EfectoDesarrollo").GetComponent<TextMeshProUGUI>();
+        efectoDesarrollo[1] = GameObject.Find("N2-EfectoDesarrollo").GetComponent<TextMeshProUGUI>();
+        efectoDesarrollo[2] = GameObject.Find("N3-EfectoDesarrollo").GetComponent<TextMeshProUGUI>();
 
         IconoSociedad[0] = GameObject.Find("N1-IconoSociedad").GetComponent<Image>();
         IconoSociedad[1] = GameObject.Find("N2-IconoSociedad").GetComponent<Image>();
