@@ -823,7 +823,12 @@ void Start()
         resultados[0] = GameObject.Find("Elementos").GetComponent<TextMeshProUGUI>();
         resultados[1] = GameObject.Find("Numeros").GetComponent<TextMeshProUGUI>();
 
-
+        GameObject.Find("Price1").SetActive(false);
+        GameObject.Find("Price2").SetActive(false);
+        GameObject.Find("Price3").SetActive(false);
+        GameObject.Find("Price4").SetActive(false);
+        GameObject.Find("Price5").SetActive(false);
+        GameObject.Find("Price6").SetActive(false);
 
 
         //Obtenemos referencias de los powerups... DEPRECATED
