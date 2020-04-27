@@ -1075,13 +1075,14 @@ void Start()
     {
         for (int i = 0; i < iconosPU.Length; i++)
         {
-            iconosPU[i].sprite = null;
+            iconosPU[i].color = new Color(255, 255, 255, 0);
             countPU[i].text = null;
         }
 
         for (int i = 0; i < gm.jugador.inventario.Count; i++)
         {
             iconosPU[i].sprite = powerUpSprites[(int)gm.jugador.inventario[i].pwrNombreEnum];
+            iconosPU[i].color = new Color(255, 255, 255, 1);
 
             switch (gm.jugador.inventario[i].pwrNombreEnum)
             {
@@ -1102,6 +1103,15 @@ void Start()
                     break;
             }
         }
+    }
+
+    public void initSeguidores()
+    {
+        gm.jugador.inventario.Add(new Powerups());
+        gm.jugador.inventario[0].pwrNombreEnum = PowerupsName.SEGUIDORES;
+
+        gm.jugador.inventario.Add(new Powerups());
+        gm.jugador.inventario[1].pwrNombreEnum = PowerupsName.APOYOS;
     }
 
     public void continueToResult()
