@@ -1352,7 +1352,6 @@ void Start()
         turnoActualTexto.text = aux;
         canvasResultados.SetActive(false);
         canvasTurn.SetActive(true);
-        turnoActualNumero++;
     }
 
     public void StartNextTurn()
@@ -1375,7 +1374,7 @@ void Start()
     gm.involucionObjetivo;
          */
 
-        if(turnoActualNumero == 7)
+        if(turnoActualNumero == 6)
         {
             //Derrota
             if (gm.involucionActual >= gm.involucionObjetivo)
@@ -1392,7 +1391,7 @@ void Start()
                 SceneManager.LoadScene(4);
             }
         }
-
+        turnoActualNumero++;
 
     }
 }
