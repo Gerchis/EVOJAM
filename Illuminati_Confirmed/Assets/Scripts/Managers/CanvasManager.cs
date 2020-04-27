@@ -62,13 +62,64 @@ public class CanvasManager : MonoBehaviour
     Slider sliderSociedadNegativo;
     Slider sliderEconomiaPositivo;
     Slider sliderEconomiaNegativo;
+
     Slider sliderDesarrolloPositivo;
     Slider sliderDesarrolloNegativo;
     Slider sliderInvolucionPositivo;
     Slider sliderInvolucionNegativo;
 
+    GameObject sliderSociedadObjetivo;
+    GameObject sliderEconomiaObjetivo;
+    GameObject sliderDesarrolloObjetivo;
+    GameObject sliderInvolucionObjetivo;    
+
     //Por cada noticia[] > efecto[]
     int[,] modificacionValores = new int[3,3];
+
+
+    public void initSlidersValues()
+    {
+        Debug.Log("PLAYER INFO");
+        Debug.Log("Rol: "+gm.jugador.getRol());
+        Debug.Log("SO: "+gm.sociedadObjetivo);
+        Debug.Log("EO: "+ gm.economiaObjetivo);
+        Debug.Log("DO: "+ gm.desarrolloObjetivo);
+        Debug.Log("IO: " + gm.involucionObjetivo);
+
+        if(gm.sociedadObjetivo == -1)
+        {
+            sliderSociedadObjetivo.SetActive(false);
+        } else
+        {
+            sliderSociedadObjetivo.GetComponent<Slider>().value = gm.sociedadObjetivo;
+        }
+
+        if (gm.economiaObjetivo == -1)
+        {
+            sliderEconomiaObjetivo.SetActive(false);
+        }
+        else
+        {
+            sliderEconomiaObjetivo.GetComponent<Slider>().value = gm.economiaObjetivo;
+        }
+
+        if(gm.desarrolloObjetivo == -1)
+        {
+            sliderDesarrolloObjetivo.SetActive(false);
+        }
+        else
+        {
+            sliderDesarrolloObjetivo.GetComponent<Slider>().value = gm.desarrolloObjetivo;
+        }
+        
+        sliderInvolucionObjetivo.GetComponent<Slider>().value = gm.involucionObjetivo;
+
+        sliderSociedad.value = gm.sociedadActual;
+        sliderEconomia.value = gm.economiaActual;
+        sliderDesarrollo.value = gm.desarrolloActual;
+        sliderInvolucion.value = gm.involucionActual;
+    }
+
 
     public void actualizarSliders()
     {
@@ -193,11 +244,6 @@ public class CanvasManager : MonoBehaviour
                     j = gm.maxMisionesJugables;
                     continue;
                 }
-                Debug.Log("i " + i);
-                Debug.Log("j "+j);
-                Debug.Log("Length idMisionesSeleccionadas[i]: " + gm.idMisionesSeleccionadas.Length);
-                Debug.Log("Length efectosNoticia[j]: " + gm.noticiasIngame[0].efectosNoticia.Length);
-                Debug.Log(gm.noticiasIngame[gm.idMisionesSeleccionadas[i]].efectosNoticia[j].valor);
                 modificacionValores[i,j] = gm.noticiasIngame[gm.idMisionesSeleccionadas[i]].efectosNoticia[j].valor;
 
                 //Si es última iteración del for(j) AKA ya se ha calculado todos los modificacionValores[i][k] & pwrPublicidad == mision.
@@ -219,7 +265,8 @@ public class CanvasManager : MonoBehaviour
      * ###################
      * CANVAS DINAMICO: MISIONES
      * ###################
-     */
+     */    
+    #region MISIONES
     TextMeshProUGUI[] titulosMisionesSeleccionadas = new TextMeshProUGUI[3];    
     Image[] iconosM2 = new Image[3];
     Image[] iconosM1 = new Image[3];
@@ -554,6 +601,8 @@ public class CanvasManager : MonoBehaviour
             }
         }
     }
+
+    #endregion
 
     /*index
      * ###################
@@ -958,6 +1007,11 @@ void Start()
         sliderInvolucionPositivo = GameObject.Find("SI-sliderInvolucionPositivo").GetComponent<Slider>();
         sliderInvolucionNegativo = GameObject.Find("SI-sliderInvolucionPositivo").GetComponent<Slider>();
 
+        sliderSociedadObjetivo = GameObject.Find("SS-sliderObjetivo");
+        sliderEconomiaObjetivo = GameObject.Find("SE-sliderObjetivo");
+        sliderDesarrolloObjetivo = GameObject.Find("SD-sliderObjetivo");
+        sliderInvolucionObjetivo = GameObject.Find("SI-sliderObjetivo");
+       
 
         // -----------------
         // |    GENERAL    |

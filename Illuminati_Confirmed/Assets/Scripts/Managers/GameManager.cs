@@ -43,7 +43,7 @@ public class GameManager : MonoBehaviour
 
     /*index
      * VARIABLES DE JUEGO
-     */  
+     */
     public int maxMisionesJugables = 3;
     public int maxSlotsMisiones = 3;
     public Personajes jugador;
@@ -71,7 +71,7 @@ public class GameManager : MonoBehaviour
         desarrolloActual = Random.Range(80, 101);
 
         involucionActual = sociedadActual + economiaActual + desarrolloActual;
-        involucionObjectivo = 120; //120 de 300
+        involucionObjetivo = 120; //120 de 300
 
         //TODO: Hacer flujo de rondas. Win/Lose GAME
         turnActual = 0;
@@ -82,7 +82,7 @@ public class GameManager : MonoBehaviour
             avataresControl[i] = false;
             rolControl[i] = false;
         }
-        
+
 
         SetValuesPjs();
         jugador = new Personajes((RolSecreto)randRol, avatares[randAvatar], influencia, apoyos, seguidores, false);
@@ -95,13 +95,17 @@ public class GameManager : MonoBehaviour
         }
 
         //TODO: Hacer INIT de sliders
-        actualizarSliders();
-
+        initSlidersValues();
     }
 
     void actualizarSliders()
     {
         GameObject.Find("CanvasManager").GetComponent<CanvasManager>().actualizarSliders();
+    }
+
+    void initSlidersValues()
+    {
+        GameObject.Find("CanvasManager").GetComponent<CanvasManager>().initSlidersValues();
     }
 
     void SetValuesPjs()
@@ -110,7 +114,7 @@ public class GameManager : MonoBehaviour
         {
             randRol = Random.Range(0, (int)RolSecreto.TOTAL_ROLES);
         } while (rolControl[randRol]);
-
+        
         do
         {
             randAvatar = Random.Range(0, avatares.Length);
@@ -139,7 +143,7 @@ public class GameManager : MonoBehaviour
     public int desarrolloObjetivo;  
     [Space(10)]
     public int involucionActual;
-    public int involucionObjectivo;
+    public int involucionObjetivo;
     
     //TODO HACER FLOW JUEGO
     int turnActual;
@@ -290,10 +294,6 @@ public class GameManager : MonoBehaviour
     public void initNoticias()
     {
         noticiasIngame = new Noticias[7];
-
-        //El personaje ya está en una misión 
-        
-        //TODO
     }
 
     /*index
