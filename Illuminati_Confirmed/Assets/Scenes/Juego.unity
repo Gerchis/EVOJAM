@@ -3080,7 +3080,7 @@ PrefabInstance:
     - target: {fileID: 6619318565016298519, guid: 5345cd88eeaa3d14481b215c39bc322d,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: aplicarPwrInfo
+      value: aplicarPwrVoto
       objectReference: {fileID: 0}
     - target: {fileID: 6619318565016298519, guid: 5345cd88eeaa3d14481b215c39bc322d,
         type: 3}
