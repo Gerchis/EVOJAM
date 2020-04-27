@@ -33,6 +33,8 @@ public class CanvasManager : MonoBehaviour
 
     Button[] botonesTienda = new Button[6];
 
+    Button botonNuevoTurno;
+
 
     /*index
      * ###################
@@ -960,6 +962,8 @@ void Start()
         
         turnoActualTexto = GameObject.Find("TextTurno").GetComponent<TextMeshProUGUI>();
 
+        botonNuevoTurno = GameObject.Find("BotonNuevoTurno").GetComponent<Button>();
+
 
         //Obtenemos referencias de los powerups... DEPRECATED
         //pwrCensura = GameObject.Find("pwrCensura").GetComponent<Button>();
@@ -1352,8 +1356,19 @@ void Start()
 
     public void ActualizarTurno()
     {    
-        string aux = "Mes " + turnoActualNumero.ToString();
-        turnoActualTexto.text = aux;
+        if( turnoActualNumero < 7)
+        {
+            string aux = "Mes " + turnoActualNumero.ToString();
+            turnoActualTexto.text = aux;
+            botonNuevoTurno.GetComponentInChildren<TextMeshProUGUI>().text = "Nuevo Turno";
+        }
+        else
+        {
+            turnoActualTexto.text = "Final de Partida";
+            botonNuevoTurno.GetComponentInChildren<TextMeshProUGUI>().text = "Ver resultados";
+        }
+        
+        
         canvasResultados.SetActive(false);
         canvasTurn.SetActive(true);
     }
@@ -1378,7 +1393,7 @@ void Start()
     gm.involucionObjetivo;
          */
 
-        if(turnoActualNumero == 6)
+        if(turnoActualNumero == 7)
         {
             //Derrota
             if (gm.involucionActual >= gm.involucionObjetivo)
