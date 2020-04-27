@@ -275,9 +275,18 @@ public class GameManager : MonoBehaviour
             {
                 if (jugador.inventario[i].pwrNombreEnum == _pw)
                 {
-                    
-                    jugador.inventario[i].cantidad++;
-
+                    switch (jugador.inventario[i].pwrNombreEnum)
+                    {
+                        case PowerupsName.APOYOS:
+                            jugador.apoyos++;
+                            break;
+                        case PowerupsName.SEGUIDORES:
+                            jugador.seguidores++;
+                            break;
+                        default:
+                            jugador.inventario[i].cantidad++;
+                            break;
+                    }
                     jugador.influencia -= precios[(int)_pw - 1];
                     UpdateInventario();
                     return;
