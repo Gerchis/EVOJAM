@@ -44,6 +44,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxMisionesJugables: 3
+  maxSlotsMisiones: 3
   avatares:
   - {fileID: 21300000, guid: dbea17651de3e1445a7f1952f122aa50, type: 3}
   - {fileID: 21300000, guid: 12d11a14997455549936c06bc1073a98, type: 3}
@@ -53,6 +54,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: b6059f9b0b4a2df43a7036444b665f82, type: 3}
   - {fileID: 21300000, guid: 94f5f0651e0ed204098818689e8ddf67, type: 3}
   - {fileID: 21300000, guid: 8b86003dc3a232e46a9a86557ace5874, type: 3}
+  playerAvatar: {fileID: 0}
   precios: 000000000000000000000000000000000000000000000000
   sociedadActual: 0
   economiaActual: 0
@@ -99,7 +101,7 @@ MonoBehaviour:
     misionJugada: 0
   - titulo: Invertir el poder I+D en viajar en el tiempo.
     misionJugada: 0
-  idMisionesSeleccionadas: 
+  idMisionesSeleccionadas: 000000000000000000000000
   noticiasIngame:
   - titulo: 
     texto: 

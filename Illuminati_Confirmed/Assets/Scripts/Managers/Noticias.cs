@@ -30,6 +30,6 @@ public class Noticias
     }
 
     [Header("Efectos Noticia")]
-    public Efectos[] efectosNoticia;
+    public Efectos[] efectosNoticia = new Efectos[3];
 
 }

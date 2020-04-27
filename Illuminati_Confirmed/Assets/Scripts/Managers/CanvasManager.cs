@@ -68,9 +68,9 @@ public class CanvasManager : MonoBehaviour
     Slider sliderInvolucionNegativo;
 
     //Por cada noticia[] > efecto[]
-    int[][] modificacionValores;
+    int[,] modificacionValores = new int[3,3];
 
-    void actualizarSliders()
+    public void actualizarSliders()
     {
         int previoSociedad;
         int previoEconomia;
@@ -87,9 +87,9 @@ public class CanvasManager : MonoBehaviour
         //Obtenemos la modificación final de los sliders
         for (int i = 0; i < gm.maxMisionesJugables; i++)
         {
-            modificacionSociedad += modificacionValores[i][0];
-            modificacionEconomia += modificacionValores[i][1];
-            modificacionDesarrollo += modificacionValores[i][2];
+            modificacionSociedad += modificacionValores[i,0];
+            modificacionEconomia += modificacionValores[i,1];
+            modificacionDesarrollo += modificacionValores[i,2];
         }
 
         //Guardamos valor previo de los efectos actuales
@@ -174,7 +174,7 @@ public class CanvasManager : MonoBehaviour
         {
             for (int j = 0; j < gm.maxMisionesJugables; j++)
             {
-                modificacionValores[i][j] = 0;
+                modificacionValores[i,j] = 0;
             }
         }
 
@@ -193,8 +193,12 @@ public class CanvasManager : MonoBehaviour
                     j = gm.maxMisionesJugables;
                     continue;
                 }
-
-                modificacionValores[i][j] = gm.noticiasIngame[gm.idMisionesSeleccionadas[i]].efectosNoticia[j].valor;
+                Debug.Log("i " + i);
+                Debug.Log("j "+j);
+                Debug.Log("Length idMisionesSeleccionadas[i]: " + gm.idMisionesSeleccionadas.Length);
+                Debug.Log("Length efectosNoticia[j]: " + gm.noticiasIngame[0].efectosNoticia.Length);
+                Debug.Log(gm.noticiasIngame[gm.idMisionesSeleccionadas[i]].efectosNoticia[j].valor);
+                modificacionValores[i,j] = gm.noticiasIngame[gm.idMisionesSeleccionadas[i]].efectosNoticia[j].valor;
 
                 //Si es última iteración del for(j) AKA ya se ha calculado todos los modificacionValores[i][k] & pwrPublicidad == mision.
                 if (j == gm.maxMisionesJugables - 1 && gm.jugador.powerupActivo(PowerupsName.PUBLICIDAD, i))
@@ -202,7 +206,7 @@ public class CanvasManager : MonoBehaviour
                     //Aplicamos efecto del powerup
                     for (int k = 0; k < gm.maxMisionesJugables; k++)
                     {
-                        modificacionValores[i][k] *= 2;
+                        modificacionValores[i,k] *= 2;
                     }
                 }
             }
@@ -224,18 +228,22 @@ public class CanvasManager : MonoBehaviour
     GameObject[,] Background = new GameObject[3, 3];
     Button[,] iaAvatar = new Button[3, 3];
     GameObject[,] Informacion = new GameObject[3, 3];
+    GameObject[,] InformacionInfo = new GameObject[3, 3];
     TextMeshProUGUI[,] ApoyosTexto = new TextMeshProUGUI[3, 3];
     GameObject[,] Voto = new GameObject[3, 3];
+    GameObject[,] VotoInfo = new GameObject[3, 3];
     GameObject[,] pwrVoto = new GameObject[3, 3];
     GameObject[,] pwrInfo = new GameObject[3, 3];
     GameObject[] spVotoSI = new GameObject[3];
     GameObject[] spVotoNO = new GameObject[3];
     GameObject[] spAvatar = new GameObject[3];
+    GameObject[,] Exit = new GameObject[3, 3];
     GameObject[] spBackground = new GameObject[3];
     Image[,] SociedadIcono = new Image[3, 3];
     Image[,] EconomiaIcono = new Image[3, 3];
     Image[,] DesarrolloIcono = new Image[3, 3];
     Image [,] VotoIcono = new Image[3, 3];
+    GameObject[,] Poderes = new GameObject[3, 3];
     
 
     //public GameObject[] informacionesConocidas;
@@ -243,9 +251,6 @@ public class CanvasManager : MonoBehaviour
     //INTEGRACIÓN: Continue de la tienda.
     public void setCanvasMisiones()
     {
-        //Ocultamos toda la visibilidad de las fichas (por si queda alguna abierta)
-        ocultarTodasVisibilidadFicha();
-
         //Inicializamos misiones
         gm.initMisiones();
 
@@ -284,9 +289,9 @@ public class CanvasManager : MonoBehaviour
                     iaAvatar[i,j].GetComponent<Image>().sprite = gm.misionesIngame[gm.idMisionesSeleccionadas[i]].listaPersonajes[j].avatar;
 
                     //...reiniciamos la intención de voto revelada del turno anterior
-                    Voto[i, j].SetActive(false);                    
+                    VotoInfo[i, j].SetActive(false);
                     pwrVoto[i, j].SetActive(true);
-                                
+
                     if (gm.jugador.VerificarDisponibilidad(PowerupsName.AVERIGUAR_VOTO))
                     {
                         pwrVoto[i, j].GetComponent<Button>().interactable = true;
@@ -294,17 +299,23 @@ public class CanvasManager : MonoBehaviour
                     else
                     {
                         pwrVoto[i, j].GetComponent<Button>().interactable = false;
-                    }                    
+                    }
 
                     //...ficha del personaje...
-                    if(gm.misionesIngame[gm.idMisionesSeleccionadas[i]].listaPersonajes[j].getPersonajeInvestigado())
+                    //...actualizamos su valor de apoyos
+                    ApoyosTexto[i, j].text = gm.misionesIngame[gm.idMisionesSeleccionadas[i]].listaPersonajes[j].getApoyosRAW().ToString();
+                    
+                    if (gm.misionesIngame[gm.idMisionesSeleccionadas[i]].listaPersonajes[j].getPersonajeInvestigado())
                     {
-                        //...actualizamos su valor de apoyos
-                        ApoyosTexto[i,j].text = gm.misionesIngame[gm.idMisionesSeleccionadas[i]].listaPersonajes[j].getApoyosRAW().ToString();
-                        
-                        //...la mostramos por pantalla
-                        Informacion[i,j].SetActive(true);
+                        //...la mostramos por pantalla la info
+                        InformacionInfo[i,j].SetActive(true);
                         pwrInfo[i,j].SetActive(false);
+                    }
+                    else
+                    {
+                        //...la mostramos por pantalla el powerup
+                        InformacionInfo[i, j].SetActive(false);
+                        pwrInfo[i, j].SetActive(true);
 
                         if (gm.jugador.VerificarDisponibilidad(PowerupsName.INVESTIGADO))
                         {
@@ -314,7 +325,6 @@ public class CanvasManager : MonoBehaviour
                         {
                             pwrInfo[i, j].GetComponent<Button>().interactable = false;
                         }
-
                     }
                 }
                 else //Para cada slot desocupado de la misión...
@@ -324,6 +334,9 @@ public class CanvasManager : MonoBehaviour
                 }    
             }
         }
+
+        //Ocultamos toda la visibilidad de las fichas (por si queda alguna abierta)
+        ocultarTodasVisibilidadFicha();
     }
 
     void setActiveIconosMision(Image[] iconos, Estadisticas efectoPrincipal)
@@ -383,7 +396,7 @@ public class CanvasManager : MonoBehaviour
         int j = int.Parse(parametros[1]);
 
         //Aplicamos powerup VOTO        
-        Voto[i, j].SetActive(true);
+        VotoInfo[i, j].SetActive(true);
 
         if(gm.misionesIngame[gm.idMisionesSeleccionadas[i]].listaPersonajes[j].GetVotacion())
         {
@@ -409,8 +422,8 @@ public class CanvasManager : MonoBehaviour
 
         //Aplicamos powerup INVESTIGAR
         gm.misionesIngame[gm.idMisionesSeleccionadas[i]].listaPersonajes[j].setPersonajeInvestigado(true);
-        
-        Informacion[i, j].SetActive(true);        
+
+        InformacionInfo[i, j].SetActive(true);        
         pwrInfo[i, j].SetActive(false);
         
         gm.jugador.ConsumirPowerup(PowerupsName.INVESTIGADO);
@@ -519,10 +532,11 @@ public class CanvasManager : MonoBehaviour
 
         //Actualizamos comportamiento botones y seteamos su aportación de apoyos a la votación
         Background[i,j].SetActive(activado);
+        Exit[i, j].SetActive(activado);
+
         Informacion[i,j].SetActive(activado);
         Voto[i,j].SetActive(activado);
-        pwrVoto[i,j].SetActive(activado);
-        pwrInfo[i,j].SetActive(activado);
+        Poderes[i,j].SetActive(activado);
     }
 
     void ocultarTodasVisibilidadFicha()
@@ -532,10 +546,11 @@ public class CanvasManager : MonoBehaviour
             for (int j = 0; j < gm.maxSlotsMisiones; j++)
             {
                 Background[i, j].SetActive(false);
+                Exit[i, j].SetActive(false);
+
                 Informacion[i, j].SetActive(false);
                 Voto[i, j].SetActive(false);
-                pwrVoto[i, j].SetActive(false);
-                pwrInfo[i, j].SetActive(false);
+                Poderes[i, j].SetActive(false);
             }
         }
     }
@@ -783,6 +798,16 @@ void Start()
         Informacion[2, 1] = GameObject.Find("M2-S1-Informacion");
         Informacion[2, 2] = GameObject.Find("M2-S2-Informacion");
 
+        InformacionInfo[0, 0] = GameObject.Find("M0-S0-InformacionInfo");
+        InformacionInfo[0, 1] = GameObject.Find("M0-S1-InformacionInfo");
+        InformacionInfo[0, 2] = GameObject.Find("M0-S2-InformacionInfo");
+        InformacionInfo[1, 0] = GameObject.Find("M1-S0-InformacionInfo");
+        InformacionInfo[1, 1] = GameObject.Find("M1-S1-InformacionInfo");
+        InformacionInfo[1, 2] = GameObject.Find("M1-S2-InformacionInfo");
+        InformacionInfo[2, 0] = GameObject.Find("M2-S0-InformacionInfo");
+        InformacionInfo[2, 1] = GameObject.Find("M2-S1-InformacionInfo");
+        InformacionInfo[2, 2] = GameObject.Find("M2-S2-InformacionInfo");
+
         Voto[0, 0] = GameObject.Find("M0-S0-Voto");
         Voto[0, 1] = GameObject.Find("M0-S1-Voto");
         Voto[0, 2] = GameObject.Find("M0-S2-Voto");
@@ -792,6 +817,16 @@ void Start()
         Voto[2, 0] = GameObject.Find("M2-S0-Voto");
         Voto[2, 1] = GameObject.Find("M2-S1-Voto");
         Voto[2, 2] = GameObject.Find("M2-S2-Voto");
+
+        VotoInfo[0, 0] = GameObject.Find("M0-S0-VotoInfo");
+        VotoInfo[0, 1] = GameObject.Find("M0-S1-VotoInfo");
+        VotoInfo[0, 2] = GameObject.Find("M0-S2-VotoInfo");
+        VotoInfo[1, 0] = GameObject.Find("M1-S0-VotoInfo");
+        VotoInfo[1, 1] = GameObject.Find("M1-S1-VotoInfo");
+        VotoInfo[1, 2] = GameObject.Find("M1-S2-VotoInfo");
+        VotoInfo[2, 0] = GameObject.Find("M2-S0-VotoInfo");
+        VotoInfo[2, 1] = GameObject.Find("M2-S1-VotoInfo");
+        VotoInfo[2, 2] = GameObject.Find("M2-S2-VotoInfo");
 
         pwrVoto[0, 0] = GameObject.Find("M0-S0-pwrVoto");
         pwrVoto[0, 1] = GameObject.Find("M0-S1-pwrVoto");
@@ -852,6 +887,26 @@ void Start()
         iaAvatar[2, 0] = GameObject.Find("M2-S0-Avatar").GetComponent<Button>();
         iaAvatar[2, 1] = GameObject.Find("M2-S1-Avatar").GetComponent<Button>();
         iaAvatar[2, 2] = GameObject.Find("M2-S2-Avatar").GetComponent<Button>();
+
+        Poderes[0, 0] = GameObject.Find("M0-S0-Poderes");
+        Poderes[0, 1] = GameObject.Find("M0-S1-Poderes");
+        Poderes[0, 2] = GameObject.Find("M0-S2-Poderes");
+        Poderes[1, 0] = GameObject.Find("M1-S0-Poderes");
+        Poderes[1, 1] = GameObject.Find("M1-S1-Poderes");
+        Poderes[1, 2] = GameObject.Find("M1-S2-Poderes");
+        Poderes[2, 0] = GameObject.Find("M2-S0-Poderes");
+        Poderes[2, 1] = GameObject.Find("M2-S1-Poderes");
+        Poderes[2, 2] = GameObject.Find("M2-S2-Poderes");
+
+        Exit[0, 0] = GameObject.Find("M0-S0-Exit");
+        Exit[0, 1] = GameObject.Find("M0-S1-Exit");
+        Exit[0, 2] = GameObject.Find("M0-S2-Exit");
+        Exit[1, 0] = GameObject.Find("M1-S0-Exit");
+        Exit[1, 1] = GameObject.Find("M1-S1-Exit");
+        Exit[1, 2] = GameObject.Find("M1-S2-Exit");
+        Exit[2, 0] = GameObject.Find("M2-S0-Exit");
+        Exit[2, 1] = GameObject.Find("M2-S1-Exit");
+        Exit[2, 2] = GameObject.Find("M2-S2-Exit");
 
         ApoyosTexto[0, 0] = GameObject.Find("M0-S0-ApoyosTexto").GetComponent<TextMeshProUGUI>();
         ApoyosTexto[0, 1] = GameObject.Find("M0-S1-ApoyosTexto").GetComponent<TextMeshProUGUI>();

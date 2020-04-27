@@ -51,7 +51,7 @@ public class GameManager : MonoBehaviour
     public Sprite[] avatares;
     bool[] avataresControl = new bool[(int)RolSecreto.TOTAL_ROLES];
     bool[] rolControl = new bool[(int)RolSecreto.TOTAL_ROLES];
-    
+    public Image playerAvatar;
 
 
     //VALUES PJS
@@ -74,8 +74,8 @@ public class GameManager : MonoBehaviour
         involucionObjectivo = 120; //120 de 300
 
         //TODO: Hacer flujo de rondas. Win/Lose GAME
-        //turnActual = 0;
-        //turnMax = 12;
+        turnActual = 0;
+        turnMax = 12;
 
         for (int i = 0; i < (int)RolSecreto.TOTAL_ROLES; i++)
         {
@@ -86,12 +86,22 @@ public class GameManager : MonoBehaviour
 
         SetValuesPjs();
         jugador = new Personajes((RolSecreto)randRol, avatares[randAvatar], influencia, apoyos, seguidores, false);
+        playerAvatar = GameObject.Find("PlayerAvatar").GetComponent<Image>();
+        playerAvatar.sprite = avatares[randAvatar];
         for (int i = 0; i < pnjs.Length; i++)
         {
             SetValuesPjs();
             pnjs[i] = new Personajes((RolSecreto)randRol, avatares[randAvatar], influencia, apoyos, seguidores, true);
         }
 
+        //TODO: Hacer INIT de sliders
+        actualizarSliders();
+
+    }
+
+    void actualizarSliders()
+    {
+        GameObject.Find("CanvasManager").GetComponent<CanvasManager>().actualizarSliders();
     }
 
     void SetValuesPjs()
@@ -99,10 +109,14 @@ public class GameManager : MonoBehaviour
         do
         {
             randRol = Random.Range(0, (int)RolSecreto.TOTAL_ROLES);
+        } while (rolControl[randRol]);
+
+        do
+        {
             randAvatar = Random.Range(0, avatares.Length);
-        } while (avataresControl[randAvatar] && rolControl[randRol]);
-        avataresControl[randAvatar] = true;
+        } while(avataresControl[randAvatar]);
         
+        avataresControl[randAvatar] = true;
         rolControl[randRol] = true;
 
         influencia = Random.Range(100, 300);
@@ -128,8 +142,8 @@ public class GameManager : MonoBehaviour
     public int involucionObjectivo;
     
     //TODO HACER FLOW JUEGO
-    //int turnActual;
-    //int turnMax;
+    int turnActual;
+    int turnMax;
 
     public void calcularInvolucion()
     {
@@ -167,7 +181,6 @@ public class GameManager : MonoBehaviour
         int num;
         bool controlFail = false;
         int control = 0;
-        idMisionesSeleccionadas = new int[3];
 
         for (int i = 0; i < maxMisionesJugables; i++)
         {
