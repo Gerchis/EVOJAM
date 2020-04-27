@@ -26,8 +26,8 @@ public class CanvasManager : MonoBehaviour
     public Sprite spriteLocation;
 
 
-    public TextMeshProUGUI[] preciosPowerUps;
-    public TextMeshProUGUI[] resultados;
+    TextMeshProUGUI[] preciosPowerUps = new TextMeshProUGUI[6];
+    TextMeshProUGUI[] resultados = new TextMeshProUGUI[2];
 
 
     /*index
@@ -466,6 +466,8 @@ public class CanvasManager : MonoBehaviour
         pwrVoto[i, j].SetActive(false);        
 
         gm.jugador.ConsumirPowerup(PowerupsName.AVERIGUAR_VOTO);
+        UpdateInventario();
+
     }
 
     public void aplicarPwrInfo(string idParams)
@@ -497,6 +499,8 @@ public class CanvasManager : MonoBehaviour
 
         if (afinidades[2]) { num = 1; } else { num = 2; }
         DesarrolloIcono[i, j].GetComponent<Image>().sprite = spritesDesarrollo[num];
+
+        UpdateInventario();
     }
 
 
@@ -699,6 +703,7 @@ public class CanvasManager : MonoBehaviour
         setNoticiaAfectada(PowerupsName.CENSURA, idNoticia);
         verificarPowerUp(PowerupsName.CENSURA);
         actualizarSliders();
+        UpdateInventario();
     }
 
     public void aplicarPublicidad(int idNoticia)
@@ -719,6 +724,7 @@ public class CanvasManager : MonoBehaviour
         setNoticiaAfectada(PowerupsName.PUBLICIDAD, idNoticia);
         verificarPowerUp(PowerupsName.PUBLICIDAD);
         actualizarSliders();
+        UpdateInventario();
     }
 
 
@@ -799,13 +805,12 @@ void Start()
         ImagenNoticia[1] = GameObject.Find("N2-Imagen").GetComponent<Image>();
         ImagenNoticia[2] = GameObject.Find("N3-Imagen").GetComponent<Image>();
 
-        preciosPowerUps = new TextMeshProUGUI[6];
-        preciosPowerUps[0] = GameObject.Find("Price 1").GetComponent<TextMeshProUGUI>();
-        preciosPowerUps[1] = GameObject.Find("Price 2").GetComponent<TextMeshProUGUI>();
-        preciosPowerUps[2] = GameObject.Find("Price 3").GetComponent<TextMeshProUGUI>();
-        preciosPowerUps[3] = GameObject.Find("Price 4").GetComponent<TextMeshProUGUI>();
-        preciosPowerUps[4] = GameObject.Find("Price 5").GetComponent<TextMeshProUGUI>();
-        preciosPowerUps[5] = GameObject.Find("Price 6").GetComponent<TextMeshProUGUI>();
+        preciosPowerUps[0] = GameObject.Find("Price1").GetComponent<TextMeshProUGUI>();
+        preciosPowerUps[1] = GameObject.Find("Price2").GetComponent<TextMeshProUGUI>();
+        preciosPowerUps[2] = GameObject.Find("Price3").GetComponent<TextMeshProUGUI>();
+        preciosPowerUps[3] = GameObject.Find("Price4").GetComponent<TextMeshProUGUI>();
+        preciosPowerUps[4] = GameObject.Find("Price5").GetComponent<TextMeshProUGUI>();
+        preciosPowerUps[5] = GameObject.Find("Price6").GetComponent<TextMeshProUGUI>();
 
         BotonCensura[0] = GameObject.Find("N1-BotonCensurar").GetComponent<Button>();
         BotonCensura[1] = GameObject.Find("N2-BotonCensurar").GetComponent<Button>();
@@ -815,8 +820,6 @@ void Start()
         BotonPublicidad[1] = GameObject.Find("N2-BotonPublicitar").GetComponent<Button>();
         BotonPublicidad[2] = GameObject.Find("N3-BotonPublicitar").GetComponent<Button>();
 
-
-        resultados = new TextMeshProUGUI[2];
         resultados[0] = GameObject.Find("Elementos").GetComponent<TextMeshProUGUI>();
         resultados[1] = GameObject.Find("Numeros").GetComponent<TextMeshProUGUI>();
 
@@ -1100,7 +1103,14 @@ void Start()
     {
         for (int i = 0; i < gm.precios.Length; i++)
         {
-            preciosPowerUps[i].text = gm.precios[i].ToString();
+            Debug.LogWarning(i);
+            Debug.Log(preciosPowerUps.Length);
+            Debug.Log(gm.precios.Length);
+            Debug.Log(gm.precios[i].ToString());
+            Debug.Log(preciosPowerUps[i].text);
+            
+            preciosPowerUps[i].text = "casa";
+            //preciosPowerUps[i].text = gm.precios[i].ToString();
         }
 
         resultados[0].text = "Seguidores Ganados\r\nInfluencia Ganada\r\n-----------------------------------------\r\nTOTAL";

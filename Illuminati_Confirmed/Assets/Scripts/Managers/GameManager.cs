@@ -259,9 +259,13 @@ public class GameManager : MonoBehaviour
         //Si el resultado de la votacion es favorable a los intereses gana seguidores
     }
 
+    void UpdateInventario()
+    {
+        GameObject.Find("CanvasManager").GetComponent<CanvasManager>().UpdateInventario();
+    }
+
     public void BuyPowerUp(PowerupsName _pw)
     {
-
 
         if (precios[(int)_pw] <= jugador.influencia)
         {
@@ -283,8 +287,10 @@ public class GameManager : MonoBehaviour
             powerUp.cantidad = 1;
 
             jugador.inventario.Add(powerUp);
-
+            UpdateInventario();
         }
+
+        
     }
 
     //AL FINAL NO LO NECESITAMOS

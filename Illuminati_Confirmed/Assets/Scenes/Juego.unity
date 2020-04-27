@@ -1073,6 +1073,11 @@ PrefabInstance:
       propertyPath: noticiasIngame.Array.data[1].efectosNoticia.Array.data[1].estadistica
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 211502313940986786, guid: 1c4ebf66ea6b0214391b324f7e6bcda7,
+        type: 3}
+      propertyPath: precios.Array.data[0]
+      value: 250
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1c4ebf66ea6b0214391b324f7e6bcda7, type: 3}
 --- !u!1 &404145341
@@ -7085,8 +7090,6 @@ MonoBehaviour:
   - {fileID: 21300000, guid: a8047174bf4567e4c808478ad87393bf, type: 3}
   - {fileID: 21300000, guid: 47ca078ce56d418448b30a2ce1841883, type: 3}
   spriteLocation: {fileID: 21300000, guid: 0d418ab8657082e449537f7ebee841d6, type: 3}
-  preciosPowerUps: []
-  resultados: []
   spriteCensura: {fileID: 21300000, guid: dafc809baef28fb47abc4687a5c413b8, type: 3}
   spritePublicidad: {fileID: 21300000, guid: 1976caa130d7b494785ce1c6be08a8de, type: 3}
   spriteNoticia: {fileID: 0}
@@ -8525,22 +8528,22 @@ PrefabInstance:
     - target: {fileID: 1092113566367474779, guid: 30e8f6ef1bac04c4481ee18654bac2a8,
         type: 3}
       propertyPath: m_Name
-      value: Price 3
+      value: Price3
       objectReference: {fileID: 0}
     - target: {fileID: 1092113566687239084, guid: 30e8f6ef1bac04c4481ee18654bac2a8,
         type: 3}
       propertyPath: m_Name
-      value: Price 2
+      value: Price2
       objectReference: {fileID: 0}
     - target: {fileID: 1092113566857709221, guid: 30e8f6ef1bac04c4481ee18654bac2a8,
         type: 3}
       propertyPath: m_Name
-      value: Price 4
+      value: Price4
       objectReference: {fileID: 0}
     - target: {fileID: 1092113566996248920, guid: 30e8f6ef1bac04c4481ee18654bac2a8,
         type: 3}
       propertyPath: m_Name
-      value: Price 1
+      value: Price1
       objectReference: {fileID: 0}
     - target: {fileID: 1092113567015334197, guid: 30e8f6ef1bac04c4481ee18654bac2a8,
         type: 3}
@@ -8750,12 +8753,12 @@ PrefabInstance:
     - target: {fileID: 1092113567985096932, guid: 30e8f6ef1bac04c4481ee18654bac2a8,
         type: 3}
       propertyPath: m_Name
-      value: Price 6
+      value: Price6
       objectReference: {fileID: 0}
     - target: {fileID: 1092113568006843431, guid: 30e8f6ef1bac04c4481ee18654bac2a8,
         type: 3}
       propertyPath: m_Name
-      value: Price 5
+      value: Price5
       objectReference: {fileID: 0}
     - target: {fileID: 1092113566367474777, guid: 30e8f6ef1bac04c4481ee18654bac2a8,
         type: 3}
