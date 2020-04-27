@@ -283,4 +283,4 @@ MonoBehaviour:
       valor: -15
     - estadistica: 2
       valor: 15
-  modificadorSeguidores: 50
+  modificadorSeguidores: 2
