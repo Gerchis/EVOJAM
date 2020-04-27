@@ -18,6 +18,7 @@ public class Personajes
         seguidores = _seguidores;
         ia = _ia;
         personajeInvestigado = false;
+        rol = _rol;
 
         switch (_rol)
         {
@@ -103,6 +104,9 @@ public class Personajes
     //ATRIBUTOS GENERALES
     public Sprite avatar;
     RolSecreto rol;
+
+    public RolSecreto getRol() { return rol; }
+
     //Revisar orden de afinidades en GameManager > public enum Estadisticas;
     bool[] afinidadesEstadisticas = new bool[3];
 

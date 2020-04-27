@@ -62,13 +62,64 @@ public class CanvasManager : MonoBehaviour
     Slider sliderSociedadNegativo;
     Slider sliderEconomiaPositivo;
     Slider sliderEconomiaNegativo;
+
     Slider sliderDesarrolloPositivo;
     Slider sliderDesarrolloNegativo;
     Slider sliderInvolucionPositivo;
     Slider sliderInvolucionNegativo;
 
+    GameObject sliderSociedadObjetivo;
+    GameObject sliderEconomiaObjetivo;
+    GameObject sliderDesarrolloObjetivo;
+    GameObject sliderInvolucionObjetivo;    
+
     //Por cada noticia[] > efecto[]
     int[,] modificacionValores = new int[3,3];
+
+
+    public void initSlidersValues()
+    {
+        Debug.Log("PLAYER INFO");
+        Debug.Log("Rol: "+gm.jugador.getRol());
+        Debug.Log("SO: "+gm.sociedadObjetivo);
+        Debug.Log("EO: "+ gm.economiaObjetivo);
+        Debug.Log("DO: "+ gm.desarrolloObjetivo);
+        Debug.Log("IO: " + gm.involucionObjetivo);
+
+        if(gm.sociedadObjetivo == -1)
+        {
+            sliderSociedadObjetivo.SetActive(false);
+        } else
+        {
+            sliderSociedadObjetivo.GetComponent<Slider>().value = gm.sociedadObjetivo;
+        }
+
+        if (gm.economiaObjetivo == -1)
+        {
+            sliderEconomiaObjetivo.SetActive(false);
+        }
+        else
+        {
+            sliderEconomiaObjetivo.GetComponent<Slider>().value = gm.economiaObjetivo;
+        }
+
+        if(gm.desarrolloObjetivo == -1)
+        {
+            sliderDesarrolloObjetivo.SetActive(false);
+        }
+        else
+        {
+            sliderDesarrolloObjetivo.GetComponent<Slider>().value = gm.desarrolloObjetivo;
+        }
+        
+        sliderInvolucionObjetivo.GetComponent<Slider>().value = gm.involucionObjetivo;
+
+        sliderSociedad.value = gm.sociedadActual;
+        sliderEconomia.value = gm.economiaActual;
+        sliderDesarrollo.value = gm.desarrolloActual;
+        sliderInvolucion.value = gm.involucionActual;
+    }
+
 
     public void actualizarSliders()
     {
@@ -193,11 +244,6 @@ public class CanvasManager : MonoBehaviour
                     j = gm.maxMisionesJugables;
                     continue;
                 }
-                Debug.Log("i " + i);
-                Debug.Log("j "+j);
-                Debug.Log("Length idMisionesSeleccionadas[i]: " + gm.idMisionesSeleccionadas.Length);
-                Debug.Log("Length efectosNoticia[j]: " + gm.noticiasIngame[0].efectosNoticia.Length);
-                Debug.Log(gm.noticiasIngame[gm.idMisionesSeleccionadas[i]].efectosNoticia[j].valor);
                 modificacionValores[i,j] = gm.noticiasIngame[gm.idMisionesSeleccionadas[i]].efectosNoticia[j].valor;
 
                 //Si es última iteración del for(j) AKA ya se ha calculado todos los modificacionValores[i][k] & pwrPublicidad == mision.
@@ -219,7 +265,8 @@ public class CanvasManager : MonoBehaviour
      * ###################
      * CANVAS DINAMICO: MISIONES
      * ###################
-     */
+     */    
+    #region MISIONES
     TextMeshProUGUI[] titulosMisionesSeleccionadas = new TextMeshProUGUI[3];    
     Image[] iconosM2 = new Image[3];
     Image[] iconosM1 = new Image[3];
@@ -555,6 +602,8 @@ public class CanvasManager : MonoBehaviour
         }
     }
 
+    #endregion
+
     /*index
      * ###################
      * CANVAS DINAMICO: TIENDA
@@ -593,6 +642,10 @@ public class CanvasManager : MonoBehaviour
 
     Button[] BotonCensura = new Button[3];
     Button[] BotonPublicidad = new Button[3];
+
+    Image[] iconosPU = new Image[6];
+    public Sprite[] powerUpSprites;
+    Text[] countPU = new Text[6];
 
     void setCanvasNoticias()
     {
@@ -749,6 +802,8 @@ void Start()
         resultados = new TextMeshProUGUI[2];
         resultados[0] = GameObject.Find("Elementos").GetComponent<TextMeshProUGUI>();
         resultados[1] = GameObject.Find("Numeros").GetComponent<TextMeshProUGUI>();
+
+
 
 
         //Obtenemos referencias de los powerups... DEPRECATED
@@ -958,6 +1013,24 @@ void Start()
         sliderInvolucionPositivo = GameObject.Find("SI-sliderInvolucionPositivo").GetComponent<Slider>();
         sliderInvolucionNegativo = GameObject.Find("SI-sliderInvolucionPositivo").GetComponent<Slider>();
 
+        sliderSociedadObjetivo = GameObject.Find("SS-sliderObjetivo");
+        sliderEconomiaObjetivo = GameObject.Find("SE-sliderObjetivo");
+        sliderDesarrolloObjetivo = GameObject.Find("SD-sliderObjetivo");
+        sliderInvolucionObjetivo = GameObject.Find("SI-sliderObjetivo");
+       
+        iconosPU[0] = GameObject.Find("IconPU1").GetComponent<Image>();
+        iconosPU[1] = GameObject.Find("IconPU2").GetComponent<Image>();
+        iconosPU[2] = GameObject.Find("IconPU3").GetComponent<Image>();
+        iconosPU[3] = GameObject.Find("IconPU4").GetComponent<Image>();
+        iconosPU[4] = GameObject.Find("IconPU5").GetComponent<Image>();
+        iconosPU[5] = GameObject.Find("IconPU6").GetComponent<Image>();
+
+        countPU[0] = GameObject.Find("Slot1").GetComponent<Text>();
+        countPU[1] = GameObject.Find("Slot2").GetComponent<Text>();
+        countPU[2] = GameObject.Find("Slot3").GetComponent<Text>();
+        countPU[3] = GameObject.Find("Slot4").GetComponent<Text>();
+        countPU[4] = GameObject.Find("Slot5").GetComponent<Text>();
+        countPU[5] = GameObject.Find("Slot6").GetComponent<Text>();
 
         // -----------------
         // |    GENERAL    |
@@ -973,6 +1046,39 @@ void Start()
 
     }
 
+    public void UpdateInventario()
+    {
+        for (int i = 0; i < iconosPU.Length; i++)
+        {
+            iconosPU[i].sprite = null;
+            countPU[i].text = null;
+        }
+
+        for (int i = 0; i < gm.jugador.inventario.Count; i++)
+        {
+            iconosPU[i].sprite = powerUpSprites[(int)gm.jugador.inventario[i].pwrNombreEnum];
+
+            switch (gm.jugador.inventario[i].pwrNombreEnum)
+            {
+                case PowerupsName.APOYOS:
+
+                    countPU[i].text = gm.jugador.apoyos.ToString();
+
+                    break;
+                case PowerupsName.SEGUIDORES:
+
+                    countPU[i].text = gm.jugador.seguidores.ToString();
+
+                    break;
+                default:
+
+                    countPU[i].text = gm.jugador.inventario[i].cantidad.ToString();
+
+                    break;
+            }
+        }
+    }
+
     public void continueToResult()
     {
         for (int i = 0; i < gm.precios.Length; i++)
@@ -982,6 +1088,8 @@ void Start()
 
         resultados[0].text = "Seguidores Ganados\r\nInfluencia Ganada\r\n-----------------------------------------\r\nTOTAL";
         resultados[1].text = gm.modificadorSeguidores.ToString() + "\r\n" + gm.jugador.seguidores.ToString() + "\r\n-----------------------------------------\r\n" + gm.jugador.influencia.ToString();
+
+        UpdateInventario();
     }
 
     void verificarPowerUp(PowerupsName _name)
