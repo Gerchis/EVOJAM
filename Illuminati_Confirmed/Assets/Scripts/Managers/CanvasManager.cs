@@ -1366,44 +1366,25 @@ void Start()
     }
 
     public void ActualizarTurno()
-    {    
-        if( turnoActualNumero < 7)
+    {
+        canvasResultados.SetActive(false);
+        canvasTurn.SetActive(true);
+        if ( turnoActualNumero < 7)
         {
             string aux = "Mes " + turnoActualNumero.ToString();
             turnoActualTexto.text = aux;
             botonNuevoTurno.GetComponentInChildren<TextMeshProUGUI>().text = "Nuevo Turno";
+            
         }
         else
         {
             turnoActualTexto.text = "Final de Partida";
             botonNuevoTurno.GetComponentInChildren<TextMeshProUGUI>().text = "Ver resultados";
-        }
-        
-        
-        canvasResultados.SetActive(false);
-        canvasTurn.SetActive(true);
+        }     
     }
 
     public void StartNextTurn()
     {
-        canvasTurn.SetActive(false);
-        setCanvasMisiones();
-        canvasMisiones.SetActive(true);
-
-        //TODO verifica victoria o derrota: 
-        /*
-    sociedadObjetivo
-    sociedadActual
-    economiaObjetivo;
-    economiaActual
-    desarrolloObjetivo;  
-    desarrolloActual
-    
-        USA SOLO ESTA!!!!! >>>>
-    gm.involucionActual;
-    gm.involucionObjetivo;
-         */
-
         if(turnoActualNumero == 7)
         {
             //Derrota
@@ -1421,6 +1402,10 @@ void Start()
                 SceneManager.LoadScene(4);
             }
         }
+
+        canvasTurn.SetActive(false);
+        setCanvasMisiones();
+        canvasMisiones.SetActive(true);
         turnoActualNumero++;
 
     }
