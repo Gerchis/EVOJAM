@@ -1090,6 +1090,7 @@ void Start()
         //Desactivamos parents...
         canvasPrensa.SetActive(false);
         canvasResultados.SetActive(false);
+        canvasTurn.SetActive(true);
         setCanvasMisiones();
         canvasMisiones.SetActive(true);
 
@@ -1156,9 +1157,10 @@ void Start()
     {
         AddSeguidores();
         gm.AddInfluencia(gm.jugador);
+        
 
         resultados[0].text = "Seguidores Ganados\r\nInfluencia Ganada\r\n-----------------------------------------\r\nTOTAL";
-        resultados[1].text = gm.modificadorSeguidores.ToString() + "\r\n" + gm.jugador.seguidores.ToString() + "\r\n-----------------------------------------\r\n" + gm.jugador.influencia.ToString();
+        resultados[1].text = gm.modificadorSeguidores.ToString() + "\r\n" + (gm.jugador.seguidores * 25).ToString() + "\r\n-----------------------------------------\r\n" + gm.jugador.influencia.ToString();
 
         UpdateInventario();
     }
@@ -1205,6 +1207,7 @@ void Start()
     {    
         string aux = "Mes " + turnoActualNumero.ToString();
         turnoActualTexto.text = aux;
+        canvasResultados.SetActive(false);
         canvasTurn.SetActive(true);
         turnoActualNumero++;
     }
