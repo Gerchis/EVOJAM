@@ -337,6 +337,7 @@ public class CanvasManager : MonoBehaviour
     Image[,] DesarrolloIcono = new Image[3, 3];
     GameObject [,] VotoIcono = new GameObject[3, 3];
     GameObject[,] Poderes = new GameObject[3, 3];
+    TextMeshProUGUI InfoMes;
 
     //public GameObject[] informacionesConocidas;
 
@@ -353,6 +354,9 @@ public class CanvasManager : MonoBehaviour
             spBackground[i].SetActive(false);
             spVotoSI[i].SetActive(false);
             spVotoNO[i].SetActive(false);
+
+            //Reseteamos sprite neutro en slot player
+            spAvatar[i].GetComponent<Image>().sprite = spriteLocation;
 
             //Mostramos/ocultamos los iconos relevantes de la misión
             switch (i)
@@ -1141,6 +1145,8 @@ void Start()
         Exit[2, 1] = GameObject.Find("M2-S1-Exit");
         Exit[2, 2] = GameObject.Find("M2-S2-Exit");
 
+        InfoMes = GameObject.Find("InfoMes").GetComponent<TextMeshProUGUI>();
+
         ApoyosTexto[0, 0] = GameObject.Find("M0-S0-ApoyosTexto").GetComponent<TextMeshProUGUI>();
         ApoyosTexto[0, 1] = GameObject.Find("M0-S1-ApoyosTexto").GetComponent<TextMeshProUGUI>();
         ApoyosTexto[0, 2] = GameObject.Find("M0-S2-ApoyosTexto").GetComponent<TextMeshProUGUI>();
@@ -1365,6 +1371,8 @@ void Start()
         }
     }
 
+
+
     public void ActualizarTurno()
     {
         canvasResultados.SetActive(false);
@@ -1373,6 +1381,7 @@ void Start()
         {
             string aux = "Mes " + turnoActualNumero.ToString();
             turnoActualTexto.text = aux;
+            InfoMes.text = aux;
             botonNuevoTurno.GetComponentInChildren<TextMeshProUGUI>().text = "Nuevo Turno";
             
         }
@@ -1385,6 +1394,14 @@ void Start()
 
     public void StartNextTurn()
     {
+        if(turnoActualNumero <= 6)
+        {
+            canvasTurn.SetActive(false);
+            setCanvasMisiones();
+            canvasMisiones.SetActive(true);
+        }
+        
+
         if(turnoActualNumero == 7)
         {
             //Derrota
@@ -1402,10 +1419,6 @@ void Start()
                 SceneManager.LoadScene(4);
             }
         }
-
-        canvasTurn.SetActive(false);
-        setCanvasMisiones();
-        canvasMisiones.SetActive(true);
         turnoActualNumero++;
 
     }

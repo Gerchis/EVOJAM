@@ -14,7 +14,7 @@ public class MainMenuController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        volumen=GameObject.Find("SliderVolumen").GetComponent<Slider>();
+        //volumen=GameObject.Find("SliderVolumen").GetComponent<Slider>();
 
         mainMenu.SetActive(true);
         opciones.SetActive(false);
@@ -38,11 +38,11 @@ public class MainMenuController : MonoBehaviour
         creditos.SetActive(true);
     }
 
-    public void Options()
-    {
-        mainMenu.SetActive(false);
-        opciones.SetActive(true);
-    }
+    //public void Options()
+    //{
+    //    mainMenu.SetActive(false);
+    //    opciones.SetActive(true);
+    //}
 
     public void Volver()
     {
@@ -56,10 +56,10 @@ public class MainMenuController : MonoBehaviour
         SceneManager.LoadScene(2);
     }
 
-    private Slider volumen;
+    //private Slider volumen;
 
-    public void SaveAudio()
-    {
-        GameManager.Instance.saveVolumenValue(volumen.value);
-    }
+    //public void SaveAudio()
+    //{
+    //    GameManager.Instance.saveVolumenValue(volumen.value);
+    //}
 }
