@@ -12,7 +12,11 @@ AnimatorController:
   m_AnimatorLayers:
   - serializedVersion: 5
     m_Name: Base Layer
+<<<<<<< HEAD
     m_StateMachine: {fileID: 1107933058524730876}
+=======
+    m_StateMachine: {fileID: 1107979755329158532}
+>>>>>>> f7f22b333af7a70692a57cced82f7e3127020d35
     m_Mask: {fileID: 0}
     m_Motions: []
     m_Behaviours: []
@@ -22,14 +26,22 @@ AnimatorController:
     m_IKPass: 0
     m_SyncedLayerAffectsTiming: 0
     m_Controller: {fileID: 9100000}
+<<<<<<< HEAD
 --- !u!1102 &1102503890079159814
+=======
+--- !u!1102 &1102594271359502868
+>>>>>>> f7f22b333af7a70692a57cced82f7e3127020d35
 AnimatorState:
   serializedVersion: 5
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
+<<<<<<< HEAD
   m_Name: New Animation
+=======
+  m_Name: Tierra
+>>>>>>> f7f22b333af7a70692a57cced82f7e3127020d35
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []
@@ -42,13 +54,21 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
+<<<<<<< HEAD
   m_Motion: {fileID: 7400000, guid: 65aa4f33a7101e54686dd56533950fb4, type: 2}
+=======
+  m_Motion: {fileID: 7400000, guid: 74d84a55b509c9d4695f9d5c747e5323, type: 2}
+>>>>>>> f7f22b333af7a70692a57cced82f7e3127020d35
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: 
+<<<<<<< HEAD
 --- !u!1107 &1107933058524730876
+=======
+--- !u!1107 &1107979755329158532
+>>>>>>> f7f22b333af7a70692a57cced82f7e3127020d35
 AnimatorStateMachine:
   serializedVersion: 5
   m_ObjectHideFlags: 1
@@ -58,7 +78,11 @@ AnimatorStateMachine:
   m_Name: Base Layer
   m_ChildStates:
   - serializedVersion: 1
+<<<<<<< HEAD
     m_State: {fileID: 1102503890079159814}
+=======
+    m_State: {fileID: 1102594271359502868}
+>>>>>>> f7f22b333af7a70692a57cced82f7e3127020d35
     m_Position: {x: 200, y: 0, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions: []
@@ -69,4 +93,8 @@ AnimatorStateMachine:
   m_EntryPosition: {x: 50, y: 120, z: 0}
   m_ExitPosition: {x: 800, y: 120, z: 0}
   m_ParentStateMachinePosition: {x: 800, y: 20, z: 0}
+<<<<<<< HEAD
   m_DefaultState: {fileID: 1102503890079159814}
+=======
+  m_DefaultState: {fileID: 1102594271359502868}
+>>>>>>> f7f22b333af7a70692a57cced82f7e3127020d35
