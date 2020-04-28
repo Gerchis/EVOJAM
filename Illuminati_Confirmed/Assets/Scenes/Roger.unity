@@ -881,5 +881,53 @@ PrefabInstance:
       propertyPath: m_Name
       value: Price 5
       objectReference: {fileID: 0}
+    - target: {fileID: 1092113567406235178, guid: 30e8f6ef1bac04c4481ee18654bac2a8,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 6474d14ddb0ba954998c92ea9c0c8b55,
+        type: 3}
+    - target: {fileID: 1092113567406235178, guid: 30e8f6ef1bac04c4481ee18654bac2a8,
+        type: 3}
+      propertyPath: m_Type
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1092113567406235178, guid: 30e8f6ef1bac04c4481ee18654bac2a8,
+        type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1092113567406235178, guid: 30e8f6ef1bac04c4481ee18654bac2a8,
+        type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1092113567406235178, guid: 30e8f6ef1bac04c4481ee18654bac2a8,
+        type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1092113566058710291, guid: 30e8f6ef1bac04c4481ee18654bac2a8,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 6474d14ddb0ba954998c92ea9c0c8b55,
+        type: 3}
+    - target: {fileID: 1092113566058710291, guid: 30e8f6ef1bac04c4481ee18654bac2a8,
+        type: 3}
+      propertyPath: m_Type
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1092113567386801778, guid: 30e8f6ef1bac04c4481ee18654bac2a8,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 6474d14ddb0ba954998c92ea9c0c8b55,
+        type: 3}
+    - target: {fileID: 1092113567386801778, guid: 30e8f6ef1bac04c4481ee18654bac2a8,
+        type: 3}
+      propertyPath: m_Type
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 30e8f6ef1bac04c4481ee18654bac2a8, type: 3}
