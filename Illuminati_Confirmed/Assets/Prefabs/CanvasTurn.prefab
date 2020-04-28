@@ -140,6 +140,7 @@ GameObject:
   - component: {fileID: 6861544797316404499}
   - component: {fileID: 6861544797316404501}
   - component: {fileID: 6861544797316404500}
+  - component: {fileID: 3384016501549791550}
   m_Layer: 5
   m_Name: TextTurnoLimite
   m_TagString: Untagged
@@ -163,7 +164,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.000061035, y: -106}
+  m_AnchoredPosition: {x: 1928, y: -106}
   m_SizeDelta: {x: 1920, y: 145.4}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6861544797316404501
@@ -286,6 +287,25 @@ MonoBehaviour:
   - {fileID: 0}
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!95 &3384016501549791550
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6861544797316404498}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: c80fb11b5dc43824299bea9ed2e6ae24, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &6861544797800676312
 GameObject:
   m_ObjectHideFlags: 0
@@ -555,6 +575,7 @@ GameObject:
   - component: {fileID: 6861544798570092173}
   - component: {fileID: 6861544798570092175}
   - component: {fileID: 6861544798570092174}
+  - component: {fileID: 676811550854161030}
   m_Layer: 5
   m_Name: TextTurno
   m_TagString: Untagged
@@ -701,3 +722,22 @@ MonoBehaviour:
   - {fileID: 0}
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!95 &676811550854161030
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6861544798570092172}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: d3ed852fcd0564e4e82a90c0071fd302, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
