@@ -337,6 +337,7 @@ public class CanvasManager : MonoBehaviour
     Image[,] DesarrolloIcono = new Image[3, 3];
     GameObject [,] VotoIcono = new GameObject[3, 3];
     GameObject[,] Poderes = new GameObject[3, 3];
+    TextMeshProUGUI InfoMes;
 
     //public GameObject[] informacionesConocidas;
 
@@ -1144,6 +1145,8 @@ void Start()
         Exit[2, 1] = GameObject.Find("M2-S1-Exit");
         Exit[2, 2] = GameObject.Find("M2-S2-Exit");
 
+        InfoMes = GameObject.Find("InfoMes").GetComponent<TextMeshProUGUI>();
+
         ApoyosTexto[0, 0] = GameObject.Find("M0-S0-ApoyosTexto").GetComponent<TextMeshProUGUI>();
         ApoyosTexto[0, 1] = GameObject.Find("M0-S1-ApoyosTexto").GetComponent<TextMeshProUGUI>();
         ApoyosTexto[0, 2] = GameObject.Find("M0-S2-ApoyosTexto").GetComponent<TextMeshProUGUI>();
@@ -1368,6 +1371,8 @@ void Start()
         }
     }
 
+
+
     public void ActualizarTurno()
     {
         canvasResultados.SetActive(false);
@@ -1376,6 +1381,7 @@ void Start()
         {
             string aux = "Mes " + turnoActualNumero.ToString();
             turnoActualTexto.text = aux;
+            InfoMes.text = aux;
             botonNuevoTurno.GetComponentInChildren<TextMeshProUGUI>().text = "Nuevo Turno";
             
         }
